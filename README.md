@@ -22,22 +22,33 @@ I am not at liberty to host the reference database files (SILVA, UNITE) as they 
 And then bring life to the scripts by typing 
   > sudo chmod a+x scripts/*sh
 
-2. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder i.e., V4 16S Illumina SILVA132 classifier goes in the folder labelled 'Illumina', ITS2 UNITE Ion Torrent classifier goes in the folder labelled 'Unite'.
+3. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder i.e., V4 16S Illumina SILVA132 classifier goes in the folder labelled 'Illumina', ITS2 UNITE Ion Torrent classifier goes in the folder labelled 'Unite'.
   
-  -- These two steps you only need to do once to set up the scripts on your computer. You can replace the classifiers with newer versions as and when is necessary. -- 
+  -- These three steps are all you need to set up the scripts on your computer. You can replace the classifiers with newer versions as and when is necessary. -- 
   
   -- The following steps are how to run the pipeline each time on your own machine, assuming you've completed the first two steps properly. -- 
+
+# How to run the pipeline 
+1. Create a folder in the extracted folder (which is now on the Desktop or wherever you put it) and call it something sensible pertaining to your project. For the purposes of this readme, we'll call our project MUSE (because you should all listen to more MUSE.)
+  - So you now have: ~/Desktop/QIIME2/ which contains the scripts folder, your classifiers folder, and a folder called MUSE. 
   
-3. Create a folder in the extracted folder (which is now on the Desktop or wherever you put it) and call it something sensible pertaining to your project. For the purposes of this readme, we'll call our project MUSE (because you should all listen to more MUSE.)
-  So you now have: ~/Desktop/QIIME2/ which contains the scripts folder, your classifiers folder, and a folder called MUSE. 
-  
-4. In your project folder (MUSE), you will place your map file along with your raw sequence data. Your map file should be called after your project, so for this example, it will be called musemap.txt
+2. In your project folder (MUSE), you will place your map file along with your raw sequence data. Your map file should be called after your project, so for this example, it will be called musemap.txt
   -- Illumina: You will have received your demultiplexed data (already split into individual samples per barcode) in a series of folders, each containing two fastqs, the forward and reverse read. You need to put all these fastqs into one folder called 'Seqs', within your project (MUSE) folder. 
   -- Ion Torrent: You will have one multiplexed fastq file. Put this in your project (MUSE) folder. Rename your fastq to the project name, e.g., muse.fastq
 
-So to recap this step, in your ~/Desktop/QIIME2/MUSE folder, you will have musemap.txt, and either a Seqs folder or a muse.fastq file. Now you're ready to run the pipeline.
+  - So to recap this step, in your ~/Desktop/QIIME2/MUSE folder, you will have musemap.txt, and either a Seqs folder or a muse.fastq file. Now you're ready to run the pipeline.
 
 5. Open a Terminal (macOS or Linux, not compatibable with Windows PowerShell), and cd to the location of the scripts folder, e.g., cd ~/Desktop/QIIME2
 
 6. enter the following command 
-  > scripts/pipeline.sh 
+  > scripts/pipeline.sh muse 
+  
+And follow the on-screen instructions. It will ask you to input a series of options. Read and type carefully, it's a sensitive soul is this pipeline. 
+  - First it will ask whether this data is from Illumina or Ion Torrent, so type your response accordingly. It is case sensitive, so use capital I and T!
+  - It will then ask you whether you'd like to use DADA2 or Deblur for the denoising/ASV step. I'll be honest with you, I never wrote a script to run with Deblur, so you're stuck with DADA2 for now (this may change if at least one person ever asks me to between now and the end of time), so type DADA2 (all caps!) 
+
+Over the next two steps, it will ask you how you'd like to trim and truncate your reads. This is quite difficult because you do not yet know the quality of your reads, or how that quality deteriorates with length. Therefore, some assumption is required. 
+  - Trimming removes *n* number of bases from the 5' end. A good number is usually 16 (Illumina) or 20-25 (Ion Torrent), to make sure any non-biological bases are definitely removed (e.g., adaptors). So, enter a number, like 16 or 25, and hit return.
+  - Truncating cuts your reads off at *n* at the 3' end. This is usually to remove low quality bases at the end of reads. With Ion Torrent, my experience is that most anything past about 300 bp is low-quality and best removed. With Illumina paired-end, the forward read is usuall good quality 'til about 240 bp, and the reverse reads is usually good until about 180 bp. So, enter a number for truncating. If later you decide that these are too short/long, you can always run again with more appropriate numbers. 
+  
+Then that's it! The pipeline will do the rest! A brief overview of what the pipeline does can be found in the pipeline_overview document. 
