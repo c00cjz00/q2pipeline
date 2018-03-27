@@ -2,14 +2,14 @@
 #QIIME 2 Ion Torrent Pipeline by Peter Leary 
 #This is pretty much a carbon copy of the "Moving Pictures" tutorial on the QIIME2 website, albeit in a slightly different order.
 #Check that $1 isn't empty
-source activate qiime2-2017.12
+source activate qiime2-2018.2
 #
 if [[ -z "$1" ]]; then
-	echo -e "Error - you must enter a name for the analysis at the end of the command e.g. ~/qiime/qiime2/qiime2_pipeline.sh test"
+	echo -e "Error - you must enter a name for the analysis at the end of the command e.g. scripts/pipeline.sh test"
 	exit
 fi
 #
-#Make sure the folder name isn't longer than 7 characters, for some reason 
+#Make sure the folder name isn't longer than 12 characters, for some reason 
 if [ "${#1}" -ge "13" ]; then
 	echo -e "Error - analysis name must be no more than 12 characters\n"
 	exit
@@ -21,17 +21,17 @@ echo -e "\nHiya, this is a QIIME 2 pipeline for Ion Torrent and Illumina data. P
 echo -e "\nStep 1. Firstly, please tell me whether this is Ion Torrent or Illumina data. Type which one it is below, and press return.\n"
 read platform_in
 #
-if [[ "$platform_in" == "Ion Torrent" && ! -f $HOME/Desktop/QIIME2/$1/$1.fastq ]]; then
+if [[ "$platform_in" == "Ion Torrent" && ! -f ../$1/$1.fastq ]]; then
 	echo -e "Please put your files in ~/Desktop/QIIME2/$1 - You might need to create the folder first\n"
 	exit
 fi
 #
-if [[ "$platform_in" == "Ion Torrent" && ! -f $HOME/Desktop/QIIME2/$1/emp/*gz ]]; then
+if [[ "$platform_in" == "Ion Torrent" && ! -f ../$1/emp/*gz ]]; then
 	echo -e "Ah, you're running Ion Torrent data, so you need to run 'step1.sh $1' first. Sorry!\n"
 	exit
 fi
 #
-if [[ "$platform_in" == "Illumina" && ! -r $HOME/Desktop/QIIME2/$1/seqs/ ]]; then
+if [[ "$platform_in" == "Illumina" && ! -r ../$1/seqs/ ]]; then
 	echo -e "Please put your files in ~/Desktop/QIIME2/$1/seqs - You might need to create the folder first\n"
 	exit
 fi
@@ -46,9 +46,9 @@ echo -e "\nStep 5b. Thanks! Now type how you'd like sequences truncated at the 3
 read trunclen_in
 echo -e "\n"
 #
-echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in" > $HOME/Desktop/QIIME2/$1/options.txt
+echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in" > ../$1/options.txt
 #
-mkdir $HOME/Desktop/QIIME2/$1/useful 
+mkdir ../$1/useful 
 #This is where it starts playing with your data
 #Ion Torrent Import
 if [[ "$platform_in" == "Ion Torrent" ]]; then 
