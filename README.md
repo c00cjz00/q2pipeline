@@ -13,8 +13,13 @@ A full list of references can be found in the References file.
 # Caveat! 
 I am not at liberty to host the reference database files (SILVA, UNITE) as they belong to their respective owners! Therefore, these scripts will not work 'as-is' as they do not contain to required feature classifiers. You can download the reference databases yourself and create your own naive-Bayes trained classifiers. However, since this set of scripts is intended for use and distribution amongst the IMH group at Newcastle University, I will be more than happy to give you a copy of my own feature classifiers, or show you how to get them from our group computer. 
 
-# How to 
-1. Download the .zip file containing all the scripts, unzip it, and copy the extracted folder to a useful place, e.g., Desktop 
+# How to set up 
+1. Download the .zip file containing all the scripts, unzip it, and copy the extracted folder to a useful place, e.g., Desktop
+
+2. Open a terminal and cd to where you saved the extracted folder, e.g.
+  > cd ~/Desktop/QIIME2 
+And then bring life to the scripts by typing 
+  > sudo chmod a+x scripts/*sh 
 
 2. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder i.e., V4 16S Illumina SILVA132 classifier goes in the folder labelled 'Illumina', ITS2 UNITE Ion Torrent classifier goes in the folder labelled 'Unite'.
   
@@ -33,4 +38,5 @@ So to recap this step, in your ~/Desktop/QIIME2/MUSE folder, you will have musem
 
 5. Open a Terminal (macOS or Linux, not compatibable with Windows PowerShell), and cd to the location of the scripts folder, e.g., cd ~/Desktop/QIIME2
 
-6. 
+6. enter the following command 
+  > scripts/pipeline.sh 
