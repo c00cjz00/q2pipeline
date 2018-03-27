@@ -53,83 +53,83 @@ mkdir ../$1/useful
 #Ion Torrent Import
 if [[ "$platform_in" == "Ion Torrent" ]]; then 
 echo -e "\nImporting Ion Torrent data into QIIME2\n"
-FIRST=$(name=$1 $HOME/qiime/QIIME2/import.sh)
+FIRST=$(name=$1 import.sh)
 echo $FIRST
 fi
 #Ion Torrent demuxing
 if [[ "$platform_in" == "Ion Torrent" ]]; then 
 echo -e "\nDemultiplexing samples (that means separating samples based on barcodes)\n"
-SECOND=$(name=$1 $HOME/qiime/QIIME2/demux.sh)
+SECOND=$(name=$1 demux.sh)
 echo $SECOND
 fi
 #Illumina import
 if [[ "$platform_in" == "Illumina" ]]; then 
 echo -e "\nImporting Illumina data and making demultiplexed files\n"
-THIRD=$(name=$1 $HOME/qiime/qiime2/import_illumina.sh)
+THIRD=$(name=$1 import_illumina.sh)
 echo $THIRD
 fi
 #
 #Dada2
 if [[ "$platform_in" == "Ion Torrent" && "$sv_in" == "DADA2" ]]; then 
 echo -e "\nDADA2-ing now. This takes me about 6 - 12 hours, so go do something else while I'm working!\n"
-FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in $HOME/qiime/QIIME2/dada2.sh)
+FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in dada2.sh)
 echo $FOURTH
 fi
 #
 if [[ "$platform_in" == "Illumina" && "$sv_in" == "DADA2" ]]; then 
 echo -e "\nDADA2-ing now. This takes me about 6 - 12 hours, so go do something else while I'm working!\n"
-FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in $HOME/qiime/QIIME2/dada2_illumina.sh)
+FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in dada2_illumina.sh)
 echo $FOURTH
 fi
 #
 #Deblur
 if [[ "$sv_in" == 'Deblur' ]]; then
 echo -e "\nDebluring now. This takes about 30-60 minutes?\n"
-FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in $HOME/qiime/QIIME2/deblur.sh)
+FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in deblur.sh)
 echo $FOURTH
 fi
 #
 #Closed-reference OTU picking via vsearch, for use with Tax4Fun 
 echo -e "\nClosed-reference OTU picking via vsearch - for use with Tax4Fun\n"
-FIFTH=$(name=$1 sv=$sv_in $HOME/qiime/qiime2/closed.sh)
+FIFTH=$(name=$1 sv=$sv_in closed.sh)
 echo $FIFTH 
 #
 #Align
 echo -e "\nAligning\n"
-SIXTH=$(name=$1 sv=$sv_in $HOME/qiime/QIIME2/align.sh)
+SIXTH=$(name=$1 sv=$sv_in align.sh)
 echo $SIXTH
 #
 #Assign taxonomy Ion Torrent 
 if [[ "$platform_in" == "Ion Torrent" ]]; then
 echo -e "\nAssigning taxonomy - 99%\n"
-EIGTH=$(name=$1 sv=$sv_in $HOME/qiime/QIIME2/assign.sh)
+EIGTH=$(name=$1 sv=$sv_in assign.sh)
 echo $EIGTH
 fi
 #
 #Assign taxonomy Illumina
 if [[ "$platform_in" == "Illumina" ]]; then
 echo -e "\nAssigning taxonomy - 99%\n"
-EIGTH=$(name=$1 sv=$sv_in $HOME/qiime/QIIME2/assign_illumina.sh)
+EIGTH=$(name=$1 sv=$sv_in assign_illumina.sh)
 echo $EIGTH
 fi
 #
 #Make phylogenetic tree
 echo -e "\nMaking phylogenetic tree\n"
-NINTH=$(name=$1 sv=$sv_in $HOME/qiime/QIIME2/tree.sh)
+NINTH=$(name=$1 sv=$sv_in tree.sh)
 echo $NINTH
 #
 echo -e "\nOkay now it's your turn. Go into the output ~/Desktop/QIIME2/$1/useful/table/index.html and select the second tab. Find the bottom sample with the fewest reads, and enter the number below for sampling depth.\n"
 read samdep_in
 echo -e "\nDoing alpha diversity\n"
-TENTH=$(name=$1 sv=$sv_in sam=$samdep_in sam_max=$sammax_in $HOME/qiime/QIIME2/alpha.sh)
+TENTH=$(name=$1 sv=$sv_in sam=$samdep_in sam_max=$sammax_in alpha.sh)
 echo $TENTH 
 #
 echo -e "\nNow doing some beta diversity\n"
-ELEVNTH=$(name=$1 sv=$sv_in $HOME/qiime/QIIME2/beta.sh)
+ELEVNTH=$(name=$1 sv=$sv_in beta.sh)
 echo $ELEVNTH
 #
 echo -e "\nTidying up and making a folder of useful stuff\n"
-TWELFTH=$(name=$1 sv=$sv_in $HOME/qiime/QIIME2/final.sh)
+TWELFTH=$(name=$1 sv=$sv_in final.sh)
 echo $TWELFTH
 #
 echo -e "\nFinished!\n"
