@@ -53,11 +53,9 @@ fi
 echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in, $trunclen_rev_in" > ../$1/options.txt
 #
 if [[ "$platform_in" == "Ion Torrent" ]]; then 
-source activate qiime1
 	echo -e "Prepping Ion Torrent data for import\n"
 	FIRST=$(name=$1 step1.sh)
 	echo $FIRST
-source deactivate
 fi
 #
 source activate qiime2-2018.2
