@@ -38,6 +38,6 @@ qiime taxa barplot \
 qiime tools export ../$name/taxonomy/taxa-bar-plots.qzv --output-dir ../$name/useful/taxa-bar-plots
 qiime tools export ../$name/taxonomy/taxa-bar-plots-500.qzv --output-dir ../$name/useful/taxa-bar-plots-500
 qiime tools export ../$name/taxonomy/taxonomy.qza --output-dir ../$name/useful/
-biom add-metadata -i ../$name/useful/biomtable/feature-table.biom -o ../$name/useful/biomtable/feature-table-tax.biom --observation-metadata-fp $../$name/useful/taxonomy.tsv --observation-header OTUID,taxonomy --sc-separated taxonomy
+biom add-metadata -i ../$name/useful/biomtable/feature-table.biom -o ../$name/useful/biomtable/feature-table-tax.biom --observation-metadata-fp ../$name/useful/taxonomy.tsv --observation-header OTUID,taxonomy --sc-separated taxonomy
 biom convert -i ../$name/useful/biomtable/feature-table-tax.biom -o ../$name/useful/biomtable/otu_table_w_tax.txt --to-tsv --table-type="OTU table" --header-key taxonomy
 #
