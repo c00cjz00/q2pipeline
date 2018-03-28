@@ -22,7 +22,11 @@ I am not at liberty to host the reference database files (SILVA, UNITE) as they 
   > cd ~/Desktop/QIIME2
 
 And then bring life to the scripts by typing 
-  > sudo chmod a+x scripts/*sh
+  > sudo chmod a+x *sh
+
+And lastly, execute the script that will tidy everything up and create the right folders for you 
+  > source ./setup.sh
+
 
 3. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder i.e., V4 16S Illumina SILVA132 classifier goes in the folder labelled 'Illumina', ITS2 UNITE Ion Torrent classifier goes in the folder labelled 'Unite'.
   
