@@ -5,4 +5,5 @@ mv *sh scripts
 mkdir classifiers 
 mkdir classifiers/illumina
 mkdir classifiers/iontorrent
+mkdir classifiers/silva119
 echo -e "\nFinished!\n"
