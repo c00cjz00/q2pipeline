@@ -50,6 +50,9 @@ if [[ "$platform_in" == "Illumina" ]]; then
 	read trunclen_rev_in
 fi
 #
+echo -e "Lastly, please tell me how many processors/threads your computer has. If you have a dual core processor, the answer is 2, so type 2. If you have a quad core, it's 4. If you have a quad core i7 with hyperthreading (like the iMac), it's 8, so enter 8.\n" 
+read threads_in
+#
 echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in, $trunclen_rev_in" > ../$1/options.txt
 #
 if [[ "$platform_in" == "Ion Torrent" ]]; then 
@@ -84,31 +87,31 @@ fi
 #Dada2
 if [[ "$platform_in" == "Ion Torrent" && "$sv_in" == "DADA2" ]]; then 
 echo -e "\nDADA2-ing now. This takes me about 6 - 12 hours, so go do something else while I'm working!\n"
-FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in dada2.sh)
+FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in threads=$threads_in dada2.sh)
 echo $FOURTH
 fi
 #
 if [[ "$platform_in" == "Illumina" && "$sv_in" == "DADA2" ]]; then 
 echo -e "\nDADA2-ing now. This takes me about 6 - 12 hours, so go do something else while I'm working!\n"
-FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in truncrev=$trunclen_rev_in dada2_illumina.sh)
+FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in truncrev=$trunclen_rev_in threads=$threads_in dada2_illumina.sh)
 echo $FOURTH
 fi
 #
 #Deblur
-if [[ "$sv_in" == 'Deblur' ]]; then
+if [[ "$platform_in" == "Illumina" && "$sv_in" == 'Deblur' ]]; then
 echo -e "\nDebluring now. This takes about 30-60 minutes?\n"
-FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in deblur.sh)
+FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in threads=$threads_in deblur.sh)
 echo $FOURTH
 fi
 #
 #Closed-reference OTU picking via vsearch, for use with Tax4Fun 
 echo -e "\nClosed-reference OTU picking via vsearch - for use with Tax4Fun\n"
-FIFTH=$(name=$1 sv=$sv_in closed.sh)
+FIFTH=$(name=$1 sv=$sv_in threads=$threads_in closed.sh)
 echo $FIFTH 
 #
 #Align
 echo -e "\nAligning\n"
-SIXTH=$(name=$1 sv=$sv_in align.sh)
+SIXTH=$(name=$1 sv=$sv_in threads=$threads_in align.sh)
 echo $SIXTH
 #
 #Assign taxonomy Ion Torrent 
