@@ -1,14 +1,14 @@
 #!/bin/bash
 #QIIME 2 Ion Torrent Pipeline by Peter Leary
 #Step 2.5 - Aligning
-mkdir $HOME/Desktop/QIIME2/$name/aligned
+mkdir ../$name/aligned
 qiime alignment mafft \
-  --i-sequences $HOME/Desktop/QIIME2/$name/$sv/rep-seqs.qza \
-  --o-alignment $HOME/Desktop/QIIME2/$name/aligned/aligned-rep-seqs.qza \
-  --p-n-threads 8 \
+  --i-sequences ../$name/$sv/rep-seqs.qza \
+  --o-alignment ../$name/aligned/aligned-rep-seqs.qza \
+  --p-n-threads $threads \
   --quiet
 #
 qiime alignment mask \
-  --i-alignment $HOME/Desktop/QIIME2/$name/aligned/aligned-rep-seqs.qza \
-  --o-masked-alignment $HOME/Desktop/QIIME2/$name/aligned/masked-aligned-rep-seqs.qza \
+  --i-alignment ../$name/aligned/aligned-rep-seqs.qza \
+  --o-masked-alignment ../$name/aligned/masked-aligned-rep-seqs.qza \
   --quiet
