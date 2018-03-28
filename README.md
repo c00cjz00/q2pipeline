@@ -14,6 +14,8 @@ A full list of references can be found in the References file.
 I am not at liberty to host the reference database files (SILVA, UNITE) as they belong to their respective owners! Therefore, these scripts will not work 'as-is' as they do not contain to required feature classifiers. You can download the reference databases yourself and create your own naive-Bayes trained classifiers. However, since this set of scripts is intended for use and distribution amongst the IMH group at Newcastle University, I will be more than happy to give you a copy of my own feature classifiers, or show you how to get them from our group computer. 
 
 # How to set up 
+  - You must have QIIME2 installed, clearly. It takes about 10 minutes and is incredibly simple on macOS and Linux.
+  - You must have *both* QIIME1 and QIIME2 installed if you wish to analyse Ion Torrent Data.
 1. Download the .zip file containing all the scripts, unzip it, and copy the extracted folder to a useful place, e.g., Desktop
 
 2. Open a terminal and cd to where you saved the extracted folder, e.g.
