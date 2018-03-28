@@ -2,7 +2,6 @@
 #QIIME 2 Ion Torrent Pipeline by Peter Leary 
 #This is pretty much a carbon copy of the "Moving Pictures" tutorial on the QIIME2 website, albeit in a slightly different order.
 #Check that $1 isn't empty
-source activate qiime2-2018.2
 #
 if [[ -z "$1" ]]; then
 	echo -e "Error - you must enter a name for the analysis at the end of the command e.g. scripts/pipeline.sh test"
@@ -46,7 +45,22 @@ echo -e "\nStep 5b. Thanks! Now type how you'd like sequences truncated at the 3
 read trunclen_in
 echo -e "\n"
 #
-echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in" > ../$1/options.txt
+if [[ "$platform_in" == "Illumina" ]]; then
+	echo -e "5c. Illumina-option Special! Please tell me how you'd like to truncate your reverse reads at the 3' end. 180 is a very sensible number\n"
+	read trunclen_rev_in
+fi
+#
+echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in, $trunclen_rev_in" > ../$1/options.txt
+#
+if [[ "$platform_in" == "Ion Torrent" ]]; then 
+source activate qiime1
+	echo -e "Prepping Ion Torrent data for import\n"
+	FIRST=$(name=$1 step1.sh)
+	echo $FIRST
+source deactivate
+fi
+#
+source activate qiime2-2018.2
 #
 mkdir ../$1/useful 
 #This is where it starts playing with your data
@@ -72,7 +86,7 @@ fi
 #Dada2
 if [[ "$platform_in" == "Ion Torrent" && "$sv_in" == "DADA2" ]]; then 
 echo -e "\nDADA2-ing now. This takes me about 6 - 12 hours, so go do something else while I'm working!\n"
-FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in dada2.sh)
+FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in truncrev=$trunclen_rev_in dada2.sh)
 echo $FOURTH
 fi
 #
