@@ -5,7 +5,7 @@ qiime vsearch cluster-features-closed-reference \
 --i-table ../$name/$sv/table.qza \
 --i-reference-sequences ../classifiers/silva119/*.qza \
 --p-perc-identity 0.99 \
---p-threads 8 \
+--p-threads $threads \
 --output-dir ../$name/closed \
 --quiet
 #
