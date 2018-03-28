@@ -20,18 +20,18 @@ echo -e "\nHiya, this is a QIIME 2 pipeline for Ion Torrent and Illumina data. P
 echo -e "\nStep 1. Firstly, please tell me whether this is Ion Torrent or Illumina data. Type which one it is below, and press return.\n"
 read platform_in
 #
-if [[ "$platform_in" == "Ion Torrent" && ! -f ../$1/$1.fastq ]]; then
-	echo -e "Please put your files in ~/Desktop/QIIME2/$1 - You might need to create the folder first\n"
+if [[ "$platform_in" == "Ion Torrent" && ! -f $1/$1.fastq ]]; then
+	echo -e "Please put your files in $1 - You might need to create the folder first\n"
 	exit
 fi
 #
-if [[ "$platform_in" == "Ion Torrent" && ! -f ../$1/emp/*gz ]]; then
+if [[ "$platform_in" == "Ion Torrent" && ! -f $1/emp/*gz ]]; then
 	echo -e "Ah, you're running Ion Torrent data, so you need to run 'step1.sh $1' first. Sorry!\n"
 	exit
 fi
 #
-if [[ "$platform_in" == "Illumina" && ! -r ../$1/seqs/ ]]; then
-	echo -e "Please put your files in ~/Desktop/QIIME2/$1/seqs - You might need to create the folder first\n"
+if [[ "$platform_in" == "Illumina" && ! -r $1/seqs/ ]]; then
+	echo -e "Please put your files in $1/seqs - You might need to create the folder first\n"
 	exit
 fi
 #
