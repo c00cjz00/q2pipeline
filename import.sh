@@ -3,5 +3,5 @@
 #Step 2.1 - importing EMP-protocol data 
 qiime tools import \
   --type EMPSingleEndSequences \
-  --input-path $HOME/Desktop/QIIME2/$name/emp \
-  --output-path $HOME/Desktop/QIIME2/$name/emp/emp-single-end-sequences.qza
+  --input-path ../$name/emp \
+  --output-path ../$name/emp/emp-single-end-sequences.qza
