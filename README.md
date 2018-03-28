@@ -5,18 +5,21 @@ QIIME2 Pipeline Scripts for IMH Group (March 2018) – By Peter Leary, Newcastle
 A badly appropriated set of scripts based on the Moving Pictures tutorial: https://docs.qiime2.org/2018.2/tutorials/moving-pictures/ 
 
 The intention is to perform pipeline analysis on 16S and ITS rRNA gene sequencing data from the Illumina and Ion Torrent platforms, with a few extra steps including preparing data for and running in Tax4Fun (Asshauer et al., 2015), using QIIME2 (currently 2018.2) (Caporaso et al., 2010). 
+  - ITS support is coming very soon! Well, as soon as someone requests it... 
 
-These scripts employ the SILVA132 and 119 databases (for taxonomic and Tax4Fun analysis respectively) (Quast et al., 2011) for 16S, and the UNITE 7.2 database for ITS (Kõljalg et al., 2005). 
+These scripts employ the SILVA databases (Quast et al., 2011) for 16S, and the UNITE 7.2 database for ITS (Kõljalg et al., 2005). 
 
-A full list of references can be found in the References file. 
+A full list of references can be found in the References Wiki.
 
 # Caveat! 
-I am not at liberty to host the reference database files (SILVA, UNITE) as they belong to their respective owners! Therefore, these scripts will not work 'as-is' as they do not contain to required feature classifiers. You can download the reference databases yourself and create your own naive-Bayes trained classifiers. However, since this set of scripts is intended for use and distribution amongst the IMH group at Newcastle University, I will be more than happy to give you a copy of my own feature classifiers, or show you how to get them from our group computer. 
+I am not at liberty to host the reference database files (SILVA, UNITE) as they belong to their respective owners! Therefore, these scripts will not work 'as-is' as they do not contain to required feature classifiers (except Greengenes...). You can download the reference databases yourself and create your own naive-Bayes trained classifiers. However, since this set of scripts is intended for use and distribution amongst the IMH group at Newcastle University, I will be more than happy to give you a copy of my own feature classifiers, or show you how to get them from our group computer. 
 
 # How to set up 
   - You must have QIIME2 installed, clearly. It takes about 10 minutes and is incredibly simple on macOS and Linux.
+    -- https://docs.qiime2.org/2018.2/install/native/
   - You must have *both* QIIME1 and QIIME2 installed if you wish to analyse Ion Torrent Data.
-1. Download the .zip file containing all the scripts, unzip it, and copy the extracted folder to a useful place, e.g., Desktop
+    -- http://qiime.org/install/install.html
+1. Download the .zip file containing all the scripts, unzip it, and copy the extracted folder to a useful place, e.g., Desktop. You can rename it if you like, to anything really. QIIME2 is a sensible name. 
 
 2. Open a terminal and cd to where you saved the extracted folder, e.g.
   > cd ~/Desktop/QIIME2
@@ -47,7 +50,7 @@ And lastly, execute the script that will tidy everything up and create the right
 5. Open a Terminal (macOS or Linux, not compatibable with Windows PowerShell), and cd to the location of the scripts folder, e.g., cd ~/Desktop/QIIME2
 
 6. enter the following command 
-  > scripts/pipeline.sh muse 
+  > source scripts/pipeline.sh muse 
   
 And follow the on-screen instructions. It will ask you to input a series of options. Read and type carefully, it's a sensitive soul is this pipeline. 
   - First it will ask whether this data is from Illumina or Ion Torrent, so type your response accordingly. It is case sensitive, so use capital I and T!
