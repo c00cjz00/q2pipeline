@@ -4,10 +4,8 @@ QIIME2 Pipeline Scripts for IMH Group (March 2018) – By Peter Leary, Newcastle
 
 A badly appropriated set of scripts based on the Moving Pictures tutorial: https://docs.qiime2.org/2018.2/tutorials/moving-pictures/ 
 
-The intention is to perform pipeline analysis on 16S and ITS rRNA gene sequencing data from the Illumina and Ion Torrent platforms, with a few extra steps including preparing data for and running in Tax4Fun (Asshauer et al., 2015), using QIIME2 (currently 2018.2) (Caporaso et al., 2010). 
-  - ITS support is coming very soon! Well, as soon as someone requests it... 
-
-These scripts employ the SILVA databases (Quast et al., 2011) for 16S, and the UNITE 7.2 database for ITS (Kõljalg et al., 2005). 
+The intention is to perform pipeline analysis on 16S rRNA gene sequencing data from the Illumina and Ion Torrent platforms, with a few extra steps including preparing data for and running in Tax4Fun (Asshauer et al., 2015), using QIIME2 (currently 2018.2) (Caporaso et al., 2010). 
+  - I will include ITS support as soon as anyone asks me for it... 
 
 A full list of references can be found in the References Wiki.
 
