@@ -31,7 +31,7 @@ And lastly, execute the script that will tidy everything up and create the right
   > source ./setup.sh
 
 
-3. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder i.e., V4 16S Illumina SILVA132 classifier goes in the folder labelled 'Illumina', ITS2 UNITE Ion Torrent classifier goes in the folder labelled 'Unite'.
+3. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder i.e., V4 16S Illumina SILVA132 classifier goes in the folder labelled 'Illumina', V4-V5 16S Ion Torrent SILVA132 classifier goes in 'Ion Torrent'. The SILVA119 files for Tax4Fun go in 'SILVA119'.
   
   -- These three steps are all you need to set up the scripts on your computer. You can replace the classifiers with newer versions as and when is necessary. -- 
   
@@ -47,17 +47,19 @@ And lastly, execute the script that will tidy everything up and create the right
 
   - So to recap this step, in your ~/Desktop/QIIME2/MUSE folder, you will have musemap.txt, and either a Seqs folder or a muse.fastq file. Now you're ready to run the pipeline.
 
-5. Open a Terminal (macOS or Linux, not compatibable with Windows PowerShell), and cd to the location of the scripts folder, e.g., cd ~/Desktop/QIIME2
+5. Open a Terminal (macOS or Linux, not compatibable with Windows PowerShell), and cd to the location of the main folder, e.g., cd ~/Desktop/QIIME2
 
-6. enter the following command 
+6. enter the following command, where 'muse' is replaced by whatever you've called your project folder and files. 
   > source scripts/pipeline.sh muse 
   
 And follow the on-screen instructions. It will ask you to input a series of options. Read and type carefully, it's a sensitive soul is this pipeline. 
   - First it will ask whether this data is from Illumina or Ion Torrent, so type your response accordingly. It is case sensitive, so use capital I and T!
-  - It will then ask you whether you'd like to use DADA2 or Deblur for the denoising/ASV step. I'll be honest with you, I never wrote a script to run with Deblur, so you're stuck with DADA2 for now (this may change if at least one person ever asks me to between now and the end of time), so type DADA2 (all caps!) 
+  - It will then ask you whether you'd like to use DADA2 or Deblur for the denoising/ASV step. I'll be honest with you, I have no intention of using Deblur, but type one and hit return. 
 
-Over the next two steps, it will ask you how you'd like to trim and truncate your reads. This is quite difficult because you do not yet know the quality of your reads, or how that quality deteriorates with length. Therefore, some assumption is required. 
+Over the next two steps, it will ask you how you'd like to trim and truncate your reads. This is quite difficult because you do not yet know the quality of your reads, or how that quality deteriorates with length. Therefore, some assumptions are required. Ideally, we'd prepare the Demux files that give you this information first, but that would mean you'd have to set the pipeline away and then come back after like 20 minutes. Also, it should be possible to get quality information straight from whoever did your sequencing. Anyway, I digress. 
   - Trimming removes *n* number of bases from the 5' end. A good number is usually 16 (Illumina) or 20-25 (Ion Torrent), to make sure any non-biological bases are definitely removed (e.g., adaptors). So, enter a number, like 16 or 25, and hit return.
   - Truncating cuts your reads off at *n* at the 3' end. This is usually to remove low quality bases at the end of reads. With Ion Torrent, my experience is that most anything past about 300 bp is low-quality and best removed. With Illumina paired-end, the forward read is usuall good quality 'til about 240 bp, and the reverse reads is usually good until about 180 bp. So, enter a number for truncating. If later you decide that these are too short/long, you can always run again with more appropriate numbers. 
+  
+It will then ask how many cores/threads your computer has. For most of you, using a 13" MacBook Pro, the answer is 2. So type 2 and hit return. If you have a fancier computer, it might be 4, so type that. If you have a really nice machine, like the iMac (or my 15" MacBook Pro with Intel i7) the answer is 8. So hit 8. 
   
 Then that's it! The pipeline will do the rest! A brief overview of what the pipeline does can be found in the pipeline_overview document. 
