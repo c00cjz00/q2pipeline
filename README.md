@@ -36,19 +36,19 @@ And lastly, execute the script that will tidy everything up and create the right
   -- The following steps are how to run the pipeline each time on your own machine, assuming you've completed the first two steps properly. -- 
 
 # How to run the pipeline 
-1. Create a folder in the extracted folder (which is now on the Desktop or wherever you put it) and call it something sensible pertaining to your project. For the purposes of this readme, we'll call our project MUSE (because you should all listen to more MUSE.)
-  - So you now have: ~/Desktop/QIIME2/ which contains the scripts folder, your classifiers folder, and a folder called MUSE. 
+1. Create a folder in the extracted folder (which is now on the Desktop or wherever you put it) and call it something sensible pertaining to your project. For the purposes of this readme, we'll call our project TEST
+ - So you now have: ~/Desktop/QIIME2/ which contains the scripts folder, your classifiers folder, and a folder called TEST. 
   
-2. In your project folder (MUSE), you will place your map file along with your raw sequence data. Your map file should be called after your project, so for this example, it will be called musemap.txt
-  -- Illumina: You will have received your demultiplexed data (already split into individual samples per barcode) in a series of folders, each containing two fastqs, the forward and reverse read. You need to put all these fastqs into one folder called 'Seqs', within your project (MUSE) folder. 
-  -- Ion Torrent: You will have one multiplexed fastq file. Put this in your project (MUSE) folder. Rename your fastq to the project name, e.g., muse.fastq
+2. In your project folder (TEST), you will place your map file along with your raw sequence data. Your map file should be called after your project, so for this example, it will be called testmap.txt
+  -- Illumina: You will have received your demultiplexed data (already split into individual samples per barcode) in a series of folders, each containing two fastqs, the forward and reverse read. You need to put all these fastqs into one folder called 'Seqs', within your project (TEST) folder. 
+  -- Ion Torrent: You will have one multiplexed fastq file. Put this in your project (TEST) folder. Rename your fastq to the project name, e.g., test.fastq
 
-  - So to recap this step, in your ~/Desktop/QIIME2/MUSE folder, you will have musemap.txt, and either a Seqs folder or a muse.fastq file. Now you're ready to run the pipeline.
+  - So to recap this step, in your ~/Desktop/QIIME2/TEST folder, you will have testmap.txt, and either a Seqs folder or a test.fastq file. Now you're ready to run the pipeline.
 
 5. Open a Terminal (macOS or Linux, not compatibable with Windows PowerShell), and cd to the location of the main folder, e.g., cd ~/Desktop/QIIME2
 
-6. enter the following command, where 'muse' is replaced by whatever you've called your project folder and files. 
-  > source scripts/pipeline.sh muse 
+6. enter the following command, where 'test' is replaced by whatever you've called your project folder and files. 
+  > source scripts/pipeline.sh test 
   
 And follow the on-screen instructions. It will ask you to input a series of options. Read and type carefully, it's a sensitive soul is this pipeline. 
   - First it will ask whether this data is from Illumina or Ion Torrent, so type your response accordingly. It is case sensitive, so use capital I and T!
@@ -60,4 +60,4 @@ Over the next two steps, it will ask you how you'd like to trim and truncate you
   
 It will then ask how many cores/threads your computer has. For most of you, using a 13" MacBook Pro, the answer is 2. So type 2 and hit return. If you have a fancier computer, it might be 4, so type that. If you have a really nice machine, like the iMac (or my 15" MacBook Pro with Intel i7) the answer is 8. So hit 8. 
   
-Then that's it! The pipeline will do the rest! A brief overview of what the pipeline does can be found in the pipeline_overview document. 
+Then that's it! The pipeline will do the rest! A brief overview of what the pipeline does can be found in the pipeline_overview document.
