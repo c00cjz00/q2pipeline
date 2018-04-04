@@ -110,7 +110,7 @@ fi
 #
 #Closed-reference OTU picking via vsearch, for use with Tax4Fun 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 4 ]]; then
-source activate qiime2-2017.12
+source activate qiime2-2018.2
 echo -e "\nClosed-reference OTU picking via vsearch - for use with Tax4Fun\n"
 FIFTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/closed.sh)
 echo $FIFTH 
@@ -118,7 +118,7 @@ fi
 #
 #Align
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 4 ]]; then
-source activate qiime2-2017.12
+source activate qiime2-2018.2
 echo -e "\nAligning\n"
 SIXTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/align.sh)
 echo $SIXTH
@@ -126,7 +126,7 @@ fi
 #
 #Assign taxonomy Ion Torrent 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 6 ]]; then
-source activate qiime2-2017.12
+source activate qiime2-2018.2
 if [[ "$platform_in" == "Ion Torrent" ]]; then
 echo -e "\nAssigning taxonomy - 99%\n"
 EIGTH=$(name=$1 sv=$sv_in scripts/assign.sh)
@@ -143,14 +143,14 @@ fi
 #
 #Make phylogenetic tree
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 7 ]]; then
-source activate qiime2-2017.12
+source activate qiime2-2018.2
 echo -e "\nMaking phylogenetic tree\n"
 NINTH=$(name=$1 sv=$sv_in scripts/tree.sh)
 echo $NINTH
 fi
 #
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 8 ]]; then
-source activate qiime2-2017.12
+source activate qiime2-2018.2
 echo -e "\nOkay now it's your turn. Go into the output ~/Desktop/QIIME2/$1/useful/table/index.html and select the second tab. Find the bottom sample with the fewest reads, and enter the number below for sampling depth.\n"
 read samdep_in
 echo -e "\nDoing alpha diversity\n"
