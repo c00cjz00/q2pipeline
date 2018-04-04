@@ -40,7 +40,9 @@ And lastly, execute the script that will tidy everything up and create the right
  - So you now have: ~/Desktop/QIIME2/ which contains the scripts folder, your classifiers folder, and a folder called TEST. 
   
 2. In your project folder (TEST), you will place your map file along with your raw sequence data. Your map file should be called after your project, so for this example, it will be called testmap.txt
-  -- Illumina: You will have received your demultiplexed data (already split into individual samples per barcode) in a series of folders, each containing two fastqs, the forward and reverse read. You need to put all these fastqs into one folder called 'Seqs', within your project (TEST) folder. 
+ 
+ -- Illumina: You will have received your demultiplexed data (already split into individual samples per barcode) in a series of folders, each containing two fastqs, the forward and reverse read. You need to put all these fastqs into one folder called 'Seqs', within your project (TEST) folder. 
+  
   -- Ion Torrent: You will have one multiplexed fastq file. Put this in your project (TEST) folder. Rename your fastq to the project name, e.g., test.fastq
 
   - So to recap this step, in your ~/Desktop/QIIME2/TEST folder, you will have testmap.txt, and either a Seqs folder or a test.fastq file. Now you're ready to run the pipeline.
