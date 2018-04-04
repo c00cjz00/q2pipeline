@@ -61,7 +61,7 @@ if [[ "$platform_in" == "Ion Torrent" ]]; then
 	echo $FIRST
 fi
 #
-source activate qiime2-2017.12
+source activate qiime2-2018.2
 #
 mkdir $1/useful 
 #This is where it starts playing with your data
@@ -87,7 +87,7 @@ fi
 #
 #Dada2
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]]; then
-source activate qiime2-2017.12
+source activate qiime2-2018.2
 if [[ "$platform_in" == "Ion Torrent" && "$sv_in" == "DADA2" ]]; then 
 echo -e "\nDADA2-ing now. This takes me about 6 - 12 hours, so go do something else while I'm working!\n"
 FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in threads=$threads_in scripts/dada2.sh)
