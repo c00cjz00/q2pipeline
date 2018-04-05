@@ -42,7 +42,7 @@ fi
 fi
 #
 # Enter the denoising/ASV protocol to use, either DADA2 or Deblur in QIIME2 
-if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]]; then
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 6 ]]; then
 echo -e "\nStep 2. Please type in the name of the denoising protocol you'd like to use by typing either DADA2 or Deblur below.\n"
 read sv_in
 #
@@ -52,6 +52,7 @@ exit
 fi
 #
 # Enter the value to trim all reads from the 5' end. This is essential for Ion Torrent. 
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]]; then
 echo -e "\nStep 3a. Now I need you to tell me how you'd like to trim reads at the 5' end. For Ion Torrent, this should be ~20 bp, so type 20. For Illumina, it should be ~13, so type 13, and hit return.\n"
 read trimleft_in
 #
@@ -63,6 +64,7 @@ read trunclen_in
 if [[ "$platform_in" == "Illumina" ]]; then
 	echo -e "\n3c. Illumina-option Special! Please tell me how you'd like to truncate your reverse reads at the 3' end. 180 is a very sensible number I feel.\n"
 	read trunclen_rev_in
+fi
 fi
 fi
 #
