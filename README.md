@@ -31,14 +31,21 @@ And then bring life to the scripts by typing
 Next, execute the script that will tidy everything up and create the right folders for you 
   > source ./setup.sh
   
-And then lastly, execute the script that will install Tax4Fun and its dependencies. Make sure you install R (you don't need RStudio for this...)
+And then lastly, execute the script that will install Tax4Fun and its dependencies. It also downloads the SILVA119 files needed for Tax4Fun *but not for closed-reference OTU picking* – these will still need downloading. Make sure you install R first (you don't need RStudio for this...)!
   > ./scripts/install_tax4fun.R
 
 
-3. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder i.e., V4 16S Illumina SILVA132 classifier goes in the folder labelled 'Illumina', V4-V5 16S Ion Torrent SILVA132 classifier goes in 'Ion Torrent'. The SILVA119 files for Tax4Fun go in 'SILVA119'. Make sure you don't put any folders in the Illumina, Ion Torrent, or silva119 folders, only actual files. So it should look like '/silva119/99_otus.qza' not '/silva119/silva119/99_otus.qza'. 
+3. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder e.g.; 
+
+-- V4 16S Illumina SILVA132 classifier goes in the folder labelled 'Illumina', 
+-- V4-V5 16S Ion Torrent SILVA132 classifier goes in 'Ion Torrent', 
+-- The silva119 files for Tax4Fun go in 'silva119' – for this you need the 99_otus.qza and taxonomy string.
+
+Make sure you don't put any folders in the Illumina, Ion Torrent, or silva119 folders, only actual files. So it should look like '/silva119/99_otus.qza' not '/silva119/silva119/99_otus.qza'. 
   
   -- These three steps are all you need to set up the scripts on your computer. You can replace the classifiers with newer versions as and when is necessary. -- 
-  
+
+
   -- The following steps are how to run the pipeline each time on your own machine, assuming you've completed the first two steps properly. -- 
 
 # How to run the pipeline 
