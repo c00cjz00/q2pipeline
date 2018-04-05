@@ -33,7 +33,3 @@ grep -E "K02117|K02118|K02119|K02120|K02121|K02122|K02123|K02124" $name/useful/t
 #Methane oxidation M00174
 grep -E "K10944|K10945|K10946|K16157|K16158|K16159|K16160|K16161|K16162|K14028|K14029" $name/useful/tax4fun/Tax4FunProfile_Export.csv >> $name/useful/tax4fun/sorted/methane_oxidation.csv
 #
-#SOX
-grep -E "K17222|K17223|K17224|K17225|K08738|K17226|K17227"
-/Desktop/Tax4Fun/qiime2/$1/"$1"_Tax4Fun.csv >> $name/useful/tax4fun/sorted/sox.csv
-#
