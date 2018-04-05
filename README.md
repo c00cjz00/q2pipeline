@@ -24,6 +24,7 @@ I am not at liberty to host the reference database files (SILVA, UNITE) as they 
 
 And then bring life to the scripts by typing 
   > sudo chmod a+x *sh
+  > sudo chmod a+x *R
 
 And lastly, execute the script that will tidy everything up and create the right folders for you 
   > source ./setup.sh
