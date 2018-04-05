@@ -17,7 +17,7 @@ I am not at liberty to host the reference database files (SILVA, UNITE) as they 
     -- https://docs.qiime2.org/2018.2/install/native/
   - You must have *both* QIIME1 and QIIME2 installed if you wish to analyse Ion Torrent Data.
     -- http://qiime.org/install/install.html
-  - You must have R installed, and Tax4Fun (along with dependancies...)
+  - You must have R installed (tesed on R 3.4.3)
 1. Download the .zip file containing all the scripts, unzip it, and copy the extracted folder to a useful place, e.g., Desktop. You can rename it if you like, to anything really. QIIME2 is a sensible name. 
 
 2. Open a terminal and cd to where you saved the extracted folder, e.g.
@@ -27,8 +27,11 @@ And then bring life to the scripts by typing
   > sudo chmod a+x *sh
   > sudo chmod a+x *R
 
-And lastly, execute the script that will tidy everything up and create the right folders for you 
+Next, execute the script that will tidy everything up and create the right folders for you 
   > source ./setup.sh
+  
+And then lastly, execute the script that will install Tax4Fun and its dependencies. Make sure you install R (you don't need RStudio for this...)
+  > source ./scripts/install_tax4fun.R
 
 
 3. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder i.e., V4 16S Illumina SILVA132 classifier goes in the folder labelled 'Illumina', V4-V5 16S Ion Torrent SILVA132 classifier goes in 'Ion Torrent'. The SILVA119 files for Tax4Fun go in 'SILVA119'. Make sure you don't put any folders in the Illumina, Ion Torrent, or silva119 folders, only actual files. So it should look like '/silva119/99_otus.qza' not '/silva119/silva119/99_otus.qza'. 
