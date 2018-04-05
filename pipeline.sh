@@ -18,10 +18,15 @@ fi
 # Enter which sequencing platform was used 
 echo -e "\nHiya, this is a QIIME 2 pipeline for Ion Torrent and Illumina data. Please read the following options, and type your responses in carefully.\n"
 #
+# Enter a number where the pipeline should start from
+echo -e "\nOkay listen up, here you can select which step of the pipeline you'd like to run from. Obviously, if you are running this on new data, you need to run the entire pipeline. If you choose to run from another step, you must have the files from the previous steps in the right place, as the pipeline will look for them as it would look for them if it had made them itself. This is more for people who wish to re-run certain bits of their analysis with different options. Pick a part of the pipeline and enter the number below.\n\n1. From the beginning, so importing and demultiplexing.\n2. DADA2 onwards.\n3. Closed OTU picking onwards.\n4. Aligning.\n5. Assign Taxonomy.\n6. Construct phylogenetic tree.\n7. Alpha diversity and beta diversity.\n8. Tax4Fun only.\n"
+read step_in
+#
+if [[ "$step_in" == 1 ]]; then
 echo -e "\nStep 1. Firstly, please tell me whether this is Ion Torrent or Illumina data. Type which one it is below, and press return.\n"
 read platform_in
-if [[ "$platform_in" == ! "Illumina" ]] || [[ "$sv_in" == ! "Ion Torrent" ]]; then
-echo -e "\nYou didn't type in your option properly. I am very fussy, and demand that you type in your option better. I am case sensitive, so if I say type Illumina, I mean Illumina, not illumina or loomina!"
+if [[ "$platform_in" != "Illumina" ]] && [[ "$platform_in" != "Ion Torrent" ]]; then
+echo -e "\nYou didn't type in your option properly. I am very fussy, and demand that you type in your option better. I am case sensitive, so if I say type Illumina, I mean Illumina, not illumina or loomina! If I say Ion Torrent, I mean that, not ion torrent or i0n 70RR3n7\n"
 exit
 fi
 # Checking the required files from Ion Torrent or Illumina are present and accounted for
@@ -34,13 +39,15 @@ if [[ "$platform_in" == "Illumina" && ! $1/seqs/*fastq.gz ]]; then
 	echo -e "Please put your files in $1/seqs - You might need to create the folder first.\n"
 	exit
 fi
+fi
 #
 # Enter the denoising/ASV protocol to use, either DADA2 or Deblur in QIIME2 
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]]; then
 echo -e "\nStep 2. Please type in the name of the denoising protocol you'd like to use by typing either DADA2 or Deblur below.\n"
 read sv_in
 #
-if [[ "$sv_in" == ! "DADA2" ]] || [[ "$sv_in" == ! "Deblur" ]]; then
-echo -e "\nYou didn't type in your option properly. I am very fussy, and demand that you type in your option better. I am case sensitive, so if I say type DADA2, I mean DADA2, not dada2 or Dada2!"
+if [[ "$sv_in" != "DADA2" ]] && [[ "$sv_in" != "Deblur" ]]; then
+echo -e "\nYou didn't type in your option properly. I am very fussy, and demand that you type in your option better. I am case sensitive, so if I say type DADA2, I mean DADA2, not dada2 or Dada2!\n"
 exit
 fi
 #
@@ -57,14 +64,11 @@ if [[ "$platform_in" == "Illumina" ]]; then
 	echo -e "\n3c. Illumina-option Special! Please tell me how you'd like to truncate your reverse reads at the 3' end. 180 is a very sensible number I feel.\n"
 	read trunclen_rev_in
 fi
+fi
 #
 # Enter the number of threads I can use
 echo -e "\nStep 4. Great, now please tell me how many processors/threads your computer has. If you have a dual core processor, the answer is 2, so type 2. If you have a quad core, it's 4. If you have a quad core i7 with hyperthreading (like the iMac), it's 8, so enter 8.\n" 
 read threads_in
-#
-# Enter a number where the pipeline should start from
-echo -e "\nOkay now listen up, here you can select which step of the pipeline you'd like to run from. Obviously, if you are running this on new data, you need to run the entire pipeline. If you choose to run from another step, you must have the files from the previous steps in the right place, as the pipeline will look for them as it would look for them if it had made them itself. This is more for people who wish to re-run certain bits of their analysis with different options. Pick a part of the pipeline and enter the number below.\n\n1. From the beginning, so importing and demultiplexing.\n2. DADA2 onwards.\n3. Closed OTU picking onwards.\n4. Aligning.\n5. Assign Taxonomy.\n6. Construct phylogenetic tree.\n7. Alpha diversity and beta diversity.\n8. Tax4Fun only.\n"
-read step_in
 #
 # Prints out a .txt file of all the inputs the user entered
 echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in\nHave a nice day!" > $1/options.txt
