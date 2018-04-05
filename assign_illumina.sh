@@ -35,7 +35,7 @@ qiime taxa barplot \
   --o-visualization $name/taxonomy/taxa-bar-plots-500.qzv \
   --quiet
 #
-qiime tools export taxonomy/taxa-bar-plots.qzv --output-dir $name/useful/taxa-bar-plots
+qiime tools export $name/taxonomy/taxa-bar-plots.qzv --output-dir $name/useful/taxa-bar-plots
 qiime tools export $name/taxonomy/taxa-bar-plots-500.qzv --output-dir $name/useful/taxa-bar-plots-500
 qiime tools export $name/taxonomy/taxonomy.qza --output-dir $name/useful/
 biom add-metadata -i $name/useful/biomtable/feature-table.biom -o $name/useful/biomtable/feature-table-tax.biom --observation-metadata-fp $name/useful/taxonomy.tsv --observation-header OTUID,taxonomy --sc-separated taxonomy
