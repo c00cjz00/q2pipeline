@@ -20,6 +20,10 @@ echo -e "\nHiya, this is a QIIME 2 pipeline for Ion Torrent and Illumina data. P
 #
 echo -e "\nStep 1. Firstly, please tell me whether this is Ion Torrent or Illumina data. Type which one it is below, and press return.\n"
 read platform_in
+if [[ "$platform_in" == ! "Illumina" ]] || [[ "$sv_in" == ! "Ion Torrent" ]]; then
+echo -e "\nYou didn't type in your option properly. I am very fussy, and demand that you type in your option better. I am case sensitive, so if I say type Illumina, I mean Illumina, not illumina or loomina!"
+exit
+fi
 # Checking the required files from Ion Torrent or Illumina are present and accounted for
 if [[ "$platform_in" == "Ion Torrent" && ! -f $1/$1.fastq ]]; then
 	echo -e "Please put your files in $1 - You might need to create the folder first.\n"
@@ -34,6 +38,11 @@ fi
 # Enter the denoising/ASV protocol to use, either DADA2 or Deblur in QIIME2 
 echo -e "\nStep 2. Please type in the name of the denoising protocol you'd like to use by typing either DADA2 or Deblur below.\n"
 read sv_in
+#
+if [[ "$sv_in" == ! "DADA2" ]] || [[ "$sv_in" == ! "Deblur" ]]; then
+echo -e "\nYou didn't type in your option properly. I am very fussy, and demand that you type in your option better. I am case sensitive, so if I say type DADA2, I mean DADA2, not dada2 or Dada2!"
+exit
+fi
 #
 # Enter the value to trim all reads from the 5' end. This is essential for Ion Torrent. 
 echo -e "\nStep 3a. Now I need you to tell me how you'd like to trim reads at the 5' end. For Ion Torrent, this should be ~20 bp, so type 20. For Illumina, it should be ~13, so type 13, and hit return.\n"
@@ -178,14 +187,19 @@ echo $TWELFTH
 fi
 #
 # Tax4Fun time... 
-echo -e "\nTax4Funning...\n"
-if [[ "$step_in" == 1 ]] || [[ "$step_in" < 9 ]]; then
+echo -e "\nWould you like to run Tax4Fun on your data, and have it chuck out some metabolic pathways for you? Enter Y or N below\n"
+read tax_in
+#
+if [[ "$tax_in" == "N" ]]; then
+echo -e "\nFinished!\n"
+exit
+fi
+#
+if [[ "$tax_in" == "Y" ]] || [[ "$step_in" < 9 ]]; then
 echo -e "\nDoing Tax4Fun for you!"
 mkdir $1/useful/tax4fun
-cd $1/
-THIRTEENTH=$(name=$1 ../scripts/tax4fun.R)
+THIRTEENTH=$(name=$1 scripts/tax4fun.R)
 echo $THIRTEENTH
-cd ../
 #
 FOURTEENTH=$(name=$1 scripts/key_kos.sh)
 echo $FOURTEENTH
