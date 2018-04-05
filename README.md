@@ -56,7 +56,7 @@ And then lastly, execute the script that will install Tax4Fun and its dependenci
 5. Open a Terminal (macOS or Linux, not compatibable with Windows PowerShell), and cd to the location of the main folder, e.g., cd ~/Desktop/QIIME2
 
 6. enter the following command, where 'test' is replaced by whatever you've called your project folder and files. 
-  > source scripts/pipeline.sh test 
+  > ./scripts/pipeline.sh test 
   
 And follow the on-screen instructions. It will ask you to input a series of options. Read and type carefully, it's a sensitive soul is this pipeline. 
   - First it will ask whether this data is from Illumina or Ion Torrent, so type your response accordingly. It is case sensitive, so use capital I and T!
