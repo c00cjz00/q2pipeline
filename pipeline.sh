@@ -33,7 +33,7 @@ fi
 echo -e "\nStep 2. Please type in the name of the denoising protocol you'd like to use by typing either DADA2 or Deblur below.\n"
 read sv_in
 #
-echo -e "\nStep 3a. Now I need you to tell me how you'd like to trim reads at the 5' end. For Ion Torrent, this should be ~20 bp, so type 20. For Illumina, it should be ~16, so type 16, and hit return.\n"
+echo -e "\nStep 3a. Now I need you to tell me how you'd like to trim reads at the 5' end. For Ion Torrent, this should be ~20 bp, so type 20. For Illumina, it should be ~13, so type 13, and hit return.\n"
 read trimleft_in
 #
 echo -e "\nStep 3b. Thanks! Now type how you'd like sequences truncated at the 3' end. For Illumina, ~240 bp is sensible. For Ion Torrent, I personally recommend truncating to around 250-300, and the more conservative the better. Type in a sensible number and hit return.\n"
