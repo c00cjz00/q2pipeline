@@ -189,8 +189,10 @@ fi
 if [[ "$tax_in" == "Y" ]] || [[ "$step_in" < 9 ]]; then
 echo -e "\nDoing Tax4Fun for you!"
 mkdir $1/useful/tax4fun
-THIRTEENTH=$(name=$1 scripts/tax4fun.R)
+cd $1/
+THIRTEENTH=$(name=$1 ../scripts/tax4fun.R)
 echo $THIRTEENTH
+cd ../
 #
 FOURTEENTH=$(name=$1 scripts/key_kos.sh)
 echo $FOURTEENTH
