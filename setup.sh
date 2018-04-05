@@ -2,6 +2,7 @@
 #
 mkdir scripts
 mv *sh scripts 
+mv *R scripts
 mkdir classifiers 
 mkdir classifiers/illumina
 mkdir classifiers/iontorrent
