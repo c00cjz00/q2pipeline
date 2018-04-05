@@ -17,6 +17,7 @@ I am not at liberty to host the reference database files (SILVA, UNITE) as they 
     -- https://docs.qiime2.org/2018.2/install/native/
   - You must have *both* QIIME1 and QIIME2 installed if you wish to analyse Ion Torrent Data.
     -- http://qiime.org/install/install.html
+  - You must have R installed, and Tax4Fun (along with dependancies...)
 1. Download the .zip file containing all the scripts, unzip it, and copy the extracted folder to a useful place, e.g., Desktop. You can rename it if you like, to anything really. QIIME2 is a sensible name. 
 
 2. Open a terminal and cd to where you saved the extracted folder, e.g.
