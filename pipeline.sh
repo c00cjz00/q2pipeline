@@ -1,25 +1,26 @@
 #!/bin/bash
-#QIIME 2 Ion Torrent Pipeline by Peter Leary 
-#This is pretty much a carbon copy of the "Moving Pictures" tutorial on the QIIME2 website, albeit in a slightly different order.
-#Check that $1 isn't empty
+# QIIME 2 Ion Torrent Pipeline by Peter Leary 
+# This is pretty much a carbon copy of the "Moving Pictures" tutorial on the QIIME2 website, albeit in a slightly different order.
+# Check that $1 isn't empty
 #
 if [[ -z "$1" ]]; then
 	echo -e "Error - you must enter a name for the analysis at the end of the command e.g. scripts/pipeline.sh test"
 	exit
 fi
 #
-#Make sure the folder name isn't longer than 12 characters, for some reason 
+# Make sure the folder name isn't longer than 12 characters, to keep things neat. No special characters. 
 if [ "${#1}" -ge "13" ]; then
 	echo -e "Error - analysis name must be no more than 12 characters\n"
 	exit
 fi
 #
-#Options bit 
+# Options bit 
+# Enter which sequencing platform was used 
 echo -e "\nHiya, this is a QIIME 2 pipeline for Ion Torrent and Illumina data. Please read the following options, and type your responses in carefully.\n"
 #
 echo -e "\nStep 1. Firstly, please tell me whether this is Ion Torrent or Illumina data. Type which one it is below, and press return.\n"
 read platform_in
-#
+# Checking the required files from Ion Torrent or Illumina are present and accounted for
 if [[ "$platform_in" == "Ion Torrent" && ! -f $1/$1.fastq ]]; then
 	echo -e "Please put your files in $1 - You might need to create the folder first.\n"
 	exit
@@ -30,30 +31,38 @@ if [[ "$platform_in" == "Illumina" && ! $1/seqs/*fastq.gz ]]; then
 	exit
 fi
 #
+# Enter the denoising/ASV protocol to use, either DADA2 or Deblur in QIIME2 
 echo -e "\nStep 2. Please type in the name of the denoising protocol you'd like to use by typing either DADA2 or Deblur below.\n"
 read sv_in
 #
+# Enter the value to trim all reads from the 5' end. This is essential for Ion Torrent. 
 echo -e "\nStep 3a. Now I need you to tell me how you'd like to trim reads at the 5' end. For Ion Torrent, this should be ~20 bp, so type 20. For Illumina, it should be ~13, so type 13, and hit return.\n"
 read trimleft_in
 #
+# Enter the value to truncate all reads at the 3' end. This is based on quality.
 echo -e "\nStep 3b. Thanks! Now type how you'd like sequences truncated at the 3' end. For Illumina, ~240 bp is sensible. For Ion Torrent, I personally recommend truncating to around 250-300, and the more conservative the better. Type in a sensible number and hit return.\n"
 read trunclen_in
 #
+# Enter the value to truncate all reverse reads from Illumina 
 if [[ "$platform_in" == "Illumina" ]]; then
 	echo -e "\n3c. Illumina-option Special! Please tell me how you'd like to truncate your reverse reads at the 3' end. 180 is a very sensible number I feel.\n"
 	read trunclen_rev_in
 fi
 #
+# Enter the number of threads I can use
 echo -e "\nStep 4. Great, now please tell me how many processors/threads your computer has. If you have a dual core processor, the answer is 2, so type 2. If you have a quad core, it's 4. If you have a quad core i7 with hyperthreading (like the iMac), it's 8, so enter 8.\n" 
 read threads_in
 #
-echo -e "\nOkay now listen up, here you can select which step of the pipeline you'd like to run from. Obviously, if you are running this on new data, you need to run the entire pipeline. If you choose to run from another step, you must have the files from the previous steps in the right place, as the pipeline will look for them as it would look for them if it had made them itself. This is more for people who wish to re-run certain bits of their analysis with different options. Pick a part of the pipeline and enter the number below.\n\n1. From the beginning, so importing and demultiplexing.\n2. DADA2 onwards.\n3. Closed OTU picking onwards.\n4. Aligning.\n5. Assign Taxonomy.\n6. Construct phylogenetic tree.\n7. Alpha diversity and beta diversity.\n"
+# Enter a number where the pipeline should start from
+echo -e "\nOkay now listen up, here you can select which step of the pipeline you'd like to run from. Obviously, if you are running this on new data, you need to run the entire pipeline. If you choose to run from another step, you must have the files from the previous steps in the right place, as the pipeline will look for them as it would look for them if it had made them itself. This is more for people who wish to re-run certain bits of their analysis with different options. Pick a part of the pipeline and enter the number below.\n\n1. From the beginning, so importing and demultiplexing.\n2. DADA2 onwards.\n3. Closed OTU picking onwards.\n4. Aligning.\n5. Assign Taxonomy.\n6. Construct phylogenetic tree.\n7. Alpha diversity and beta diversity.\n8. Tax4Fun only.\n"
 read step_in
 #
+# Prints out a .txt file of all the inputs the user entered
 echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in\nHave a nice day!" > $1/options.txt
 #
 echo -e "\n"
 #
+# Splits Ion Torrent fastq into reads.fastq and barcodes.fastq, and gzips them. This is so they can be imported via the EMP protocol.
 if [[ "$step_in" == 1 ]]; then
 if [[ "$platform_in" == "Ion Torrent" ]]; then 
 	echo -e "Prepping Ion Torrent data for import\n"
@@ -64,20 +73,20 @@ fi
 source activate qiime2-2018.2
 #
 mkdir $1/useful 
-#This is where it starts playing with your data
-#Ion Torrent Import
+# This is where it starts playing with your data
+# Ion Torrent Import
 if [[ "$platform_in" == "Ion Torrent" ]]; then 
 echo -e "\nImporting Ion Torrent data into QIIME2\n"
 FIRST=$(name=$1 scripts/import.sh)
 echo $FIRST
 fi
-#Ion Torrent demuxing
+# Ion Torrent demuxing
 if [[ "$platform_in" == "Ion Torrent" ]]; then 
 echo -e "\nDemultiplexing samples (that means separating samples based on barcodes)\n"
 SECOND=$(name=$1 scripts/demux.sh)
 echo $SECOND
 fi
-#Illumina import
+# Illumina import
 if [[ "$platform_in" == "Illumina" ]]; then 
 echo -e "\nImporting Illumina data and making demultiplexed files\n"
 THIRD=$(name=$1 scripts/import_illumina.sh)
@@ -85,7 +94,7 @@ echo $THIRD
 fi
 fi
 #
-#Dada2
+# Dada2
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]]; then
 source activate qiime2-2018.2
 if [[ "$platform_in" == "Ion Torrent" && "$sv_in" == "DADA2" ]]; then 
@@ -100,7 +109,7 @@ FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in truncrev=
 echo $FOURTH
 fi
 #
-#Deblur
+# Deblur
 if [[ "$platform_in" == "Illumina" && "$sv_in" == 'Deblur' ]]; then
 echo -e "\nDebluring now. This takes about 30-60 minutes?\n"
 FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in threads=$threads_in scripts/deblur.sh)
@@ -108,7 +117,7 @@ echo $FOURTH
 fi
 fi
 #
-#Closed-reference OTU picking via vsearch, for use with Tax4Fun 
+# Closed-reference OTU picking via vsearch, for use with Tax4Fun 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 4 ]]; then
 source activate qiime2-2018.2
 echo -e "\nClosed-reference OTU picking via vsearch - for use with Tax4Fun\n"
@@ -116,7 +125,7 @@ FIFTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/closed.sh)
 echo $FIFTH 
 fi
 #
-#Align
+# Align
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 4 ]]; then
 source activate qiime2-2018.2
 echo -e "\nAligning\n"
@@ -124,7 +133,7 @@ SIXTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/align.sh)
 echo $SIXTH
 fi
 #
-#Assign taxonomy Ion Torrent 
+# Assign taxonomy Ion Torrent 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 6 ]]; then
 source activate qiime2-2018.2
 if [[ "$platform_in" == "Ion Torrent" ]]; then
@@ -133,7 +142,7 @@ EIGTH=$(name=$1 sv=$sv_in scripts/assign.sh)
 echo $EIGTH
 fi
 #
-#Assign taxonomy Illumina
+# Assign taxonomy Illumina
 if [[ "$platform_in" == "Illumina" ]]; then
 echo -e "\nAssigning taxonomy - 99%\n"
 EIGTH=$(name=$1 sv=$sv_in scripts/assign_illumina.sh)
@@ -141,7 +150,7 @@ echo $EIGTH
 fi
 fi
 #
-#Make phylogenetic tree
+# Make phylogenetic tree
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 7 ]]; then
 source activate qiime2-2018.2
 echo -e "\nMaking phylogenetic tree\n"
@@ -151,6 +160,7 @@ fi
 #
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 8 ]]; then
 source activate qiime2-2018.2
+# Enter a number to be used as sampling depth for rarefaction
 echo -e "\nOkay now it's your turn. Go into the output ~/Desktop/QIIME2/$1/useful/table/index.html and select the second tab. Find the bottom sample with the fewest reads, and enter the number below for sampling depth.\n"
 read samdep_in
 echo -e "\nDoing alpha diversity\n"
@@ -161,9 +171,29 @@ echo -e "\nNow doing some beta diversity\n"
 ELEVNTH=$(name=$1 sv=$sv_in scripts/beta.sh)
 echo $ELEVNTH
 #
+# Last bit of house-keeping for the 'Useful' folder
 echo -e "\nTidying up and making a folder of useful stuff\n"
 TWELFTH=$(name=$1 sv=$sv_in scripts/final.sh)
 echo $TWELFTH
+fi
+#
+# Tax4Fun time... 
+echo -e "\nWould you like to run Tax4Fun on your data, and have it chuck out some metabolic pathways for you? Enter Y or N below\n"
+read tax_in
+#
+if [[ "$tax_in" == "N" ]]; then
+echo -e "\nFinished!\n"
+exit
+fi
+#
+if [[ "$tax_in" == "Y" ]] || [[ "$step_in" < 9 ]]; then
+echo -e "\nDoing Tax4Fun for you!"
+mkdir $1/useful/tax4fun
+THIRTEENTH=$(name=$1 scripts/tax4fun.R)
+echo $THIRTEENTH
+#
+FOURTEENTH=$(name=$1 scripts/key_kos.sh)
+echo $FOURTEENTH
 fi
 #
 echo -e "\nFinished!\n"
