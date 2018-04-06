@@ -5,7 +5,7 @@ mkdir $name/demux
 qiime demux emp-single \
   --i-seqs $name/emp/emp-single-end-sequences.qza \
   --m-barcodes-file $name/"$name"map.txt \
-  --m-barcodes-category BarcodeSequence \
+  --m-barcodes-column BarcodeSequence \
   --o-per-sample-sequences $name/demux/demux.qza \
   --quiet
   #
