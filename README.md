@@ -12,11 +12,13 @@ A full list of references can be found in the References Wiki.
 I am not at liberty to host the reference database files (SILVA, UNITE) as they belong to their respective owners! Therefore, these scripts will not work 'as-is' as they do not contain to required feature classifiers. You can download the reference databases yourself and create your own naive-Bayes trained classifiers. However, since this set of scripts is intended for use and distribution amongst the IMH group at Newcastle University, I will be more than happy to give you a copy of my own feature classifiers, or show you how to get them from our group computer. 
 
 # How to set up 
-  - You must have QIIME2 installed, clearly. It takes about 10 minutes and is incredibly simple on macOS and Linux.
+You must have QIIME2 installed at the very least. Additionally, you will need QIIME1 if you plan to use Ion Torrent data, and R if you wish to use Tax4Fun.   
     -- https://docs.qiime2.org/2018.2/install/native/
-  - You must have *both* QIIME1 and QIIME2 installed if you wish to analyse Ion Torrent Data.
     -- http://qiime.org/install/install.html
-  - You must have R installed (tesed on R 3.4.3)
+    -- https://www.stats.bris.ac.uk/R/ 
+
+However, there is a script in this here collection that will install R, Miniconda, QIIME2, and QIIME1 on your computer for you. 
+
 1. Download the .zip file containing all the scripts, by clicking the green 'Clone or download' button on the top of the main Q2 Pipeline page. Unzip it, and copy the extracted folder to a useful place, e.g., Desktop. It will be called q2pipeline-master when you download and unzip it. You can rename it if you like, to anything really. 
 
 2. Open a terminal and cd to where you saved the extracted folder, e.g.
@@ -26,6 +28,10 @@ And then bring life to the scripts by typing
   > sudo chmod a+x *sh
   
   > sudo chmod a+x *R
+
+If you want to run the script that will install everything, like QIIME1 and 2 and R, enter the following command.
+  > ./install_all.sh 
+Once it's finished installing, it's best to close all current Terminal windows and cd back to /q2pipeline-master.
 
 Next, execute the script that will tidy everything up and create the right folders for you 
   > source ./setup.sh
