@@ -13,11 +13,14 @@ I am not at liberty to host the reference database files (SILVA, UNITE) as they 
 
 # How to set up 
 You must have QIIME2 installed at the very least. Additionally, you will need QIIME1 if you plan to use Ion Torrent data, and R if you wish to use Tax4Fun.   
-    -- https://docs.qiime2.org/2018.2/install/native/
-    -- http://qiime.org/install/install.html
-    -- https://www.stats.bris.ac.uk/R/ 
+ 
+ -- https://docs.qiime2.org/2018.2/install/native/
+   
+ -- http://qiime.org/install/install.html
+    
+ -- https://www.stats.bris.ac.uk/R/ 
 
-However, there is a script in this here collection that will install R, Miniconda, QIIME2, and QIIME1 on your computer for you. 
+However, there is a script in this here collection that will install R, Miniconda, QIIME2, and QIIME1 on your computer for you. I think it may require Xcode being installed on your Mac. This is available in the Mac App Store. 
 
 1. Download the .zip file containing all the scripts, by clicking the green 'Clone or download' button on the top of the main Q2 Pipeline page. Unzip it, and copy the extracted folder to a useful place, e.g., Desktop. It will be called q2pipeline-master when you download and unzip it. You can rename it if you like, to anything really. 
 
