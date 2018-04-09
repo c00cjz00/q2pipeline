@@ -31,9 +31,10 @@ And then bring life to the scripts by typing
 
 If you want to run the script that will install everything, like QIIME1 and 2 and R, enter the following command.
   > ./install_all.sh 
+
 Once it's finished installing, it's best to close all current Terminal windows and cd back to /q2pipeline-master.
 
-Next, execute the script that will tidy everything up and create the right folders for you 
+Okay, now execute the script that will tidy everything up and create the right folders for you 
   > source ./setup.sh
   
 And then lastly, execute the script that will install Tax4Fun and its dependencies. It also downloads the SILVA119 files needed for Tax4Fun *but not for closed-reference OTU picking* – these will still need downloading. Make sure you install R first (you don't need RStudio for this...)!
