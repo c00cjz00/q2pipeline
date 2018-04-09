@@ -193,15 +193,7 @@ echo $TWELFTH
 fi
 #
 # Tax4Fun time... 
-echo -e "\nWould you like to run Tax4Fun on your data, and have it chuck out some metabolic pathways for you? Enter Y or N below\n"
-read tax_in
-#
-if [[ "$tax_in" == "N" ]]; then
-echo -e "\nFinished!\n"
-exit
-fi
-#
-if [[ "$tax_in" == "Y" ]] || [[ "$step_in" < 9 ]]; then
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 9 ]]; then
 echo -e "\nDoing Tax4Fun for you!"
 mkdir $1/useful/tax4fun
 THIRTEENTH=$(name=$1 scripts/tax4fun.R)
