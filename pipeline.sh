@@ -141,7 +141,7 @@ echo $FIFTH
 fi
 #
 # Align
-if [[ "$step_in" == 1 ]] || [[ "$step_in" < 4 ]]; then
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 5 ]]; then
 source activate qiime2-2018.2
 echo -e "\nAligning\n"
 SIXTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/align.sh)
