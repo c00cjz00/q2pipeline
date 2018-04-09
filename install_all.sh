@@ -4,9 +4,6 @@
 
 if
 [[ "$(uname)" ==  "Darwin" ]]; then                                             # Checks to see if running macOS and then downloads the right Miniconda
-wget https://www.stats.bris.ac.uk/R/bin/macosx/R-3.4.4.pkg                      # Downloads R 3.4.4 from Bristol Uni 
-sudo installer -pkg R-3.4.4.pkg -target /                                       # Installs R to the Applications folder 
-rm *pkg
 curl -O https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh  # Downloads the Miniconda installer 
 bash Miniconda3-latest-MacOSX-x86_64.sh                                         # Executes the Miniconda installer 
 rm -rf Miniconda3-latest-MacOSX-x86_64.sh                                       # Deletes the Miniconda file to be nice and tidy 
