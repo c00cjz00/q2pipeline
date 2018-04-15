@@ -19,7 +19,7 @@ fi
 echo -e "\nHiya, this is a QIIME 2 pipeline for Ion Torrent and Illumina data. Please read the following options, and type your responses in carefully.\n"
 #
 # Enter a number where the pipeline should start from
-echo -e "\nOkay listen up, here you can select which step of the pipeline you'd like to run from. Obviously, if you are running this on new data, you need to run the entire pipeline. If you choose to run from another step, you must have the files from the previous steps in the right place, as the pipeline will look for them as it would look for them if it had made them itself. This is more for people who wish to re-run certain bits of their analysis with different options. Pick a part of the pipeline and enter the number below.\n\n1. From the beginning, so importing and demultiplexing.\n2. DADA2 onwards.\n3. Closed OTU picking onwards.\n4. Aligning.\n5. Assign Taxonomy.\n6. Construct phylogenetic tree.\n7. Alpha diversity and beta diversity.\n8. Tax4Fun only.\n"
+echo -e "\nOkay listen up, here you can select which step of the pipeline you'd like to run from. Obviously, if you are running this on new data, you need to run the entire pipeline. If you choose to run from another step, you must have the files from the previous steps in the right place, as the pipeline will look for them as it would look for them if it had made them itself. This is more for people who wish to re-run certain bits of their analysis with different options. Pick a part of the pipeline and enter the number below.\n\n1. From the beginning, so importing and demultiplexing.\n2. DADA2 onwards.\n3. Closed OTU picking onwards.\n4. Assign Taxonomy.\n5. Align.\n6. Construct phylogenetic tree.\n7. Alpha diversity and beta diversity.\n8. Tax4Fun only.\n"
 read step_in
 #
 if [[ "$step_in" == 1 ]]; then
@@ -51,12 +51,12 @@ echo -e "\nYou didn't type in your option properly. I am very fussy, and demand 
 exit
 fi
 #
-# Enter the value to trim all reads from the 5' end. This is essential for Ion Torrent. 
+# Enter the value to trim all reads from the 5' end. This is essential for Ion Torrent
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]]; then
 echo -e "\nStep 3a. Now I need you to tell me how you'd like to trim reads at the 5' end. For Ion Torrent, this should be ~20 bp, so type 20. For Illumina, it should be ~13, so type 13, and hit return.\n"
 read trimleft_in
 #
-# Enter the value to truncate all reads at the 3' end. This is based on quality.
+# Enter the value to truncate all reads at the 3' end. This is based on quality
 echo -e "\nStep 3b. Thanks! Now type how you'd like sequences truncated at the 3' end. For Illumina, ~240 bp is sensible. For Ion Torrent, I personally recommend truncating to around 250-300, and the more conservative the better. Type in a sensible number and hit return.\n"
 read trunclen_in
 #
@@ -140,37 +140,38 @@ FIFTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/closed.sh)
 echo $FIFTH 
 fi
 #
-# Align
-if [[ "$step_in" == 1 ]] || [[ "$step_in" < 5 ]]; then
-source activate qiime2-2018.2
-echo -e "\nAligning\n"
-SIXTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/align.sh)
-echo $SIXTH
-fi
-#
 # Assign taxonomy Ion Torrent 
-if [[ "$step_in" == 1 ]] || [[ "$step_in" < 6 ]]; then
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 5 ]]; then
 source activate qiime2-2018.2
 if [[ "$platform_in" == "Ion Torrent" ]]; then
 echo -e "\nAssigning taxonomy - 99%\n"
-EIGTH=$(name=$1 sv=$sv_in scripts/assign.sh)
-echo $EIGTH
+SIXTH=$(name=$1 sv=$sv_in scripts/assign.sh)
+echo $SIXTH
 fi
 #
 # Assign taxonomy Illumina
 if [[ "$platform_in" == "Illumina" ]]; then
 echo -e "\nAssigning taxonomy - 99%\n"
-EIGTH=$(name=$1 sv=$sv_in scripts/assign_illumina.sh)
-echo $EIGTH
+SIXTH=$(name=$1 sv=$sv_in scripts/assign_illumina.sh)
+echo $SIXTH
 fi
 fi
 #
+# Align
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 6 ]]; then
+source activate qiime2-2018.2
+echo -e "\nAligning\n"
+SEVENTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/align.sh)
+echo $SEVENTH
+fi
+#
+
 # Make phylogenetic tree
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 7 ]]; then
 source activate qiime2-2018.2
 echo -e "\nMaking phylogenetic tree\n"
-NINTH=$(name=$1 sv=$sv_in scripts/tree.sh)
-echo $NINTH
+EIGTH=$(name=$1 sv=$sv_in scripts/tree.sh)
+echo $EIGTH
 fi
 #
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 8 ]]; then
@@ -179,28 +180,22 @@ source activate qiime2-2018.2
 echo -e "\nOkay now it's your turn. Go into the output ~/Desktop/QIIME2/$1/useful/table/index.html and select the second tab. Find the bottom sample with the fewest reads, and enter the number below for sampling depth.\n"
 read samdep_in
 echo -e "\nDoing alpha diversity\n"
-TENTH=$(name=$1 sv=$sv_in sam=$samdep_in sam_max=$sammax_in scripts/alpha.sh)
-echo $TENTH 
+NINTH=$(name=$1 sv=$sv_in sam=$samdep_in sam_max=$sammax_in scripts/alpha.sh)
+echo $NINTH 
 #
 echo -e "\nNow doing some beta diversity\n"
-ELEVNTH=$(name=$1 sv=$sv_in scripts/beta.sh)
-echo $ELEVNTH
-#
-# Last bit of house-keeping for the 'Useful' folder
-echo -e "\nTidying up and making a folder of useful stuff\n"
-TWELFTH=$(name=$1 sv=$sv_in scripts/final.sh)
-echo $TWELFTH
-fi
+TENTH=$(name=$1 sv=$sv_in scripts/beta.sh)
+echo $TENTH
 #
 # Tax4Fun time... 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 9 ]]; then
 echo -e "\nDoing Tax4Fun for you!"
 mkdir $1/useful/tax4fun
-THIRTEENTH=$(name=$1 scripts/tax4fun.R)
-echo $THIRTEENTH
+ELEVENTH=$(name=$1 scripts/tax4fun.R)
+echo $ELEVENTH
 #
-FOURTEENTH=$(name=$1 scripts/key_kos.sh)
-echo $FOURTEENTH
+TWELFTH=$(name=$1 scripts/key_kos.sh)
+echo $TWELFTH
 fi
 #
 echo -e "\nFinished!\n"
