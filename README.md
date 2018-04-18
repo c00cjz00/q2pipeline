@@ -82,6 +82,7 @@ Make sure you don't put any folders in the Illumina, Ion Torrent, or silva119 fo
 5. Open a Terminal (macOS or Linux, not compatibable with Windows PowerShell), and cd to the location of the main folder, e.g., cd ~/Desktop/q2pipeline-master
 
 6. enter the following command, where 'test' is replaced by whatever you've called your project folder and files. 
+
 `./scripts/pipeline.sh test`
   
 And follow the on-screen instructions. It will ask you to input a series of options. Read and type carefully, it's a sensitive soul is this pipeline. 
