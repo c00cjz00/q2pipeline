@@ -8,7 +8,7 @@ The intention is to perform pipeline analysis on 16S rRNA gene sequencing data f
 
 A full list of references can be found in the References Wiki.
 
-# Caveat! 
+## Caveat! 
 I am not at liberty to host the reference database files (SILVA, UNITE) as they belong to their respective owners! Therefore, these scripts will not work 'as-is' as they do not contain to required feature classifiers. You can download the reference databases yourself and create your own naive-Bayes trained classifiers. However, since this set of scripts is intended for use and distribution amongst the IMH group at Newcastle University, I will be more than happy to give you a copy of my own feature classifiers, or show you how to get them from our group computer. 
 
 # How to set up 
