@@ -9,7 +9,7 @@ qiime dada2 denoise-paired \
   --p-trim-left-r $trimleft \
   --p-trunc-len-f $trunclen \
   --p-trunc-len-r $truncrev \
-  --p-n-threads 0
+  --p-n-threads $threads
 #
 qiime feature-table summarize \
   --i-table $name/$sv/table.qza \
