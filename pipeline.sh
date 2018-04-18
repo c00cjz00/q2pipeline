@@ -70,7 +70,7 @@ fi
 #
 # Enter the number of threads I can use
 if [[ "$step_in" < 8 ]]; then
-echo -e "\nStep 4. Great, now please tell me how many processors/threads your computer has. If you have a dual core processor, the answer is 2, so type 2. If you have a quad core, it's 4. If you have a quad core i7 with hyperthreading (like the iMac), it's 8, so enter 8.\n" 
+echo -e "\nStep 4. Great, now please tell me how many processors/threads your computer has. If in doubt and wish to use everything, type 0. If you have a dual core processor, the answer is 2, so type 2. If you have a quad core, it's 4. If you have a quad core i7 with hyperthreading (like the iMac), it's 8, so enter 8.\n" 
 read threads_in
 fi
 #
