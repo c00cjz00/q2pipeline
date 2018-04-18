@@ -22,7 +22,7 @@ echo -e "\nHiya, this is a QIIME 2 pipeline for Ion Torrent and Illumina data. P
 echo -e "\nOkay listen up, here you can select which step of the pipeline you'd like to run from. Obviously, if you are running this on new data, you need to run the entire pipeline. If you choose to run from another step, you must have the files from the previous steps in the right place, as the pipeline will look for them as it would look for them if it had made them itself. This is more for people who wish to re-run certain bits of their analysis with different options. Pick a part of the pipeline and enter the number below.\n\n1. From the beginning, so importing and demultiplexing.\n2. DADA2 onwards.\n3. Closed OTU picking onwards.\n4. Assign Taxonomy.\n5. Align.\n6. Construct phylogenetic tree.\n7. Alpha diversity and beta diversity.\n8. Tax4Fun only.\n"
 read step_in
 #
-if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]]; then
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]] || [[ "$step_in" == 4 ]]; then
 echo -e "\nStep 1. Firstly, please tell me whether this is Ion Torrent or Illumina data. Type which one it is below, and press return.\n"
 read platform_in
 if [[ "$platform_in" != "Illumina" ]] && [[ "$platform_in" != "Ion Torrent" ]]; then
@@ -42,7 +42,7 @@ fi
 fi
 #
 # Enter the denoising/ASV protocol to use, either DADA2 or Deblur in QIIME2 
-if [[ "$step_in" == 1 ]] || [[ "$step_in" < 6 ]]; then
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 6 ]] || [[ "$step_in" == 7 ]]; then
 echo -e "\nStep 2. Please type in the name of the denoising protocol you'd like to use by typing either DADA2 or Deblur below.\n"
 read sv_in
 #
@@ -69,11 +69,16 @@ fi
 fi
 #
 # Enter the number of threads I can use
+if [[ "$step_in" < 8 ]]; then
 echo -e "\nStep 4. Great, now please tell me how many processors/threads your computer has. If you have a dual core processor, the answer is 2, so type 2. If you have a quad core, it's 4. If you have a quad core i7 with hyperthreading (like the iMac), it's 8, so enter 8.\n" 
 read threads_in
+fi
 #
 # Prints out a .txt file of all the inputs the user entered
 echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in\nHave a nice day!" > $1/options.txt
+if [ -e $1/options.txt ]; then
+echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in\nHave a nice day!" > $1/options2.txt
+fi
 #
 echo -e "\n"
 #
@@ -186,13 +191,16 @@ echo $NINTH
 echo -e "\nNow doing some beta diversity\n"
 TENTH=$(name=$1 sv=$sv_in scripts/beta.sh)
 echo $TENTH
+fi
 #
 # Tax4Fun time... 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 9 ]]; then
 echo -e "\nDoing Tax4Fun for you!"
 mkdir $1/useful/tax4fun
-ELEVENTH=$(name=$1 scripts/tax4fun.R)
+cd $1 
+ELEVENTH=$(name=$1 ../scripts/tax4fun.R)
 echo $ELEVENTH
+cd ../
 #
 TWELFTH=$(name=$1 scripts/key_kos.sh)
 echo $TWELFTH
