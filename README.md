@@ -14,44 +14,49 @@ I am not at liberty to host the reference database files (SILVA, UNITE) as they 
 ## How to set up 
 You must have QIIME2 installed at the very least. Additionally, you will need QIIME1 if you plan to use Ion Torrent data, and R if you wish to use Tax4Fun.   
  
- -- https://docs.qiime2.org/2018.2/install/native/
+> https://docs.qiime2.org/2018.2/install/native/
    
- -- http://qiime.org/install/install.html
+> http://qiime.org/install/install.html
     
- -- https://www.stats.bris.ac.uk/R/ 
+> https://www.stats.bris.ac.uk/R/ 
 
 However, there is a script in this here collection that will install R, Miniconda, QIIME2, and QIIME1 on your computer for you. I think it may require Xcode being installed on your Mac. This is available in the Mac App Store. 
 
 1. Download the .zip file containing all the scripts, by clicking the green 'Clone or download' button on the top of the main Q2 Pipeline page. Unzip it, and copy the extracted folder to a useful place, e.g., Desktop. It will be called q2pipeline-master when you download and unzip it. You can rename it if you like, to anything really. 
 
 2. Open a terminal and cd to where you saved the extracted folder, e.g.
-  > cd ~/Desktop/q2pipeline-master
+
+`cd ~/Desktop/q2pipeline-master`
 
 And then bring life to the scripts by typing 
-  > sudo chmod a+x *sh
+
+`sudo chmod a+x *sh`
   
-  > sudo chmod a+x *R
+`sudo chmod a+x *R`
 
 If you want to run the script that will install everything, like QIIME1 and 2 and R, enter the following command.
-  > ./install_all.sh 
+
+`./install_all.sh`
 
 Once it's finished installing, it's best to close all current Terminal windows and cd back to /q2pipeline-master.
 
 Okay, now execute the script that will tidy everything up and create the right folders for you 
-  > source ./setup.sh
+
+`source ./setup.sh`
   
 And then lastly, execute the script that will install Tax4Fun and its dependencies. It also downloads the SILVA119 files needed for Tax4Fun *but not for closed-reference OTU picking* – these will still need downloading. Make sure you install R first (you don't need RStudio for this...)!
-  > ./scripts/install_tax4fun.R
+
+`./scripts/install_tax4fun.R`
 
 
 3. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder e.g.; 
 
 
-- SILVA132 V4 99% classifier for Illumina goes in the folder labelled 'Illumina', 
+> SILVA132 V4 99% classifier for Illumina goes in the folder labelled 'Illumina', 
 
-- SILVA132 V4-V5 99% classifier for Ion Torrent goes in 'Ion Torrent', 
+> SILVA132 V4-V5 99% classifier for Ion Torrent goes in 'Ion Torrent', 
 
-- The silva119 files for Tax4Fun go in 'silva119' – for this you need the 99_otus.qza and taxonomy string.
+> The silva119 files for Tax4Fun go in 'silva119' – for this you need the 99_otus.qza and taxonomy string.
 
 
 Make sure you don't put any folders in the Illumina, Ion Torrent, or silva119 folders, only actual files. So it should look like '/illumina/classifier.qza' not '/illumina/silva119/classifier.qza'. 
@@ -68,16 +73,16 @@ Make sure you don't put any folders in the Illumina, Ion Torrent, or silva119 fo
   
 2. In your project folder (TEST), you will place your map file along with your raw sequence data. Your map file should be called after your project, so for this example, it will be called testmap.txt
  
- -- Illumina: You will have received your demultiplexed data (already split into individual samples per barcode) in a series of folders, each containing two fastqs, the forward and reverse read. You need to put all these fastqs into one folder called 'Seqs', within your project (TEST) folder. 
+> Illumina: You will have received your demultiplexed data (already split into individual samples per barcode) in a series of folders, each containing two fastqs, the forward and reverse read. You need to put all these fastqs into one folder called 'Seqs', within your project (TEST) folder. 
   
-  -- Ion Torrent: You will have one multiplexed fastq file. Put this in your project (TEST) folder. Rename your fastq to the project name, e.g., test.fastq
+> Ion Torrent: You will have one multiplexed fastq file. Put this in your project (TEST) folder. Rename your fastq to the project name, e.g., test.fastq
 
   - So to recap this step, in your ~/Desktop/q2pipeline-master/TEST folder, you will have testmap.txt, and either a Seqs folder or a test.fastq file. Now you're ready to run the pipeline.
 
 5. Open a Terminal (macOS or Linux, not compatibable with Windows PowerShell), and cd to the location of the main folder, e.g., cd ~/Desktop/q2pipeline-master
 
 6. enter the following command, where 'test' is replaced by whatever you've called your project folder and files. 
-  > ./scripts/pipeline.sh test 
+`./scripts/pipeline.sh test`
   
 And follow the on-screen instructions. It will ask you to input a series of options. Read and type carefully, it's a sensitive soul is this pipeline. 
   - First it will ask whether this data is from Illumina or Ion Torrent, so type your response accordingly. It is case sensitive, so use capital I and T!
