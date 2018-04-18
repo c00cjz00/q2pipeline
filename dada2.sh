@@ -7,7 +7,7 @@ qiime dada2 denoise-single \
   --p-trunc-len $trunclen \
   --o-representative-sequences $name/$sv/rep-seqs.qza \
   --o-table $name/$sv/table.qza \
-  --p-n-threads 0 \
+  --p-n-threads $threads \
   --p-max-ee 5 \
   --quiet
 #
