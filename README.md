@@ -1,5 +1,5 @@
 # q2pipeline
-# Introduction 
+## Introduction 
 QIIME2 Pipeline Scripts for IMH Group (March 2018) – By Peter Leary, Newcastle University  
 
 A collection of badly-written scripts based on the Moving Pictures tutorial: https://docs.qiime2.org/2018.2/tutorials/moving-pictures/ 
@@ -8,10 +8,10 @@ The intention is to perform pipeline analysis on 16S rRNA gene sequencing data f
 
 A full list of references can be found in the References Wiki.
 
-## Caveat! 
+### Caveat! 
 I am not at liberty to host the reference database files (SILVA, UNITE) as they belong to their respective owners! Therefore, these scripts will not work 'as-is' as they do not contain to required feature classifiers. You can download the reference databases yourself and create your own naive-Bayes trained classifiers. However, since this set of scripts is intended for use and distribution amongst the IMH group at Newcastle University, I will be more than happy to give you a copy of my own feature classifiers, or show you how to get them from our group computer. 
 
-# How to set up 
+## How to set up 
 You must have QIIME2 installed at the very least. Additionally, you will need QIIME1 if you plan to use Ion Torrent data, and R if you wish to use Tax4Fun.   
  
  -- https://docs.qiime2.org/2018.2/install/native/
@@ -62,7 +62,7 @@ Make sure you don't put any folders in the Illumina, Ion Torrent, or silva119 fo
 
   -- The following steps are how to run the pipeline each time on your own machine, assuming you've completed the first two steps properly. -- 
 
-# How to run the pipeline 
+## How to run the pipeline 
 1. Create a folder in the extracted folder (which is now on the Desktop or wherever you put it) and call it something sensible pertaining to your project. For the purposes of this readme, we'll call our project TEST
  - So you now have: ~/Desktop/q2pipeline-master/ which contains the scripts folder, your classifiers folder, and a folder called TEST. 
   
