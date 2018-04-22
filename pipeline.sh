@@ -184,7 +184,7 @@ fi
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 8 ]]; then
 source activate qiime2-2018.2
 # Enter a number to be used as sampling depth for rarefaction
-echo -e "\nOkay now it's your turn. Go into the output ~/Desktop/QIIME2/$1/useful/table/index.html and select the second tab. Find the bottom sample with the fewest reads, and enter the number below for sampling depth.\n"
+echo -e "\nOkay now it's your turn. Go into the output /$1/useful/table/index.html and select the second tab. Find the bottom sample with the fewest reads, and enter the number below for sampling depth.\n"
 read samdep_in
 echo -e "\nDoing alpha diversity\n"
 NINTH=$(name=$1 sv=$sv_in sam=$samdep_in sam_max=$sammax_in scripts/alpha.sh)
