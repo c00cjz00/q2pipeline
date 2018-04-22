@@ -30,6 +30,7 @@ echo -e "\nYou didn't type in your option properly. I am very fussy, and demand 
 exit
 fi
 # Checking the required files from Ion Torrent or Illumina are present and accounted for
+if [[ "$step_in" == 1 ]]; then
 if [[ "$platform_in" == "Ion Torrent" && ! -f $1/$1.fastq ]]; then
 	echo -e "Please put your files in $1 - You might need to create the folder first.\n"
 	exit
@@ -38,6 +39,7 @@ fi
 if [[ "$platform_in" == "Illumina" && ! $1/seqs/*fastq.gz ]]; then
 	echo -e "Please put your files in $1/seqs - You might need to create the folder first.\n"
 	exit
+fi
 fi
 fi
 #
