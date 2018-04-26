@@ -77,8 +77,9 @@ read threads_in
 fi
 #
 # Prints out a .txt file of all the inputs the user entered
+if [ ! -e $1/options.txt ]; then
 echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in\nHave a nice day!" > $1/options.txt
-if [ -e $1/options.txt ]; then
+elif [ -e $1/options.txt ]; then 
 echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in\nHave a nice day!" > $1/options2.txt
 fi
 #
