@@ -8,8 +8,12 @@ The intention is to perform pipeline analysis on 16S rRNA gene sequencing data f
 
 A full list of references can be found in the References Wiki.
 
-### Caveat! 
+### Caveat! Regarding taxonomy classifiers! Read me! 
 I am not at liberty to host the reference database files (SILVA, UNITE) as they belong to their respective owners! Therefore, these scripts will not work 'as-is' as they do not contain to required feature classifiers. You can download the reference databases yourself and create your own naive-Bayes trained classifiers. However, since this set of scripts is intended for use and distribution amongst the IMH group at Newcastle University, I will be more than happy to give you a copy of my own feature classifiers, or show you how to get them from our group computer. 
+
+However! 
+
+Greg Caporaso over on the QIIME2 forums has posted two SILVA 132 classifiers here https://forum.qiime2.org/t/silva-132-classifiers/3698 – one for the V4 region, one for the whole 16S. These will both do nicely for now. If you want to make your own, there's a guide here https://github.com/peterleary/q2pipeline/wiki/Creating-your-own-classifier
 
 ## How to set up 
 You must have QIIME2 installed at the very least. Additionally, you will need QIIME1 if you plan to use Ion Torrent data, and R if you wish to use Tax4Fun.   
@@ -47,6 +51,8 @@ Okay, now execute the script that will tidy everything up and create the right f
 And then lastly, execute the script that will install Tax4Fun and its dependencies. It also downloads the SILVA119 files needed for Tax4Fun *but not for closed-reference OTU picking* – these will still need downloading. Make sure you install R first (you don't need RStudio for this...)!
 
 `./scripts/install_tax4fun.R`
+
+**Note: Currently, it looks like this script is required each time you run a pipeline instance to make Tax4Fun work. I'll identify the issue soon I hope!** 
 
 
 3. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder e.g.; 
