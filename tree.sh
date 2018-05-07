@@ -4,6 +4,7 @@
 qiime phylogeny fasttree \
   --i-alignment $name/aligned/masked-aligned-rep-seqs.qza \
   --o-tree $name/aligned/unrooted-tree.qza \
+  --p-n-threads $threads \
   --quiet
 #
 qiime phylogeny midpoint-root \
