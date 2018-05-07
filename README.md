@@ -4,14 +4,14 @@ QIIME2 Pipeline Scripts by Peter Leary, Newcastle University
 
 A collection of badly-written scripts based on the Moving Pictures tutorial: https://docs.qiime2.org/2018.2/tutorials/moving-pictures/ 
 
-The intention is to perform pipeline analysis on 16S rRNA gene sequencing data from the Illumina and Ion Torrent platforms, with a few extra steps including preparing data for and running in Tax4Fun (Asshauer et al., 2015), using QIIME2 (currently 2018.2) (Caporaso et al., 2010) (I will include ITS support as soon as anyone asks me for it)... 
+The intention is to perform pipeline analysis on 16S rRNA gene sequencing data from the Illumina and Ion Torrent platforms, with a few extra steps including preparing data for and running in Tax4Fun (Asshauer et al., 2015), using QIIME2 (currently 2018.4) (Caporaso et al., 2010) (I will include ITS support as soon as anyone asks me for it)... 
 
 A full list of references can be found in the References Wiki. 
 
-*By using this pipeline, you agree to not only reference the authors of QIIME and the tools used, but me and this pipeline. I think that's fair.*
+*By using this pipeline, you agree to not only cite the authors of QIIME and the tools used, but me and this pipeline. I think that's fair.*
 
 ### Caveat! Regarding taxonomy classifiers! Read me! 
-I am not at liberty to host the reference database files (SILVA, UNITE) as they belong to their respective owners! Therefore, these scripts will not work 'as-is' as they do not contain to required feature classifiers. You can download the reference databases yourself and create your own naive-Bayes trained classifiers. However, since this set of scripts is intended for use and distribution amongst the IMH group at Newcastle University, I will be more than happy to give you a copy of my own feature classifiers, or show you how to get them from our group computer. 
+I am not at liberty to host the reference database files (SILVA, UNITE) as they belong to their respective owners! Therefore, these scripts will not work 'as-is' as they do not contain to required feature classifiers. You can download the reference databases yourself and create your own naive-Bayes trained classifiers. However, since this set of scripts is intended for use and distribution amongst the IMH group at Newcastle University, you should know where to find a copy on the iMac. 
 
 However! 
 
