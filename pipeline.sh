@@ -178,7 +178,7 @@ fi
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 7 ]]; then
 source activate qiime2-2018.2
 echo -e "\nMaking phylogenetic tree\n"
-EIGTH=$(name=$1 sv=$sv_in scripts/tree.sh)
+EIGTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/tree.sh)
 echo $EIGTH
 fi
 #
