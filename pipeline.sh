@@ -93,7 +93,7 @@ if [[ "$platform_in" == "Ion Torrent" ]]; then
 	echo $FIRST
 fi
 #
-source activate qiime2-2018.2
+source activate qiime2-2018.4
 #
 mkdir $1/useful 
 # This is where it starts playing with your data
@@ -119,7 +119,7 @@ fi
 #
 # Dada2
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]]; then
-source activate qiime2-2018.2
+source activate qiime2-2018.4
 if [[ "$platform_in" == "Ion Torrent" && "$sv_in" == "DADA2" ]]; then 
 echo -e "\nDADA2-ing now. This takes me about 6 - 12 hours, so go do something else while I'm working!\n"
 FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in threads=$threads_in scripts/dada2.sh)
@@ -142,7 +142,7 @@ fi
 #
 # Closed-reference OTU picking via vsearch, for use with Tax4Fun 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 4 ]]; then
-source activate qiime2-2018.2
+source activate qiime2-2018.4
 echo -e "\nClosed-reference OTU picking via vsearch - for use with Tax4Fun\n"
 FIFTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/closed.sh)
 echo $FIFTH 
@@ -150,7 +150,7 @@ fi
 #
 # Assign taxonomy Ion Torrent 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 5 ]]; then
-source activate qiime2-2018.2
+source activate qiime2-2018.4
 if [[ "$platform_in" == "Ion Torrent" ]]; then
 echo -e "\nAssigning taxonomy - 99%\n"
 SIXTH=$(name=$1 sv=$sv_in scripts/assign.sh)
@@ -167,7 +167,7 @@ fi
 #
 # Align
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 6 ]]; then
-source activate qiime2-2018.2
+source activate qiime2-2018.4
 echo -e "\nAligning\n"
 SEVENTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/align.sh)
 echo $SEVENTH
@@ -176,14 +176,14 @@ fi
 
 # Make phylogenetic tree
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 7 ]]; then
-source activate qiime2-2018.2
+source activate qiime2-2018.4
 echo -e "\nMaking phylogenetic tree\n"
 EIGTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/tree.sh)
 echo $EIGTH
 fi
 #
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 8 ]]; then
-source activate qiime2-2018.2
+source activate qiime2-2018.4
 # Enter a number to be used as sampling depth for rarefaction
 echo -e "\nOkay now it's your turn. Go into the output /$1/useful/table/index.html and select the second tab. Find the bottom sample with the fewest reads, and enter the number below for sampling depth.\n"
 read samdep_in
