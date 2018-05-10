@@ -7,7 +7,7 @@ qiime feature-classifier classify-sklearn \
   --i-classifier classifiers/iontorrent/*.qza \
   --i-reads $name/$sv/rep-seqs.qza \
   --o-classification $name/taxonomy/taxonomy.qza \
-  --p-n-jobs -1 \
+  --p-n-jobs $athreads \
   --quiet
 #
 qiime metadata tabulate \
