@@ -72,7 +72,7 @@ fi
 #
 # Enter the number of threads I can use
 if [[ "$step_in" < 8 ]]; then
-echo -e "\nStep 4. Great, now please tell me how many processors/threads your computer has. If you have a dual core processor, the answer is 2, so type 2. If you have a quad core, it's 4. If you have a quad core i7 with hyperthreading (like the iMac), it's 8, so enter 8.\n" 
+echo -e "\nStep 4. Great, now please tell me how many processors/threads your computer has. If you just want to use everything, type 0. For 2 cores, type 2, for 4 cores, type 4 etc. If you have a quad core i7 with hyperthreading (like the iMac), the max is 8, so enter up to 8. So, enter a number between 0 - 8.\n" 
 read threads_in
 fi
 #
@@ -84,6 +84,8 @@ echo -E -e "\n$(date)\nThe options you selected for this run are:\nSequencing Pl
 fi
 #
 echo -e "\nOkay, let's get QIIMEing!\n"
+#
+# Print a log.txt file as it goes along 
 if [ ! -e $1/log.txt ]; then
 echo -E -e "Pipeline Log\n$(date)\n" > $1/log.txt
 elif [ -e $1/log.txt ]; then
@@ -104,24 +106,27 @@ mkdir $1/useful
 # This is where it starts playing with your data
 # Ion Torrent Import
 if [[ "$platform_in" == "Ion Torrent" ]]; then  
+echo -E -e "$(date)\nPrep Ion Torrent data for import – step1.sh\n" >> $1/log.txt
 echo -e "\n$(date)\nImporting Ion Torrent data into QIIME2\n"
 FIRST=$(name=$1 scripts/import.sh)
 echo $FIRST
-echo -E -e "$(date)\nPrep Ion Torrent data for import – step1.sh\n" >> $1/log.txt
+echo -E -e "OK" >> $1/log.txt
 fi
 # Ion Torrent demuxing
 if [[ "$platform_in" == "Ion Torrent" ]]; then 
+echo -E -e "\n$(date)\nDemultiplexing samples – demux.sh\n" >> $1/log.txt
 echo -e "\n$(date)\nDemultiplexing samples (that means separating samples based on barcodes)\n"
 SECOND=$(name=$1 scripts/demux.sh)
 echo $SECOND
-echo -E -e "\n$(date)\nDemultiplexing samples – demux.sh\n" >> $1/log.txt
+echo -E -e "OK" >> $1/log.txt
 fi
 # Illumina import
 if [[ "$platform_in" == "Illumina" ]]; then 
+echo -E -e "\n$(date)\nImporting Illumina data - import_illumina.sh\n" >> $1/log.txt 
 echo -e "\n$(date)\nImporting Illumina data and making demultiplexed files\n"
 THIRD=$(name=$1 scripts/import_illumina.sh)
 echo $THIRD
-echo -E -e "\n$(date)\nImporting Illumina data - import_illumina.sh\n" >> $1/log.txt 
+echo -E -e "OK" >> $1/log.txt
 fi
 fi
 #
@@ -129,73 +134,102 @@ fi
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]]; then
 source activate qiime2-2018.4
 if [[ "$platform_in" == "Ion Torrent" && "$sv_in" == "DADA2" ]]; then 
-echo -e "\n$(date)\nDADA2-ing now. This takes me about 6 - 12 hours, so go do something else while I'm working!\n"
+echo -E -e "\n$(date)\nDoing DADA2 - dada2.sh\n" >> $1/log.txt 
+echo -e "\n$(date)\nDADA2-ing now. This can take upto a few hours, so go do something else!\n"
 FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in threads=$threads_in scripts/dada2.sh)
 echo $FOURTH
-echo -E -e "\n$(date)\nDoing DADA2 - dada2.sh\n" >> $1/log.txt 
+echo -E -e "OK" >> $1/log.txt
 fi
 #
 if [[ "$platform_in" == "Illumina" && "$sv_in" == "DADA2" ]]; then 
-echo -e "\n$(date)\nDADA2-ing now. This takes me about 6 - 12 hours, so go do something else while I'm working!\n"
+echo -E -e "\n$(date)\nDoing DADA2 - dada2_illumina.sh\n" >> $1/log.txt 
+echo -e "\n$(date)\nDADA2-ing now. This can take upto a few hours, so go do something else!\n"
 FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in truncrev=$trunclen_rev_in threads=$threads_in scripts/dada2_illumina.sh)
 echo $FOURTH
-echo -E -e "\n$(date)\nDoing DADA2 - dada2_illumina.sh\n" >> $1/log.txt 
+echo -E -e "OK" >> $1/log.txt
 fi
 #
 # Deblur
 if [[ "$platform_in" == "Illumina" && "$sv_in" == 'Deblur' ]]; then
+echo -E -e "\n$(date)\nDoing Deblur - deblur.sh\n" >> $1/log.txt 
 echo -e "\n$(date)\nDebluring now. This takes about 30-60 minutes?\n"
 FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in threads=$threads_in scripts/deblur.sh)
 echo $FOURTH
-echo -E -e "\n$(date)\nDoing Deblur - deblur.sh\n" >> $1/log.txt 
+echo -E -e "OK" >> $1/log.txt
 fi
 fi
 #
 # Closed-reference OTU picking via vsearch, for use with Tax4Fun 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 4 ]]; then
 source activate qiime2-2018.4
+echo -E -e "\n$(date)\nPicking closed ref OTUs - closed.sh\n" >> $1/log.txt 
 echo -e "\n$(date)\nClosed-reference OTU picking via vsearch - for use with Tax4Fun\n"
 FIFTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/closed.sh)
 echo $FIFTH 
-echo -E -e "\n$(date)\nPicking closed ref OTUs - closed.sh\n" >> $1/log.txt 
+echo -E -e "OK" >> $1/log.txt
 fi
 #
-# Assign taxonomy Ion Torrent 
+# Identify how many cores were selected from the available to determine the --p-n-jobs number of taxonomy classification up to a maximum of 8. 
+cores=$(sysctl -n hw.ncpu)
+if [[ "$threads_in" == 1 ]]; then 
+athreads="1"
+elif [[ "$threads_in" == 0 ]]; then 
+athreads="-1" 
+elif [[ $(($cores-$threads_in)) == 1 ]]; then
+athreads="-2" 
+elif [[ $(($cores-$threads_in)) == 2 ]]; then
+athreads="-3"
+elif [[ $(($cores-$threads_in)) == 3 ]]; then
+athreads="-4"
+elif [[ $(($cores-$threads_in)) == 4 ]]; then
+athreads="-5"
+elif [[ $(($cores-$threads_in)) == 5 ]]; then
+athreads="-6"
+elif [[ $(($cores-$threads_in)) == 6 ]]; then
+athreads="-7"
+elif [[ $(($cores-$threads_in)) == 0 ]]; then
+athreads="-1"
+fi
+# Classify taxonomy - Ion Torrent 
+echo -E -e "\n$(date)\nClassifying taxonomy at 99% with $athreads jobs (that's $threads_in threads) - assign.sh\n" >> $1/log.txt 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 5 ]]; then
 source activate qiime2-2018.4
 if [[ "$platform_in" == "Ion Torrent" ]]; then
 echo -e "\n$(date)\nClassifying taxonomy - 99%\n"
-SIXTH=$(name=$1 sv=$sv_in scripts/assign.sh)
+SIXTH=$(name=$1 sv=$sv_in athreads=$athreads scripts/assign.sh)
 echo $SIXTH
-echo -E -e "\n$(date)\nClassifying taxonomy at 99% - assign.sh\n" >> $1/log.txt 
+echo -E -e "OK" >> $1/log.txt 
 fi
 #
-# Assign taxonomy Illumina
+# Classify taxonomy - Illumina
 if [[ "$platform_in" == "Illumina" ]]; then
+echo -E -e "\n$(date)\nClassifying taxonomy at 99% with $athreads jobs (that's $threads_in threads) - assign.sh\n" >> $1/log.txt 
 echo -e "\n$(date)\nClassifying taxonomy - 99%\n"
-SIXTH=$(name=$1 sv=$sv_in scripts/assign_illumina.sh)
+SIXTH=$(name=$1 sv=$sv_in athreads=$athreads scripts/assign_illumina.sh)
 echo $SIXTH
-echo -E -e "\n$(date)\nClassifying taxonomy at 99% - assign_illumina.sh\n" >> $1/log.txt 
+echo -E -e "OK" >> $1/log.txt
 fi
 fi
 #
 # Align
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 6 ]]; then
 source activate qiime2-2018.4
+echo -E -e "\n$(date)\nAligning - align.sh\n" >> $1/log.txt 
 echo -e "\n$(date)\nAligning\n"
 SEVENTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/align.sh)
 echo $SEVENTH
-echo -E -e "\n$(date)\nAligning - align.sh\n" >> $1/log.txt 
+echo -E -e "OK" >> $1/log.txt
 fi
 #
 
 # Make phylogenetic tree
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 7 ]]; then
 source activate qiime2-2018.4
+echo -E -e "\n$(date)\nBuilding phylogenetic tree - tree.sh\n" >> $1/log.txt 
 echo -e "\n$(date)\nMaking phylogenetic tree\n"
 EIGTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/tree.sh)
 echo $EIGTH
-echo -E -e "\n$(date)\nBuilding phylogenetic tree - tree.sh\n" >> $1/log.txt 
+echo -E -e "OK" >> $1/log.txt
 fi
 #
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 8 ]]; then
@@ -204,19 +238,22 @@ source activate qiime2-2018.4
 echo -e "\nOkay now it's your turn. Go into the output /$1/useful/table/index.html and select the second tab. Find the bottom sample with the fewest reads, and enter the number below for sampling depth.\n"
 read samdep_in
 echo -E -e "Sampling depth = $samdep_in\n" >> $1/options.txt 
+echo -E -e "\n$(date)\nCore metrics and alpha diversity with a sampling depth of $samdep_in\n - alpha.sh" >> $1/log.txt 
 echo -e "\n$(date)\nDoing alpha diversity\n"
 NINTH=$(name=$1 sv=$sv_in sam=$samdep_in sam_max=$sammax_in scripts/alpha.sh)
 echo $NINTH 
-echo -E -e "\n$(date)\nCore metrics and alpha diversity with a sampling depth of $samdep_in\n - alpha.sh" >> $1/log.txt 
+echo -E -e "OK" >> $1/log.txt
 #
+echo -E -e "\n$(date)\nBeta diversity - beta.sh\n" >> $1/log.txt 
 echo -e "\n$(date)\nNow doing some beta diversity\n"
 TENTH=$(name=$1 sv=$sv_in scripts/beta.sh)
 echo $TENTH
-echo -E -e "\n$(date)\nBeta diversity - beta.sh\n" >> $1/log.txt 
+echo -E -e "OK" >> $1/log.txt
 fi
 #
 # Tax4Fun time... 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 9 ]]; then
+echo -E -e "\n$(date)\nTax4Fun and pulling out some pathways - tax4fun.R and key_kos.sh\n" >> $1/log.txt 
 echo -e "\n$(date)\nDoing Tax4Fun for you!"
 mkdir $1/useful/tax4fun
 ./scripts/install_tax4fun.R 
@@ -228,7 +265,7 @@ cd ../
 TWELFTH=$(name=$1 scripts/key_kos.sh)
 echo $TWELFTH
 fi
-echo -E -e "\n$(date)\nTax4Fun and pulling out some pathways - tax4fun.R and key_kos.sh\n" >> $1/log.txt 
+echo -E -e "OK" >> $1/log.txt
 #
 echo -e "\nFinished!\n"
-#
+# End. 
