@@ -219,6 +219,7 @@ fi
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 9 ]]; then
 echo -e "\n$(date)\nDoing Tax4Fun for you!"
 mkdir $1/useful/tax4fun
+./scripts/install_tax4fun.R 
 cd $1 
 ELEVENTH=$(name=$1 ../scripts/tax4fun.R)
 echo $ELEVENTH
