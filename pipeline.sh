@@ -268,4 +268,4 @@ fi
 echo -E -e "OK" >> $1/log.txt
 #
 echo -e "\nFinished!\n"
-# End. 
+# End.
