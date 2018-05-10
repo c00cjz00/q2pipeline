@@ -5,6 +5,7 @@ qiime dada2 denoise-paired \
   --i-demultiplexed-seqs $name/demux/demux.qza \
   --o-table $name/dada2/table \
   --o-representative-sequences $name/dada2/rep-seqs \
+  --o-denoising-stats $name/$sv/stats.qza \
   --p-trim-left-f $trimleft \
   --p-trim-left-r $trimleft \
   --p-trunc-len-f $trunclen \
