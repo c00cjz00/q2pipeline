@@ -78,13 +78,17 @@ fi
 #
 # Prints out a .txt file of all the inputs the user entered
 if [ ! -e $1/options.txt ]; then
-echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in\nHave a nice day!" > $1/options.txt
+echo -E -e "$(date)\nThe options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in" > $1/options.txt
 elif [ -e $1/options.txt ]; then 
-echo -E -e "The options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in\nHave a nice day!" > $1/options2.txt
+echo -E -e "\n$(date)\nThe options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in" >> $1/options.txt
 fi
 #
 echo -e "\nOkay, let's get QIIMEing!\n"
-echo -E -e "Log\n" > $1/log.txt
+if [ ! -e $1/log.txt ]; then
+echo -E -e "Pipeline Log\n$(date)\n" > $1/log.txt
+elif [ -e $1/log.txt ]; then
+echo -E -e "\nPipeline Log\n$(date)\n" >> $1/log.txt
+fi
 #
 # Splits Ion Torrent fastq into reads.fastq and barcodes.fastq, and gzips them. This is so they can be imported via the EMP protocol.
 if [[ "$step_in" == 1 ]]; then
@@ -199,10 +203,11 @@ source activate qiime2-2018.4
 # Enter a number to be used as sampling depth for rarefaction
 echo -e "\nOkay now it's your turn. Go into the output /$1/useful/table/index.html and select the second tab. Find the bottom sample with the fewest reads, and enter the number below for sampling depth.\n"
 read samdep_in
+echo -E -e "Sampling depth = $samdep_in\n" >> $1/options.txt 
 echo -e "\n$(date)\nDoing alpha diversity\n"
 NINTH=$(name=$1 sv=$sv_in sam=$samdep_in sam_max=$sammax_in scripts/alpha.sh)
 echo $NINTH 
-echo -E -e "\n$(date)\nCore metrics and alpha diversity\n - alpha.sh" >> $1/log.txt 
+echo -E -e "\n$(date)\nCore metrics and alpha diversity with a sampling depth of $samdep_in\n - alpha.sh" >> $1/log.txt 
 #
 echo -e "\n$(date)\nNow doing some beta diversity\n"
 TENTH=$(name=$1 sv=$sv_in scripts/beta.sh)
