@@ -17,6 +17,10 @@ However!
 
 Greg Caporaso over on the QIIME2 forums has posted two SILVA 132 classifiers here https://forum.qiime2.org/t/silva-132-classifiers/3698 – one for the V4 region, one for the whole 16S. These will both do nicely for now. If you want to make your own, there's a guide here https://github.com/peterleary/q2pipeline/wiki/Creating-your-own-classifier
 
+You can download SILVA files here: https://www.arb-silva.de/download/archive/qiime/ 
+
+For SILVA119/Tax4Fun, you'll need to download the SILVA_119_release.zip. From that, you'll need the 99% OTUs rep set file and corresponding taxonomy string. The rep set fasta file needs to be imported into QIIME2. Instructions for this are in the Wiki. 
+
 ## How to set up 
 You must have QIIME2 installed at the very least. Additionally, you will need QIIME1 if you plan to use Ion Torrent data, and R if you wish to use Tax4Fun.   
  
