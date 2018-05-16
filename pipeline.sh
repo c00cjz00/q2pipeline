@@ -170,10 +170,10 @@ echo -E -e "OK" >> $1/log.txt
 fi
 #
 # Identify how many cores were selected from the available to determine the --p-n-jobs number of taxonomy classification up to a maximum of 8. 
-if [[ "$uname" == "Darwin" ]]; then
-cores=$(sysctl -n hw.ncpu)
-elif [[ "$(expr substr $(uname -s) 1 5 )" == " Linux" ]]; then
+if [[ "$(expr substr $(uname -s) 1 5 )" == " Linux" ]]; then
 cores=$(nproc --all)
+else
+cores=$(sysctl -n hw.ncpu)
 fi
 if [[ "$threads_in" == 1 ]]; then 
 athreads="1"
