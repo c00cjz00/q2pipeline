@@ -8,7 +8,7 @@ The intention is to perform pipeline analysis on 16S rRNA gene sequencing data f
 
 A full list of references can be found in the References Wiki. 
 
-*By using this pipeline, you agree to not only cite the authors of QIIME and the tools used, but me and this pipeline. I think that's fair.*
+*By using this pipeline, you agree to not only cite the authors of QIIME and the tools used, but me and this pipeline. I think that's fair. Please reference this Github page! Thank you!* 
 
 ### Caveat! Regarding taxonomy classifiers! Read me! 
 I am not at liberty to host the reference database files (SILVA, UNITE) as they belong to their respective owners! Therefore, these scripts will not work 'as-is' as they do not contain to required feature classifiers. You can download the reference databases yourself and create your own naive-Bayes trained classifiers. However, since this set of scripts is intended for use and distribution amongst the IMH group at Newcastle University, you should know where to find a copy on the iMac. 
@@ -32,7 +32,11 @@ You must have QIIME2 installed at the very least. Additionally, you will need QI
 
 However, there is a script in this here collection that will install R, Miniconda, QIIME2, and QIIME1 on your computer for you. I think it may require Xcode being installed on your Mac. This is available in the Mac App Store. 
 
-1. Open a terminal and `cd` to somewhere useful, e.g., `cd ~/Desktop` type `git clone https://github.com/peterleary/q2pipeline`. This saves a copy of the latest pipeline scripts to the Desktop in a folder called 'q2pipeline'. Cd into the folder `cd q2pipeline`. 
+1. Open a terminal and `cd` to somewhere useful, e.g., `cd ~/Desktop`, then enter the following: 
+
+`git clone https://github.com/peterleary/q2pipeline`
+
+This saves a copy of the latest pipeline scripts to the Desktop in a folder called 'q2pipeline'. Cd into the folder `cd q2pipeline`. 
 
 1A. Alternative to using git clone, download the .zip file containing all the scripts, by clicking the green 'Clone or download' button on the top of the main Q2 Pipeline page. Unzip it, and copy the extracted folder to a useful place, e.g., Desktop. It will be called q2pipeline-master when you download and unzip it. You can rename it if you like, to anything really. 
 
@@ -59,7 +63,7 @@ And then lastly, execute the script that will install Tax4Fun and its dependenci
 **Note: Currently, it looks like this script is required each time you run a pipeline instance to make Tax4Fun work. I'll identify the issue soon I hope!** 
 
 
-2. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder e.g.; 
+2. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Or download from here (https://forum.qiime2.org/t/silva-132-classifiers/3698) Put the right classifier in the right folder e.g.; 
 
 
 > SILVA132 V4 99% classifier for Illumina goes in the folder labelled 'Illumina', 
