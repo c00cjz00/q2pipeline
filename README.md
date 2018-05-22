@@ -32,11 +32,9 @@ You must have QIIME2 installed at the very least. Additionally, you will need QI
 
 However, there is a script in this here collection that will install R, Miniconda, QIIME2, and QIIME1 on your computer for you. I think it may require Xcode being installed on your Mac. This is available in the Mac App Store. 
 
-1. Download the .zip file containing all the scripts, by clicking the green 'Clone or download' button on the top of the main Q2 Pipeline page. Unzip it, and copy the extracted folder to a useful place, e.g., Desktop. It will be called q2pipeline-master when you download and unzip it. You can rename it if you like, to anything really. 
+1. Open a terminal and `cd` to somewhere useful, e.g., `cd ~/Desktop` type `git clone https://github.com/peterleary/q2pipeline`. This saves a copy of the latest pipeline scripts to the Desktop in a folder called 'q2pipeline'. Cd into the folder `cd q2pipeline`. 
 
-2. Open a terminal and cd to where you saved the extracted folder, e.g.
-
-`cd ~/Desktop/q2pipeline-master`
+1A. Alternative to using git clone, download the .zip file containing all the scripts, by clicking the green 'Clone or download' button on the top of the main Q2 Pipeline page. Unzip it, and copy the extracted folder to a useful place, e.g., Desktop. It will be called q2pipeline-master when you download and unzip it. You can rename it if you like, to anything really. 
 
 And then bring life to the scripts by typing 
 
@@ -61,7 +59,7 @@ And then lastly, execute the script that will install Tax4Fun and its dependenci
 **Note: Currently, it looks like this script is required each time you run a pipeline instance to make Tax4Fun work. I'll identify the issue soon I hope!** 
 
 
-3. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder e.g.; 
+2. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Put the right classifier in the right folder e.g.; 
 
 
 > SILVA132 V4 99% classifier for Illumina goes in the folder labelled 'Illumina', 
