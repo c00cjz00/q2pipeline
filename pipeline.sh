@@ -78,18 +78,18 @@ fi
 #
 # Prints out a .txt file of all the inputs the user entered
 if [ ! -e $1/options.txt ]; then
-echo -E -e "$(date)\nThe options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in" > $1/options.txt
+echo -E -e "$(date)\nQIIME2 Pipeline by Peter Leary\nThe options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in" > $1/options.txt
 elif [ -e $1/options.txt ]; then 
-echo -E -e "\n$(date)\nThe options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in" >> $1/options.txt
+echo -E -e "\n$(date)\nQIIME2 Pipeline by Peter Leary\nThe options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in" >> $1/options.txt
 fi
 #
 echo -e "\nOkay, let's get QIIMEing!\n"
 #
 # Print a log.txt file as it goes along 
 if [ ! -e $1/log.txt ]; then
-echo -E -e "Pipeline Log\n$(date)\n" > $1/log.txt
+echo -E -e "QIIME2 Pipeline by Peter Leary\nPipeline Log\n$(date)\n" > $1/log.txt
 elif [ -e $1/log.txt ]; then
-echo -E -e "\nPipeline Log\n$(date)\n" >> $1/log.txt
+echo -E -e "\nQIIME2 Pipeline by Peter Leary\nPipeline Log\n$(date)\n" >> $1/log.txt
 fi
 #
 # Splits Ion Torrent fastq into reads.fastq and barcodes.fastq, and gzips them. This is so they can be imported via the EMP protocol.
