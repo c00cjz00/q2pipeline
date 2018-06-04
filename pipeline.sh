@@ -44,8 +44,8 @@ fi
 fi
 #
 # Enter the denoising/ASV protocol to use, either DADA2 or Deblur in QIIME2 
-if [[ "$step_in" == 1 ]] || [[ "$step_in" < 6 ]] || [[ "$step_in" == 7 ]]; then
-echo -e "\nStep 2. Please type in the name of the denoising protocol you'd like to use by typing either DADA2 or Deblur below.\n"
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 10 ]]; then
+echo -e "\nStep 2. Please type in the name of the denoising protocol you'd like to use (or used) by typing either DADA2 or Deblur below.\n"
 read sv_in
 #
 if [[ "$sv_in" != "DADA2" ]] && [[ "$sv_in" != "Deblur" ]]; then
