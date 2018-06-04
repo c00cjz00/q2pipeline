@@ -44,7 +44,7 @@ fi
 fi
 #
 # Enter the denoising/ASV protocol to use, either DADA2 or Deblur in QIIME2 
-if [[ "$step_in" == 1 ]] || [[ "$step_in" < 10 ]]; then
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 8 ]] || [[ "$step_in" == 9 ]]; then
 echo -e "\nStep 2. Please type in the name of the denoising protocol you'd like to use (or used) by typing either DADA2 or Deblur below.\n"
 read sv_in
 #
@@ -71,7 +71,7 @@ fi
 fi
 #
 # Enter the number of threads I can use
-if [[ "$step_in" < 8 ]]; then
+if [[ "$step_in" > 10 ]]; then
 echo -e "\nStep 4. Great, now please tell me how many processors/threads your computer has. If you just want to use everything, type 0. For 2 cores, type 2, for 4 cores, type 4 etc. If you have a quad core i7 with hyperthreading (like the iMac), the max is 8, so enter up to 8. So, enter a number between 0 - 8.\n" 
 read threads_in
 fi
@@ -258,10 +258,11 @@ TWELFTH=$(name=$1 scripts/key_kos.sh)
 echo $TWELFTH
 fi
 #
-if [[ "$step_in" == 1 ]] || [[ "$step_in" < 10 ]]; then 
+if [[ "$step_in" == 1 ]] || [[ "$step_in" == 9 ]]; then 
+source activate qiime2-2018.4
 echo -E -e "\n$(date)\nGneiss differential abundance - gneiss.sh" >> $1/log.txt
 echo -e "\n$(date)\nCalculating differential abundances via Gneiss\n"
-THIRTEENTH=$(name=$1 sv=$sv scripts/gneiss.sh)
+THIRTEENTH=$(name=$1 sv=$sv_in scripts/gneiss.sh)
 echo $THIRTEENTH
 fi
 #echo -E -e "OK" >> $1/log.txt
