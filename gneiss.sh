@@ -42,3 +42,8 @@ qiime gneiss balance-taxonomy \             # Magic as above but for taxons inst
   --m-metadata-file $name/"$name"map.txt \
   --m-metadata-column Treatment \
   --o-visualization $name/gneiss/y0_taxa_summary.qzv
+  
+mkdir $name/useful/gneiss  
+qiime tools export $name/gneiss/heatmap.qzv --output-dir $name/useful/gneiss/heatmap 
+qiime tools export $name/gneiss/y0_taxa_summary.qzv --output-dir $name/useful/gneiss/y0_taxa_summary
+qiime tools export $name/gneiss/regression_summary.qzv --output-dir $name/useful/gneiss/regression_summary
