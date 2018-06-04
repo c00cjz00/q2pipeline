@@ -258,7 +258,7 @@ TWELFTH=$(name=$1 scripts/key_kos.sh)
 echo $TWELFTH
 fi
 #
-if [[ "$step_in" == 1 ]] || [[ "$step_in" == < 10 ]]; then 
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 10 ]]; then 
 echo -E -e "\n$(date)\nGneiss differential abundance - gneiss.sh" >> $1/log.txt
 echo -e "\n$(date)\nCalculating differential abundances via Gneiss\n"
 THIRTEENTH=$(name=$1 sv=$sv scripts/gneiss.sh)
