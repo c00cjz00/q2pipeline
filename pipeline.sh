@@ -19,7 +19,7 @@ fi
 echo -e "\nHiya, this is a QIIME 2 pipeline for Ion Torrent and Illumina data. Please read the following options, and type your responses in carefully.\n"
 #
 # Enter a number where the pipeline should start from
-echo -e "\nOkay listen up, here you can select which step of the pipeline you'd like to run from. Obviously, if you are running this on new data, you need to run the entire pipeline. If you choose to run from another step, you must have the files from the previous steps in the right place, as the pipeline will look for them as it would look for them if it had made them itself. This is more for people who wish to re-run certain bits of their analysis with different options. Pick a part of the pipeline and enter the number below.\n\n1. From the beginning, so importing and demultiplexing.\n2. DADA2 onwards.\n3. Closed OTU picking onwards.\n4. Assign Taxonomy.\n5. Align.\n6. Construct phylogenetic tree.\n7. Alpha diversity and beta diversity.\n8. Tax4Fun only.\n"
+echo -e "\nOkay listen up, here you can select which step of the pipeline you'd like to run from. Obviously, if you are running this on new data, you need to run the entire pipeline. If you choose to run from another step, you must have the files from the previous steps in the right place, as the pipeline will look for them as it would look for them if it had made them itself. This is more for people who wish to re-run certain bits of their analysis with different options. Pick a part of the pipeline and enter the number below.\n\n1. From the beginning, so importing and demultiplexing.\n2. DADA2 onwards.\n3. Closed OTU picking onwards.\n4. Assign Taxonomy.\n5. Align.\n6. Construct phylogenetic tree.\n7. Alpha diversity and beta diversity.\n8. Tax4Fun only.\n9. Gneiss Differential Abundance.\n"
 read step_in
 #
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 5 ]]; then
@@ -110,7 +110,6 @@ echo -E -e "$(date)\nPrep Ion Torrent data for import – step1.sh\n" >> $1/log.
 echo -e "\n$(date)\nImporting Ion Torrent data into QIIME2\n"
 FIRST=$(name=$1 scripts/import.sh)
 echo $FIRST
-echo -E -e "OK" >> $1/log.txt
 fi
 # Ion Torrent demuxing
 if [[ "$platform_in" == "Ion Torrent" ]]; then 
@@ -118,7 +117,6 @@ echo -E -e "\n$(date)\nDemultiplexing samples – demux.sh\n" >> $1/log.txt
 echo -e "\n$(date)\nDemultiplexing samples (that means separating samples based on barcodes)\n"
 SECOND=$(name=$1 scripts/demux.sh)
 echo $SECOND
-echo -E -e "OK" >> $1/log.txt
 fi
 # Illumina import
 if [[ "$platform_in" == "Illumina" ]]; then 
@@ -126,7 +124,6 @@ echo -E -e "\n$(date)\nImporting Illumina data - import_illumina.sh\n" >> $1/log
 echo -e "\n$(date)\nImporting Illumina data and making demultiplexed files\n"
 THIRD=$(name=$1 scripts/import_illumina.sh)
 echo $THIRD
-echo -E -e "OK" >> $1/log.txt
 fi
 fi
 #
@@ -138,7 +135,6 @@ echo -E -e "\n$(date)\nDoing DADA2 - dada2.sh\n" >> $1/log.txt
 echo -e "\n$(date)\nDADA2-ing now. This can take upto a few hours, so go do something else!\n"
 FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in threads=$threads_in scripts/dada2.sh)
 echo $FOURTH
-echo -E -e "OK" >> $1/log.txt
 fi
 #
 if [[ "$platform_in" == "Illumina" && "$sv_in" == "DADA2" ]]; then 
@@ -146,7 +142,6 @@ echo -E -e "\n$(date)\nDoing DADA2 - dada2_illumina.sh\n" >> $1/log.txt
 echo -e "\n$(date)\nDADA2-ing now. This can take upto a few hours, so go do something else!\n"
 FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in truncrev=$trunclen_rev_in threads=$threads_in scripts/dada2_illumina.sh)
 echo $FOURTH
-echo -E -e "OK" >> $1/log.txt
 fi
 #
 # Deblur
@@ -155,7 +150,6 @@ echo -E -e "\n$(date)\nDoing Deblur - deblur.sh\n" >> $1/log.txt
 echo -e "\n$(date)\nDebluring now. This takes about 30-60 minutes?\n"
 FOURTH=$(name=$1 sv=$sv_in trimleft=$trimleft_in trunclen=$trunclen_in threads=$threads_in scripts/deblur.sh)
 echo $FOURTH
-echo -E -e "OK" >> $1/log.txt
 fi
 fi
 #
@@ -166,7 +160,6 @@ echo -E -e "\n$(date)\nPicking closed ref OTUs - closed.sh\n" >> $1/log.txt
 echo -e "\n$(date)\nClosed-reference OTU picking via vsearch - for use with Tax4Fun\n"
 FIFTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/closed.sh)
 echo $FIFTH 
-echo -E -e "OK" >> $1/log.txt
 fi
 #
 # Identify how many cores were selected from the available to determine the --p-n-jobs number of taxonomy classification up to a maximum of 8. 
@@ -204,7 +197,6 @@ if [[ "$platform_in" == "Ion Torrent" ]]; then
 echo -e "\n$(date)\nClassifying taxonomy - 99%\n"
 SIXTH=$(name=$1 sv=$sv_in athreads=$athreads scripts/assign.sh)
 echo $SIXTH
-echo -E -e "OK" >> $1/log.txt 
 fi
 #
 # Classify taxonomy - Illumina
@@ -213,7 +205,6 @@ echo -E -e "\n$(date)\nClassifying taxonomy at 99% with $athreads jobs (that's $
 echo -e "\n$(date)\nClassifying taxonomy - 99%\n"
 SIXTH=$(name=$1 sv=$sv_in athreads=$athreads scripts/assign_illumina.sh)
 echo $SIXTH
-echo -E -e "OK" >> $1/log.txt
 fi
 fi
 #
@@ -224,10 +215,8 @@ echo -E -e "\n$(date)\nAligning - align.sh\n" >> $1/log.txt
 echo -e "\n$(date)\nAligning\n"
 SEVENTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/align.sh)
 echo $SEVENTH
-echo -E -e "OK" >> $1/log.txt
 fi
 #
-
 # Make phylogenetic tree
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 7 ]]; then
 source activate qiime2-2018.4
@@ -235,7 +224,6 @@ echo -E -e "\n$(date)\nBuilding phylogenetic tree - tree.sh\n" >> $1/log.txt
 echo -e "\n$(date)\nMaking phylogenetic tree\n"
 EIGTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/tree.sh)
 echo $EIGTH
-echo -E -e "OK" >> $1/log.txt
 fi
 #
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 8 ]]; then
@@ -248,19 +236,17 @@ echo -E -e "\n$(date)\nCore metrics and alpha diversity with a sampling depth of
 echo -e "\n$(date)\nDoing alpha diversity\n"
 NINTH=$(name=$1 sv=$sv_in sam=$samdep_in sam_max=$sammax_in scripts/alpha.sh)
 echo $NINTH 
-echo -E -e "OK" >> $1/log.txt
 #
 echo -E -e "\n$(date)\nBeta diversity - beta.sh\n" >> $1/log.txt 
 echo -e "\n$(date)\nNow doing some beta diversity\n"
 TENTH=$(name=$1 sv=$sv_in scripts/beta.sh)
 echo $TENTH
-echo -E -e "OK" >> $1/log.txt
 fi
 #
 # Tax4Fun time... 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 9 ]]; then
 echo -E -e "\n$(date)\nTax4Fun and pulling out some pathways - tax4fun.R and key_kos.sh\n" >> $1/log.txt 
-echo -e "\n$(date)\nDoing Tax4Fun for you!"
+echo -e "\n$(date)\nDoing Tax4Fun for you!\n"
 mkdir $1/useful/tax4fun
 ./scripts/install_tax4fun.R 
 cd $1 
@@ -271,7 +257,14 @@ cd ../
 TWELFTH=$(name=$1 scripts/key_kos.sh)
 echo $TWELFTH
 fi
-echo -E -e "OK" >> $1/log.txt
+#
+if [[ "$step_in" == 1 ]] || [[ "$step_in" == < 10 ]]; then 
+echo -E -e "\n$(date)\nGneiss differential abundance - gneiss.sh" >> $1/log.txt
+echo -e "\n$(date)\nCalculating differential abundances via Gneiss\n"
+THIRTEENTH=$(name=$1 sv=$sv scripts/gneiss.sh)
+echo $THIRTEENTH
+fi
+#echo -E -e "OK" >> $1/log.txt
 #
 echo -e "\nFinished!\n"
 # End.
