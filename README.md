@@ -33,7 +33,7 @@ You must have QIIME2 installed at the very least. Additionally, you will need QI
 
 
 # Setting up the pipeline 
-# Part 1 – Downloading the scripts 
+## Part 1 – Downloading the scripts 
 1. Open a terminal and `cd` to somewhere useful, e.g., `cd ~/Desktop`, then enter the following: 
 
 `git clone https://github.com/peterleary/q2pipeline`
@@ -65,7 +65,7 @@ And then lastly, execute the script that will install Tax4Fun and its dependenci
 **Note: Currently, it looks like this script is required each time you run a pipeline instance to make Tax4Fun work. I'll identify the issue soon I hope!** 
 
 
-# Part 2 – Getting the feature classifiers in the right place 
+## Part 2 – Getting the feature classifiers in the right place 
 2. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Or download from here (https://forum.qiime2.org/t/silva-132-classifiers/3698) Put the right classifier in the right folder based on sequencing platform e.g.; 
 
 
@@ -88,7 +88,7 @@ You should only need to do this once. However, QIIME2 and the scripts get update
 
   -- The following steps are how to run the pipeline each time on your own machine, assuming you've completed the first two steps properly. -- 
 
-### How to run the pipeline 
+# How to run the pipeline 
 ## Setting up a pipeline run 
 1. Create a folder in the extracted folder (which is now on the Desktop or wherever you put it) and call it something sensible pertaining to your project. For the purposes of this readme, we'll call our project TEST
  - So you now have: `~/Desktop/q2pipeline/` which contains the scripts folder, your `classifiers` folder (along with a `scripts` folder), and a folder called `TEST`. 
