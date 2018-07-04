@@ -100,7 +100,7 @@ if [[ "$platform_in" == "Ion Torrent" ]]; then
 	echo $FIRST
 fi
 #
-source activate qiime2-2018.4
+source activate qiime2-2018.6
 #
 mkdir $1/useful 
 # This is where it starts playing with your data
@@ -129,7 +129,7 @@ fi
 #
 # Dada2
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]]; then
-source activate qiime2-2018.4
+source activate qiime2-2018.6
 if [[ "$platform_in" == "Ion Torrent" && "$sv_in" == "DADA2" ]]; then 
 echo -E -e "\n$(date)\nDoing DADA2 - dada2.sh\n" >> $1/log.txt 
 echo -e "\n$(date)\nDADA2-ing now. This can take upto a few hours, so go do something else!\n"
@@ -155,7 +155,7 @@ fi
 #
 # Closed-reference OTU picking via vsearch, for use with Tax4Fun 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 4 ]]; then
-source activate qiime2-2018.4
+source activate qiime2-2018.6
 echo -E -e "\n$(date)\nPicking closed ref OTUs - closed.sh\n" >> $1/log.txt 
 echo -e "\n$(date)\nClosed-reference OTU picking via vsearch - for use with Tax4Fun\n"
 FIFTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/closed.sh)
@@ -192,7 +192,7 @@ fi
 # Classify taxonomy - Ion Torrent 
 echo -E -e "\n$(date)\nClassifying taxonomy at 99% with $athreads jobs (that's $threads_in threads) - assign.sh\n" >> $1/log.txt 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 5 ]]; then
-source activate qiime2-2018.4
+source activate qiime2-2018.6
 if [[ "$platform_in" == "Ion Torrent" ]]; then
 echo -e "\n$(date)\nClassifying taxonomy - 99%\n"
 SIXTH=$(name=$1 sv=$sv_in athreads=$athreads scripts/assign.sh)
@@ -210,7 +210,7 @@ fi
 #
 # Align
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 6 ]]; then
-source activate qiime2-2018.4
+source activate qiime2-2018.6
 echo -E -e "\n$(date)\nAligning - align.sh\n" >> $1/log.txt 
 echo -e "\n$(date)\nAligning\n"
 SEVENTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/align.sh)
@@ -219,7 +219,7 @@ fi
 #
 # Make phylogenetic tree
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 7 ]]; then
-source activate qiime2-2018.4
+source activate qiime2-2018.6
 echo -E -e "\n$(date)\nBuilding phylogenetic tree - tree.sh\n" >> $1/log.txt 
 echo -e "\n$(date)\nMaking phylogenetic tree\n"
 EIGTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/tree.sh)
@@ -227,7 +227,7 @@ echo $EIGTH
 fi
 #
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 8 ]]; then
-source activate qiime2-2018.4
+source activate qiime2-2018.6
 # Enter a number to be used as sampling depth for rarefaction
 echo -e "\nOkay now it's your turn. Go into the output /$1/useful/table/index.html and select the second tab. Find the bottom sample with the fewest reads, and enter the number below for sampling depth.\n"
 read samdep_in
@@ -259,7 +259,7 @@ echo $TWELFTH
 fi
 #
 if [[ "$step_in" == 1 ]] || [[ "$step_in" == 9 ]]; then 
-source activate qiime2-2018.4
+source activate qiime2-2018.6
 echo -E -e "\n$(date)\nGneiss differential abundance - gneiss.sh" >> $1/log.txt
 echo -e "\n$(date)\nCalculating differential abundances via Gneiss\n"
 THIRTEENTH=$(name=$1 sv=$sv_in scripts/gneiss.sh)
