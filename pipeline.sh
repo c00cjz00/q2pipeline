@@ -71,10 +71,8 @@ fi
 fi
 #
 # Enter the number of threads I can use
-if [[ "$step_in" > 10 ]]; then
 echo -e "\nStep 4. Great, now please tell me how many processors/threads your computer has. If you just want to use everything, type 0. For 2 cores, type 2, for 4 cores, type 4 etc. If you have a quad core i7 with hyperthreading (like the iMac), the max is 8, so enter up to 8. So, enter a number between 0 - 8.\n" 
 read threads_in
-fi
 #
 # Prints out a .txt file of all the inputs the user entered
 if [ ! -e $1/options.txt ]; then
