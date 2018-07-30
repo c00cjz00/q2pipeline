@@ -70,10 +70,15 @@ fi
 fi
 fi
 #
+# Tell me which metadata column to use for Gneiss 
+if [[ "$step_in" == 9 ]]; then 
+echo -e "\nPlease tell me what column from your sample metadata/map file to use for Gneiss. Enter the name of the column exactly as it is in your map.\n"
+read column_in
+fi
+#
 # Enter the number of threads I can use
 echo -e "\nStep 4. Great, now please tell me how many processors/threads your computer has. If you just want to use everything, type 0. For 2 cores, type 2, for 4 cores, type 4 etc. If you have a quad core i7 with hyperthreading (like the iMac), the max is 8, so enter up to 8. So, enter a number between 0 - 8.\n" 
 read threads_in
-#
 # Prints out a .txt file of all the inputs the user entered
 if [ ! -e $1/options.txt ]; then
 echo -E -e "$(date)\nQIIME2 Pipeline by Peter Leary\nThe options you selected for this run are:\nSequencing Platform = $platform_in \nDenoising/ASV = $sv_in\nTrim sequences 5' = $trimleft_in\nTruncate sequences 3' = $trunclen_in $trunclen_rev_in\nThreads = $threads_in\nFrom step $step_in" > $1/options.txt
@@ -260,7 +265,7 @@ if [[ "$step_in" == 1 ]] || [[ "$step_in" == 9 ]]; then
 source activate qiime2-2018.6
 echo -E -e "\n$(date)\nGneiss differential abundance - gneiss.sh" >> $1/log.txt
 echo -e "\n$(date)\nCalculating differential abundances via Gneiss\n"
-THIRTEENTH=$(name=$1 sv=$sv_in scripts/gneiss.sh)
+THIRTEENTH=$(name=$1 sv=$sv_in column=$column_in scripts/gneiss.sh)
 echo $THIRTEENTH
 fi
 #echo -E -e "OK" >> $1/log.txt
