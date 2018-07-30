@@ -10,11 +10,11 @@ qiime gneiss correlation-clustering --i-table $name/gneiss/composition.qza --o-c
 #
 qiime gneiss ilr-transform --i-table $name/gneiss/composition.qza --i-tree $name/gneiss/hierarchy.qza --o-balances $name/gneiss/balances.qza
 #
-qiime gneiss ols-regression --p-formula "Treatment" --i-table $name/gneiss/balances.qza --i-tree $name/gneiss/hierarchy.qza --m-metadata-file $name/"$name"map.txt --o-visualization $name/gneiss/regression_summary.qzv
+qiime gneiss ols-regression --p-formula "$column" --i-table $name/gneiss/balances.qza --i-tree $name/gneiss/hierarchy.qza --m-metadata-file $name/"$name"map.txt --o-visualization $name/gneiss/regression_summary.qzv
 #
-qiime gneiss dendrogram-heatmap --i-table $name/gneiss/composition.qza --i-tree $name/gneiss/hierarchy.qza --m-metadata-file $name/"$name"map.txt --m-metadata-column Treatment --p-color-map seismic --o-visualization $name/gneiss/heatmap.qzv
+qiime gneiss dendrogram-heatmap --i-table $name/gneiss/composition.qza --i-tree $name/gneiss/hierarchy.qza --m-metadata-file $name/"$name"map.txt --m-metadata-column $column --p-color-map seismic --o-visualization $name/gneiss/heatmap.qzv
 #
-qiime gneiss balance-taxonomy --i-table $name/gneiss/composition.qza --i-tree $name/gneiss/hierarchy.qza --i-taxonomy $name/taxonomy/taxonomy.qza --p-taxa-level 4 --p-balance-name 'y0' --m-metadata-file $name/"$name"map.txt --m-metadata-column Treatment --o-visualization $name/gneiss/y0_taxa_summary.qzv
+qiime gneiss balance-taxonomy --i-table $name/gneiss/composition.qza --i-tree $name/gneiss/hierarchy.qza --i-taxonomy $name/taxonomy/taxonomy.qza --p-taxa-level 4 --p-balance-name 'y0' --m-metadata-file $name/"$name"map.txt --m-metadata-column $column --o-visualization $name/gneiss/y0_taxa_summary.qzv
 # 
 mkdir $name/useful/gneiss  
 qiime tools export $name/gneiss/heatmap.qzv --output-dir $name/useful/gneiss/heatmap 
