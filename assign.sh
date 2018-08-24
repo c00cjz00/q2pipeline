@@ -3,12 +3,22 @@
 #Step 2.6 - Assigning taxonomy 
 # Some reason, attempting to visualize or assign taxonomy to aligned seqs doesn't work, it just bugs out. The main guide makes no allusion to assigning taxonomy to aligned seqs so I guess we don't need to worry for now.
 mkdir $name/taxonomy 
+if [[ "$gene" == "16S" ]]; then
 qiime feature-classifier classify-sklearn \
-  --i-classifier classifiers/iontorrent/*.qza \
+  --i-classifier classifiers/iontorrent_16S/*.qza \
   --i-reads $name/$sv/rep-seqs.qza \
   --o-classification $name/taxonomy/taxonomy.qza \
   --p-n-jobs $athreads \
   --quiet
+fi
+if [[ "$gene" == "ITS" ]]; then
+qiime feature-classifier classify-sklearn \
+  --i-classifier classifiers/iontorrent_ITS/*.qza \
+  --i-reads $name/$sv/rep-seqs.qza \
+  --o-classification $name/taxonomy/taxonomy.qza \
+  --p-n-jobs $athreads \
+  --quiet
+fi
 #
 qiime metadata tabulate \
   --m-input-file $name/taxonomy/taxonomy.qza \
