@@ -2,9 +2,9 @@
 ## Introduction 
 QIIME2 Pipeline Scripts by Peter Leary, Newcastle University  
 
-A collection of badly-written scripts based on the Moving Pictures tutorial: https://docs.qiime2.org/2018.2/tutorials/moving-pictures/ 
+A collection of badly-written scripts based on the Moving Pictures tutorial: https://docs.qiime2.org/2018.6/tutorials/moving-pictures/ 
 
-The intention is to perform pipeline analysis on 16S rRNA gene sequencing data from the Illumina and Ion Torrent platforms, with a few extra steps including preparing data for and running in Tax4Fun (Asshauer et al., 2015), using QIIME2 (currently 2018.4) (Caporaso et al., 2010) (I will include ITS support as soon as anyone asks me for it)... 
+The intention is to perform pipeline analysis on 16S and ITS rRNA gene sequencing data from the Illumina and Ion Torrent platforms, with a few extra steps where appropriate, including preparing data for and running in Tax4Fun (Asshauer et al., 2015), using QIIME2 (currently 2018.6) (Caporaso et al., 2010) 
 
 A full list of references can be found in the References Wiki. 
 
@@ -21,15 +21,20 @@ You can download SILVA files here: https://www.arb-silva.de/download/archive/qii
 
 For SILVA119/Tax4Fun, you'll also need to download the SILVA_119_release.zip. From that, you'll need the 99% OTUs rep set file and corresponding taxonomy string. The rep set fasta file needs to be imported into QIIME2. Instructions for this are in the Wiki. 
 
-## Before setting up the pipeline 
-there is a script in this here collection that will install R, Miniconda, QIIME2, and QIIME1 on your computer for you. I think it may require Xcode being installed on your Mac. This is available in the Mac App Store.
-You must have QIIME2 installed at the very least. Additionally, you will need QIIME1 if you plan to use Ion Torrent data, and R if you wish to use Tax4Fun.   
- 
+# Installing QIIME
+QIIME2 is super easy to install on Mac and Linux.
+
 > https://docs.qiime2.org/2018.6/install/native/
+
+You must have QIIME2 installed at the very least. Additionally, you will need QIIME1 if you plan to use Ion Torrent data, and R if you wish to use Tax4Fun.   
    
 > http://qiime.org/install/install.html
     
 > https://www.stats.bris.ac.uk/R/ 
+
+However, there is a script in this collection that will install everything for you. I'm not sure how well it will work on your machine (it works on mine, but I have lots of extras installed that you might not), but give it a go:
+
+`./install_all.sh`
 
 
 # Setting up the pipeline 
@@ -44,11 +49,11 @@ This saves a copy of the latest pipeline scripts to the Desktop in a folder call
 
 And then bring life to the scripts by typing 
 
-`sudo chmod a+x *sh`  -- *sudo* may or may not be essential on your computer 
+`chmod a+x *sh`  -- *sudo* may or may not be required on your computer, e.g., `sudo chmod a+x *sh`, which will require the admin password for the first time 
   
-`sudo chmod a+x *R`
+`chmod a+x *R`
 
-If you want to run the script that will install everything, like QIIME1 and 2 and R, enter the following command.
+*If you want to run the script that will install everything, like QIIME1 and 2 and R, enter the following command.*
 
 `./install_all.sh`
 
@@ -66,21 +71,26 @@ And then lastly, execute the script that will install Tax4Fun and its dependenci
 
 
 ## Part 2 – Getting the feature classifiers in the right place 
+
 2. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Or download from here (https://forum.qiime2.org/t/silva-132-classifiers/3698) Put the right classifier in the right folder based on sequencing platform e.g.; 
 
+### 16S rRNA gene - SILVA 132 database 
 
-> SILVA132 V4 99% classifier for Illumina goes in the folder labelled 'Illumina', 
+> SILVA132 V4 99% classifier for Illumina goes in the folder labelled 'illumina_16S', 
 
 OR
 
-> SILVA132 V4-V5 99% classifier for Ion Torrent goes in 'Ion Torrent', 
+> SILVA132 V4-V5 99% classifier for Ion Torrent goes in 'iontorrent_16S', 
 
 AND
 
 > The SILVA119 files for Tax4Fun go in 'silva119' – for this you need the 99_otus.qza and taxonomy string.
 
+### ITS gene - UNITE database 
 
-Make sure you don't put any folders in the Illumina, Ion Torrent, or silva119 folders, only actual files. So it should look like '/illumina/classifier.qza' not '/illumina/silva119/classifier.qza'. 
+> UNITE ITS dynamic classifier for Illumina and Ion Torrent can go in both the 'UNITE' folder. This is because we don't extract or truncate the reads for ITS, so the classifier is the same either way. 
+
+Make sure you don't put any folders in the Illumina, Ion Torrent, or silva119 folders, only actual files. So it should look like '/illumina_16S/classifier.qza' not '/illumina_16S/silva119/classifier.qza'. 
   
   -- These two main steps are all you need to set up the scripts on your computer. You can replace the classifiers with newer versions as and when is necessary. -- 
 
