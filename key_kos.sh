@@ -3,7 +3,7 @@
 #All genes are from here http://www.genome.jp/kegg-bin/get_htext?htext=ko00002.keg&query=oxygen 
 #Genes from GraftM from NE1C2 stuff – Good starting point
 mkdir $name/useful/tax4fun/sorted
-grep -E "K00370|K00437|K02588|K14138|K00394|K00399|K10944|K16157|K00368|K15864|K00531|K11180|K02274|K00404|K02117|K00437|K00428|K02567|K03385|K02586|K14028" $name/useful/tax4fun/Tax4FunProfile_Export.csv >> $name/useful/tax4fun/sorted/grafM.csv
+grep -E "K10944|K00368|K15864|K11180|K00399|K00370|K02567|K04561|K00376|K03385|K02586|K14138|K00394|K16157|K14028|K00437|K10714|K03388|K00198" $name/useful/tax4fun/Tax4FunProfile_Export.csv >> $name/useful/tax4fun/sorted/useful.csv
 #Wolfe Cycle 
 grep -E "K03388|K00577|K00399|K00437|K00440|K00200|K00672|K01499|K10714|K00320" $name/useful/tax4fun/Tax4FunProfile_Export.csv >> $name/useful/tax4fun/sorted/wolfe.csv
 #Wood Ljungdahl
