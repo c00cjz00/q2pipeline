@@ -6,14 +6,14 @@ qiime vsearch cluster-features-closed-reference \
 --i-reference-sequences classifiers/silva119/*.qza \
 --p-perc-identity 0.99 \
 --p-threads $threads \
---output-dir $name/closed \
+--output-path $name/closed \
 --quiet
 #
 mkdir $name/useful/closed
 #
-qiime tools export $name/closed/clustered_table.qza --output-dir $name/closed/clustered-table
+qiime tools export --input-path $name/closed/clustered_table.qza --output-path $name/closed/clustered-table
 #
-qiime tools export $name/closed/clustered_sequences.qza --output-dir $name/closed/clustered-sequences
+qiime tools export --input-path $name/closed/clustered_sequences.qza --output-path $name/closed/clustered-sequences
 #
 biom add-metadata -i $name/closed/clustered-table/feature-table.biom -o $name/closed/clustered-table/feature-table-tax.biom --observation-metadata-fp classifiers/silva119/*.txt --observation-header OTUID,taxonomy --sc-separated taxonomy
 #
