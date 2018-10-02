@@ -14,4 +14,4 @@ qiime demux emp-single \
   --o-visualization $name/demux/demux.qzv \
   --quiet
   #
-  qiime tools export $name/demux/demux.qzv --output-dir  $name/demux/demux
+  qiime tools export --input-path $name/demux/demux.qzv --output-path  $name/demux/demux
