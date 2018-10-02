@@ -48,9 +48,9 @@ qiime diversity beta-group-significance \
  --quiet
 #
 # Export all figures 
-qiime tools export $name/diversity/core-metrics-results/unweighted-unifrac-emperor.qzv --output-dir $name/useful/beta-div/unweighted-unifrac-pcoa
-qiime tools export $name/diversity/core-metrics-results/weighted-unifrac-emperor.qzv --output-dir $name/useful/beta-div/weighted-unifrac-pcoa
-qiime tools export $name/diversity/core-metrics-results/bray-curtis-emperor.qzv --output-dir $name/useful/beta-div/bray-curtis-pcoa
-qiime tools export $name/diversity/core-metrics-results/unweighted_unifrac_treatment_significance.qzv --output-dir $name/useful/beta-div/unweighted-unifrac-significance
-qiime tools export $name/diversity/core-metrics-results/weighted_unifrac_treatment_significance.qzv --output-dir $name/useful/beta-div/weighted-unifrac-significance
-qiime tools export $name/diversity/core-metrics-results/bray_curtis_treatment_significance.qzv --output-dir $name/useful/beta-div/bray-curtis-significance
+qiime tools export --input-path $name/diversity/core-metrics-results/unweighted-unifrac-emperor.qzv --output-path $name/useful/beta-div/unweighted-unifrac-pcoa
+qiime tools export --input-path $name/diversity/core-metrics-results/weighted-unifrac-emperor.qzv --output-path $name/useful/beta-div/weighted-unifrac-pcoa
+qiime tools export --input-path $name/diversity/core-metrics-results/bray-curtis-emperor.qzv --output-path $name/useful/beta-div/bray-curtis-pcoa
+qiime tools export --input-path $name/diversity/core-metrics-results/unweighted_unifrac_treatment_significance.qzv --output-path $name/useful/beta-div/unweighted-unifrac-significance
+qiime tools export --input-path $name/diversity/core-metrics-results/weighted_unifrac_treatment_significance.qzv --output-path $name/useful/beta-div/weighted-unifrac-significance
+qiime tools export --input-path $name/diversity/core-metrics-results/bray_curtis_treatment_significance.qzv --output-path $name/useful/beta-div/bray-curtis-significance
