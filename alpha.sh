@@ -45,10 +45,10 @@ qiime diversity alpha-rarefaction \
   --o-visualization $name/diversity/alpha-rarefaction.qzv
 #
 # Export all visualisation plots 
-qiime tools export $name/diversity/core-metrics-results/faith-pd-group-significance.qzv --output-dir $name/useful/alpha-div/faith-pd
+qiime tools export --input-path $name/diversity/core-metrics-results/faith-pd-group-significance.qzv --output-path $name/useful/alpha-div/faith-pd
 #
-qiime tools export $name/diversity/core-metrics-results/evenness-group-significance.qzv --output-dir $name/useful/alpha-div/pielou-evenness 
+qiime tools export --input-path $name/diversity/core-metrics-results/evenness-group-significance.qzv --output-path $name/useful/alpha-div/pielou-evenness 
 #
-qiime tools export $name/diversity/core-metrics-results/shannon-group-significance.qzv --output-dir $name/useful/alpha-div/shannon-richness
+qiime tools export --input-path $name/diversity/core-metrics-results/shannon-group-significance.qzv --output-path $name/useful/alpha-div/shannon-richness
 #
-qiime tools export $name/diversity/alpha-rarefaction.qzv --output-dir $name/useful/alpha-div/alpha-rarefaction
+qiime tools export --input-path $name/diversity/alpha-rarefaction.qzv --output-path $name/useful/alpha-div/alpha-rarefaction
