@@ -7,6 +7,7 @@ mkdir classifiers
 mkdir classifiers/illumina_16S
 mkdir classifiers/iontorrent_16S
 mkdir classifiers/silva119
-mkdir classifiers/UNITE
+mkdir classifiers/iontorrent_ITS
+mkdir classifiers/illumina_ITS
 mkdir classifiers/tax4fun
 echo -e "\nFinished!\n"
