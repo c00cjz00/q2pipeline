@@ -22,9 +22,10 @@ qiime dada2 denoise-paired \
   --o-denoising-stats $name/$sv/stats.qza \
   --p-trim-left-f $trimleft \
   --p-trim-left-r $trimleft \
-  --p-trunc-len-f 0 \
-  --p-trunc-len-r 0 \
-  --p-n-threads $threads
+  --p-trunc-len-f 220 \
+  --p-trunc-len-r 80 \
+  --p-n-threads $threads \
+  --p-max-ee 5 \
   --quiet
 fi
 #
@@ -45,10 +46,10 @@ qiime feature-table tabulate-seqs \
   --o-visualization $name/$sv/rep-seqs.qzv \
   --quiet 
 #
-qiime tools export $name/$sv/table.qzv --output-dir $name/useful/table
+qiime tools export --input-path $name/$sv/table.qzv --output-path $name/useful/table
 #
-qiime tools export $name/$sv/table.qza --output-dir $name/useful/biomtable
+qiime tools export --input-path $name/$sv/table.qza --output-path $name/useful/biomtable
 #
-qiime tools export $name/$sv/rep-seqs.qzv --output-dir $name/useful/rep-seqs
+qiime tools export --input-path $name/$sv/rep-seqs.qzv --output-path $name/useful/rep-seqs
 #
 cp $name/useful/rep-seqs/sequences.fasta $name/useful/rep-seqs/rep-seqs.txt
