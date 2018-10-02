@@ -2,9 +2,9 @@
 ## Introduction 
 QIIME2 Pipeline Scripts by Peter Leary, Newcastle University  
 
-A collection of badly-written scripts based on the Moving Pictures tutorial: https://docs.qiime2.org/2018.6/tutorials/moving-pictures/ 
+A collection of badly-written scripts based on the Moving Pictures tutorial: https://docs.qiime2.org/2018.8/tutorials/moving-pictures/ 
 
-The intention is to perform pipeline analysis on 16S and ITS rRNA gene sequencing data from the Illumina and Ion Torrent platforms, with a few extra steps where appropriate, including preparing data for and running in Tax4Fun (Asshauer et al., 2015), using QIIME2 (currently 2018.6) (Caporaso et al., 2010) 
+The intention is to perform pipeline analysis on 16S and ITS rRNA gene sequencing data from the Illumina and Ion Torrent platforms, with a few extra steps where appropriate, including preparing data for and running in Tax4Fun (Asshauer et al., 2015), using QIIME2 (currently 2018.8) (Caporaso et al., 2010) 
 
 A full list of references can be found in the References Wiki. 
 
@@ -24,7 +24,7 @@ For SILVA119/Tax4Fun, you'll also need to download the SILVA_119_release.zip. Fr
 # Installing QIIME
 QIIME2 is super easy to install on Mac and Linux.
 
-> https://docs.qiime2.org/2018.6/install/native/
+> https://docs.qiime2.org/2018.8/install/native/
 
 You must have QIIME2 installed at the very least. Additionally, you will need QIIME1 if you plan to use Ion Torrent data, and R if you wish to use Tax4Fun.   
    
