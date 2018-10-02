@@ -90,7 +90,7 @@ fi
 fi
 #
 # Tell me which metadata column to use for Gneiss 
-if [[ "$step_in" == 9 ]]; then 
+if [[ "$step_in" == 1 ]] || [[ "$step_in" == 9 ]]; then 
 echo -e "\n${PUR}Please tell me what column from your sample metadata/map file to use for Gneiss. Enter the name of the column exactly as it is in your map.\n${NC}"
 read column_in
 echo -e "\n${GREEN}You chose $column_in\n${NC}"
@@ -124,7 +124,7 @@ if [[ "$platform_in" == "Ion Torrent" ]]; then
 	echo $FIRST
 fi
 #
-source activate qiime2-2018.6
+source activate qiime2-2018.8
 #
 mkdir $1/useful 
 # This is where it starts playing with your data
@@ -153,7 +153,7 @@ fi
 #
 # Dada2
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]]; then
-source activate qiime2-2018.6
+source activate qiime2-2018.8
 if [[ "$platform_in" == "Ion Torrent" && "$sv_in" == "DADA2" ]]; then 
 echo -E -e "\n$(date)\nDoing DADA2 - dada2.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nDADA2-ing now. This can take upto a few hours, so go do something else!\n${NC}"
@@ -179,7 +179,7 @@ fi
 #
 # Closed-reference OTU picking via vsearch, for use with Tax4Fun 
 if [[ "$gene_in" == "16S" && "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 4 ]]; then
-source activate qiime2-2018.6
+source activate qiime2-2018.8
 echo -E -e "\n$(date)\nPicking closed ref OTUs - closed.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nClosed-reference OTU picking via vsearch - for use with Tax4Fun\n${NC}"
 FIFTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/closed.sh)
@@ -216,7 +216,7 @@ fi
 # Classify taxonomy - Ion Torrent 
 echo -E -e "\n$(date)\nClassifying taxonomy at 99% with $athreads jobs (that's $threads_in threads) - assign.sh\n" >> $1/log.txt 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 5 ]]; then
-source activate qiime2-2018.6
+source activate qiime2-2018.8
 if [[ "$platform_in" == "Ion Torrent" ]]; then
 echo -e "\n$(date)${GREEN}\nClassifying taxonomy - 99%\n${NC}"
 SIXTH=$(name=$1 sv=$sv_in athreads=$athreads gene=$gene_in scripts/assign.sh)
@@ -234,7 +234,7 @@ fi
 #
 # Align
 if [[ "$gene_in" == "16S" && "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 6 ]]; then
-source activate qiime2-2018.6
+source activate qiime2-2018.8
 echo -E -e "\n$(date)\nAligning - align.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nAligning\n${NC}"
 SEVENTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/align.sh)
@@ -243,20 +243,21 @@ fi
 #
 # Make phylogenetic tree
 if [[ "$gene_in" == "16S" && "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 7 ]]; then
-source activate qiime2-2018.6
+source activate qiime2-2018.8
 echo -E -e "\n$(date)\nBuilding phylogenetic tree - tree.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nMaking phylogenetic tree\n${NC}"
 EIGTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/tree.sh)
 echo $EIGTH
 fi
 #
-if [[ "$gene_in" == "16S" && "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 8 ]]; then
-source activate qiime2-2018.6
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 8 ]]; then
+source activate qiime2-2018.8
 # Enter a number to be used as sampling depth for rarefaction
 echo -e "\n${PUR}Okay now it's your turn. Go into the output /$1/useful/table/index.html and select the second tab. Find the bottom sample with the fewest reads, and enter the number below for sampling depth.\n${NC}"
 read samdep_in
 echo -e "\n${GREEN}You chose $samdep_in\n"
 echo -E -e "Sampling depth = $samdep_in\n" >> $1/options.txt 
+if [[ "$gene_in" == 16S ]]; then
 echo -E -e "\n$(date)\nCore metrics and alpha diversity with a sampling depth of $samdep_in\n - alpha.sh" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nDoing alpha diversity\n${NC}"
 NINTH=$(name=$1 sv=$sv_in sam=$samdep_in sam_max=$sammax_in scripts/alpha.sh)
@@ -266,6 +267,18 @@ echo -E -e "\n$(date)\nBeta diversity - beta.sh\n" >> $1/log.txt
 echo -e "\n$(date)${GREEN}\nNow doing some beta diversity\n${NC}"
 TENTH=$(name=$1 sv=$sv_in scripts/beta.sh)
 echo $TENTH
+fi
+if [[ "$gene_in" == "ITS" ]]; then 
+echo -E -e "\n$(date)\nCore metrics and alpha diversity with a sampling depth of $samdep_in\n - alpha.sh" >> $1/log.txt 
+echo -e "\n$(date)${GREEN}\nDoing alpha diversity\n${NC}"
+NINTH=$(name=$1 sv=$sv_in athreads=$athreads sam=$samdep_in sam_max=$sammax_in scripts/alpha_its.sh)
+echo $NINTH 
+#
+echo -E -e "\n$(date)\nBeta diversity - beta.sh\n" >> $1/log.txt 
+echo -e "\n$(date)${GREEN}\nNow doing some beta diversity\n${NC}"
+TENTH=$(name=$1 athreads=$athreads sv=$sv_in scripts/beta_its.sh)
+echo $TENTH
+fi
 fi
 #
 # Tax4Fun time... 
@@ -284,7 +297,7 @@ echo $TWELFTH
 fi
 #
 if [[ "$step_in" == 1 ]] || [[ "$step_in" == 9 ]]; then 
-source activate qiime2-2018.6
+source activate qiime2-2018.8
 echo -E -e "\n$(date)\nGneiss differential abundance - gneiss.sh" >> $1/log.txt
 echo -e "\n$(date)${GREEN}\nCalculating differential abundances via Gneiss\n${NC}"
 THIRTEENTH=$(name=$1 sv=$sv_in column=$column_in scripts/gneiss.sh)
