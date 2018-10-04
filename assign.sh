@@ -1,7 +1,6 @@
 #!/bin/bash
 #QIIME 2 Ion Torrent Pipeline by Peter Leary
 #Step 2.6 - Assigning taxonomy 
-# Some reason, attempting to visualize or assign taxonomy to aligned seqs doesn't work, it just bugs out. The main guide makes no allusion to assigning taxonomy to aligned seqs so I guess we don't need to worry for now.
 mkdir $name/taxonomy 
 if [[ "$gene" == "16S" ]]; then
 qiime feature-classifier classify-sklearn \
