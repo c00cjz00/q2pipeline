@@ -43,10 +43,10 @@ qiime feature-table tabulate-seqs \
   --o-visualization $name/$sv/rep-seqs.qzv \
   --quiet
 #
-qiime tools --input-path export $name/$sv/table.qzv --output-path $name/useful/table
+qiime tools export --input-path $name/$sv/table.qzv --output-path $name/useful/table
 #
-qiime tools --input-path export $name/$sv/table.qza --output-path $name/useful/biomtable
+qiime tools export --input-path $name/$sv/table.qza --output-path $name/useful/biomtable
 #
-qiime tools --input-path export $name/$sv/rep-seqs.qzv --output-path $name/useful/rep-seqs
+qiime tools export --input-path $name/$sv/rep-seqs.qzv --output-path $name/useful/rep-seqs
 #
 cp $name/useful/rep-seqs/sequences.fasta $name/useful/rep-seqs/rep-seqs.txt
