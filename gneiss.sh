@@ -14,7 +14,7 @@ qiime gneiss dendrogram-heatmap --i-table $name/dada2/table.qza --i-tree $name/g
 #
 qiime gneiss balance-taxonomy --i-table $name/dada2/table.qza --i-tree $name/gneiss/hierarchy.qza --i-taxonomy $name/taxonomy/taxonomy.qza --p-taxa-level 4 --p-balance-name 'y0' --m-metadata-file $name/"$name"map.txt --m-metadata-column $column --o-visualization $name/gneiss/y0_taxa_summary.qzv
 #
-qiime gneiss balance-taxonomy --i-table $name/dada2/table.qza --i-tree $name/gneiss/hierarchy.qza --i-taxonomy $name/taxonomy/taxonomy.qza --p-taxa-level 4 --p-balance-name 'y1' --m-metadata-file $name/"$name"map.txt --m-metadata-column $column --o-visualization $name/gneiss/y0_taxa_summary.qzv
+qiime gneiss balance-taxonomy --i-table $name/dada2/table.qza --i-tree $name/gneiss/hierarchy.qza --i-taxonomy $name/taxonomy/taxonomy.qza --p-taxa-level 4 --p-balance-name 'y1' --m-metadata-file $name/"$name"map.txt --m-metadata-column $column --o-visualization $name/gneiss/y1_taxa_summary.qzv
 # 
 mkdir $name/useful/gneiss  
 qiime tools export --input-path $name/gneiss/heatmap.qzv --output-path $name/useful/gneiss/heatmap 
