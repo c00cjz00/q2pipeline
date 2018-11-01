@@ -21,7 +21,7 @@ fi
 #
 # Options bit 
 # Enter which sequencing platform was used 
-echo -e "\n${PUR}QIIME2 Pipeline by Peter Leary. Last updated 24/08/2018.\n"
+echo -e "\n${PUR}QIIME2 Pipeline by Peter Leary. Last updated 10/10/2018.\n"
 #
 # Enter a number where the pipeline should start from
 echo -e "\nOkay listen up, here you can select which step of the pipeline you'd like to run from. Obviously, if you are running this on new data, you need to run the entire pipeline. If you choose to run from another step, you must have the files from the previous steps in the right place, as the pipeline will look for them as it would look for them if it had made them itself. This is more for people who wish to re-run certain bits of their analysis with different options. Pick a part of the pipeline and enter the number below.\n\n1. From the beginning, so importing and demultiplexing.\n2. DADA2 onwards.\n3. Closed OTU picking onwards.\n4. Assign Taxonomy.\n5. Align.\n6. Construct phylogenetic tree.\n7. Alpha diversity and beta diversity.\n8. Tax4Fun only.\n9. Gneiss Differential Abundance.\n${NC}"
@@ -51,13 +51,10 @@ fi
 fi
 #
 # Enter which marker gene was sequenced: 16S or ITS 
-if [[ "$step_in" == 1 ]] || [[ "$step_in" == 2 ]] || [[ "$step_in" == 4 ]] || [[ "$step_in" == 4 ]] || [[ "$step_in" == 7 ]]; then 
 echo -e "\n${PUR}Please tell me what marker gene was sequenced by typing either 16S or ITS below.\n${NC}"
 read gene_in
 echo -e "\n${GREEN}You chose $gene_in\n${NC}"
-fi
 # Enter the denoising/ASV protocol to use, either DADA2 or Deblur in QIIME2 
-if [[ "$step_in" == 1 ]] || [[ "$step_in" < 8 ]] || [[ "$step_in" == 9 ]]; then
 echo -e "\n${PUR}Please type in the name of the denoising protocol you'd like to use (or used) by typing either DADA2 or Deblur below.\n${NC}"
 read sv_in
 echo -e "\n${GREEN}You chose $sv_in\n${NC}"
@@ -67,30 +64,27 @@ echo -e "\n${RED}You didn't type in your option properly. I am very fussy, and d
 exit
 fi
 #
-# Enter the value to trim all reads from the 5' end. This is essential for Ion Torrent
-if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]]; then
+# Enter the value to trim all reads from the 5' end. 
+if [[ "$step_in" == 1 ]] || [[ "$step_in" == 2 ]] && [[ "$gene_in" == "16S" ]]; then
 echo -e "\n${PUR}Now I need you to tell me how you'd like to trim reads at the 5' end. For Ion Torrent, this should be ~20 bp, so type 20. For Illumina, it should be ~13, so type 13, and hit return.\n${NC}"
 read trimleft_in
 echo -e "\n${GREEN}You chose $trimleft_in\n${NC}"
 #
-# Enter the value to truncate all reads at the 3' end. This is based on quality
-if [[ "$gene_in" == "16S" ]]; then
+# Enter the value to truncate all reads at the 3' end.
 echo -e "\n${PUR}Thanks! Now type how you'd like sequences truncated at the 3' end. For Illumina, ~240 bp is sensible. For Ion Torrent, I personally recommend truncating to around 250-300, and the more conservative the better. Type in a sensible number and hit return.\n${NC}"
 read trunclen_in
 echo -e "\n${GREEN}You chose $trunclen_in\n${NC}"
 #
 # Enter the value to truncate all reverse reads from Illumina 
-if [[ "$platform_in" == "Illumina" ]]; then
-	echo -e "\n${PUR}3c. Illumina-option Special! Please tell me how you'd like to truncate your reverse reads at the 3' end. 180 is a very sensible number I feel.\n${NC}"
+if [[ "$platform_in" == "Illumina" && "$gene_in" == "16S" ]]; then
+	echo -e "\n${PUR}Illumina-option Special! Please tell me how you'd like to truncate your reverse reads at the 3' end. 180 is a very sensible number I feel.\n${NC}"
 	read trunclen_rev_in
     echo -e "\n${GREEN}You chose $trunclen_rev_in\n${NC}"
 fi
 fi
-fi
-fi
 #
 # Tell me which metadata column to use for Gneiss 
-if [[ "$step_in" == 1 ]] || [[ "$step_in" == 9 ]]; then 
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 10 ]]; then 
 echo -e "\n${PUR}Please tell me what column from your sample metadata/map file to use for Gneiss. Enter the name of the column exactly as it is in your map.\n${NC}"
 read column_in
 echo -e "\n${GREEN}You chose $column_in\n${NC}"
@@ -132,7 +126,7 @@ mkdir $1/useful
 if [[ "$platform_in" == "Ion Torrent" ]]; then  
 echo -E -e "$(date)\nPrep Ion Torrent data for import – step1.sh\n" >> $1/log.txt
 echo -e "\n$(date)${GREEN}\nImporting Ion Torrent data into QIIME2\n${NC}"
-FIRST=$(name=$1 scripts/import.sh)
+FIRST=$(name=$1 gene=$gene_in scripts/import.sh)
 echo $FIRST
 fi
 # Ion Torrent demuxing
@@ -146,7 +140,7 @@ fi
 if [[ "$platform_in" == "Illumina" ]]; then 
 echo -E -e "\n$(date)\nImporting Illumina data - import_illumina.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nImporting Illumina data and making demultiplexed files\n${NC}"
-THIRD=$(name=$1 scripts/import_illumina.sh)
+THIRD=$(name=$1 threads=$threads_in gene=$gene_in scripts/import_illumina.sh)
 echo $THIRD
 fi
 fi
@@ -187,7 +181,7 @@ echo $FIFTH
 fi
 #
 # Identify how many cores were selected from the available to determine the --p-n-jobs number of taxonomy classification up to a maximum of 8. 
-if [[ "$(expr substr $(uname -s) 1 5 )" == " Linux" ]]; then
+if [[ "$(expr substr $(uname -s) 1 5 )" == "Linux" ]]; then
 cores=$(nproc --all)
 else
 cores=$(sysctl -n hw.ncpu)
@@ -233,7 +227,7 @@ fi
 fi
 #
 # Align
-if [[ "$gene_in" == "16S" && "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 6 ]]; then
+if [[ "$gene_in" == "16S" ]] && [[ "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 6 ]]; then
 source activate qiime2-2018.8
 echo -E -e "\n$(date)\nAligning - align.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nAligning\n${NC}"
@@ -242,7 +236,7 @@ echo $SEVENTH
 fi
 #
 # Make phylogenetic tree
-if [[ "$gene_in" == "16S" && "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 7 ]]; then
+if [[ "$gene_in" == "16S" ]] && [[ "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 7 ]]; then
 source activate qiime2-2018.8
 echo -E -e "\n$(date)\nBuilding phylogenetic tree - tree.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nMaking phylogenetic tree\n${NC}"
@@ -257,7 +251,7 @@ echo -e "\n${PUR}Okay now it's your turn. Go into the output /$1/useful/table/in
 read samdep_in
 echo -e "\n${GREEN}You chose $samdep_in\n"
 echo -E -e "Sampling depth = $samdep_in\n" >> $1/options.txt 
-if [[ "$gene_in" == 16S ]]; then
+if [[ "$gene_in" == "16S" ]]; then
 echo -E -e "\n$(date)\nCore metrics and alpha diversity with a sampling depth of $samdep_in\n - alpha.sh" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nDoing alpha diversity\n${NC}"
 NINTH=$(name=$1 sv=$sv_in sam=$samdep_in sam_max=$sammax_in scripts/alpha.sh)

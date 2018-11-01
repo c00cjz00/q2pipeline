@@ -43,9 +43,7 @@ However, there is a script in this collection that will install everything for y
 
 `git clone https://github.com/peterleary/q2pipeline`
 
-This saves a copy of the latest pipeline scripts to the Desktop in a folder called 'q2pipeline'. 
-
-`cd` into the folder `cd q2pipeline`. 
+This saves a copy of the latest pipeline scripts to the Desktop in a folder called 'q2pipeline'. Cd into the folder `cd q2pipeline`. 
 
 1A. Alternative to using git clone, download the .zip file containing all the scripts, by clicking the green 'Clone or download' button on the top of the main Q2 Pipeline page. Unzip it, and copy the extracted folder to a useful place, e.g., Desktop. It will be called q2pipeline-master when you download and unzip it. You can rename it if you like, to anything really. 
 
