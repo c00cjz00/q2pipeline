@@ -1,6 +1,6 @@
 #!/bin/bash
-#QIIME 2 Ion Torrent Pipeline by Peter Leary 
-#Step 2.1 - importing EMP-protocol data 
+# QIIME 2 Pipeline by Peter Leary 
+ 
 qiime tools import \
   --type EMPSingleEndSequences \
   --input-path $name/emp \

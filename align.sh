@@ -1,6 +1,6 @@
 #!/bin/bash
-#QIIME 2 Ion Torrent Pipeline by Peter Leary
-#Step 2.5 - Aligning
+# QIIME 2 Pipeline by Peter Leary
+
 mkdir $name/aligned
 qiime alignment mafft \
   --i-sequences $name/$sv/rep-seqs.qza \

@@ -2,39 +2,36 @@
 ## Introduction 
 QIIME2 Pipeline Scripts by Peter Leary, Newcastle University  
 
-A collection of badly-written scripts based on the Moving Pictures tutorial: https://docs.qiime2.org/2018.8/tutorials/moving-pictures/ 
+A collection of badly-written scripts based on the Moving Pictures tutorial: https://docs.qiime2.org/2018.11/tutorials/moving-pictures/ 
 
-The intention is to perform pipeline analysis on 16S and ITS rRNA gene sequencing data from the Illumina and Ion Torrent platforms, with a few extra steps where appropriate, including preparing data for and running in Tax4Fun (Asshauer et al., 2015), using QIIME2 (currently 2018.8) (Caporaso et al., 2010) 
+The intention is to perform pipeline analysis on 16S and ITS rRNA gene sequencing data from the Illumina and Ion Torrent platforms, with a few extra steps where appropriate, including preparing data for and running in Tax4Fun (Asshauer et al., 2015), using QIIME2 (currently 2018.11) (Caporaso et al., 2010) 
 
 A full list of references can be found in the References Wiki. 
 
 *By using this pipeline, you agree to not only cite the authors of QIIME and the tools used, but me and this pipeline. I think that's fair. Please reference this Github page! Thank you!* 
 
-### Caveat! Regarding taxonomy classifiers! Read me! 
-I am not supposed to host the reference database files (SILVA, UNITE) as they belong to their respective owners! Therefore, these scripts will not work 'as-is' as they do not contain to required feature classifiers. You can download the reference databases yourself and create your own naive-Bayes trained classifiers. However, if you email me at peter{dot}leary{at}ncl{dot}ac{dot}uk, I can help you out (*wink wink*)...
-
-Although! 
-
-Greg Caporaso over on the QIIME2 forums has posted two SILVA 132 (most recent) classifiers here https://forum.qiime2.org/t/silva-132-classifiers/3698 – one for the V4 region, one for the whole 16S. These will both do nicely for now. If you want to make your own, there's a guide here https://github.com/peterleary/q2pipeline/wiki/Creating-your-own-classifier
-
-You can download SILVA files here: https://www.arb-silva.de/download/archive/qiime/ 
-
-For SILVA119/Tax4Fun, you'll also need to download the SILVA_119_release.zip. From that, you'll need the 99% OTUs rep set file and corresponding taxonomy string. The rep set fasta file needs to be imported into QIIME2. Instructions for this are in the Wiki. 
 
 # Installing QIIME
 QIIME2 is super easy to install on Mac and Linux.
 
-> https://docs.qiime2.org/2018.8/install/native/
+> https://docs.qiime2.org/2018.11/install/native/
 
-You must have QIIME2 installed at the very least. Additionally, you will need QIIME1 if you plan to use Ion Torrent data, and R if you wish to use Tax4Fun.   
+You must have QIIME2 installed at the very least. Additionally, you will need QIIME1 if you plan to use Ion Torrent data.  
    
-> http://qiime.org/install/install.html
-    
-> https://www.stats.bris.ac.uk/R/ 
+> http://qiime.org/install/install.html 
 
 However, there is a script in this collection that will install everything for you. I'm not sure how well it will work on your machine (it works on mine, but I have lots of extras installed that you might not), but give it a go:
 
 `./install_all.sh`
+
+## QIIME Library
+Even if you have QIIME2 installed, you will likely need to install the Picrust2 and ITSXpress plugins. 
+
+https://library.qiime2.org/plugins/q2-picrust2/13/
+
+https://library.qiime2.org/plugins/q2-itsxpress/8/
+
+Or, you can use `./install_qiime.sh` to install the latest version of QIIME2 and the required plugins – making everyone's lives easier. This assumes you have Miniconda up and running already. If not, use the `./install_all.sh` script followed by `./install_qiime.sh`.
 
 
 # Setting up the pipeline 
@@ -55,7 +52,7 @@ And then bring life to the scripts by typing
 
 *If you want to run the script that will install everything, like QIIME1 and 2 and R, enter the following command.*
 
-`./install_all.sh`
+`./install_all.sh` 
 
 Once it's finished installing, it's best to close all current Terminal windows and `cd` back to `/q2pipeline-master` folder.
 
@@ -72,21 +69,20 @@ And then lastly, execute the script that will install Tax4Fun and its dependenci
 
 ## Part 2 – Getting the feature classifiers in the right place 
 
-2. Grab a copy of the feature classifiers, either by making your own, asking me, or copying them from the group computer. Copy them into the folder labelled 'Classifiers'. Or download from here (https://forum.qiime2.org/t/silva-132-classifiers/3698) Put the right classifier in the right folder based on sequencing platform e.g.; 
+2. The `./setup.sh` script will give download taxonomic classifier files for Illumina and Ion Torrent 16S, as well as the files needed for Picrust. You will need to source your own ITS classifier - email me if you get stuck with that. 
+
+If you download your own classifiers, please put the right classifier in the right folder based on sequencing platform e.g.; 
 
 ### 16S rRNA gene - SILVA 132 database 
 
-> SILVA132 V4 99% classifier for Illumina goes in the folder labelled 'illumina_16S', 
+> Classifier for Illumina goes in the folder labelled 'illumina_16S', 
 
 OR
 
-> SILVA132 V4-V5 99% classifier for Ion Torrent goes in 'iontorrent_16S', 
+> Classifier for Ion Torrent goes in 'iontorrent_16S', 
 
-AND
 
-> The SILVA119 files for Tax4Fun go in 'silva119' – for this you need the 99_otus.qza and taxonomy string.
-
-### ITS gene - UNITE database 
+#### ITS gene - UNITE database 
 
 > UNITE ITS dynamic classifier for Illumina and Ion Torrent can go in both the 'UNITE' folder. This is because we don't extract or truncate the reads for ITS, so the classifier is the same either way. 
 
@@ -100,7 +96,7 @@ You should only need to do this once. However, QIIME2 and the scripts get update
 
 # How to run the pipeline 
 ## Setting up a pipeline run 
-1. Create a folder in the extracted folder (which is now on the Desktop or wherever you put it) and call it something sensible pertaining to your project. For the purposes of this readme, we'll call our project TEST
+1. Create a folder in the extracted folder (which is now on the Desktop or wherever you put it) and call it something sensible pertaining to your project. For the purposes of this readme, we'll call our project TEST - `cd ~/Desktop/q2pipeline` then `mkdir test` 
  - So you now have: `~/Desktop/q2pipeline/` which contains the scripts folder, your `classifiers` folder (along with a `scripts` folder), and a folder called `TEST`. 
   
 2. In your project folder (TEST), you will place your map file along with your raw sequence data. Your map file should be called after your project, so for this example, it will be called `testmap.txt`

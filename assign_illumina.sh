@@ -1,7 +1,6 @@
 #!/bin/bash
-#QIIME 2 Ion Torrent Pipeline by Peter Leary
-#Step 2.6 - Assigning taxonomy 
-# Some reason, attempting to visualize or assign taxonomy to aligned seqs doesn't work, it just bugs out. The main guide makes no allusion to assigning taxonomy to aligned seqs so I guess we don't need to worry for now.
+# QIIME 2 Pipeline by Peter Leary
+
 mkdir $name/taxonomy 
 if [[ "$gene" == "16S" ]]; then
 qiime feature-classifier classify-sklearn \
@@ -19,32 +18,32 @@ qiime feature-classifier classify-sklearn \
   --p-n-jobs $athreads \
   --quiet
 fi
-#
+
 qiime metadata tabulate \
   --m-input-file $name/taxonomy/taxonomy.qza \
   --o-visualization $name/taxonomy/taxonomy.qzv \
   --quiet
-#
+
 qiime taxa barplot \
   --i-table $name/$sv/table.qza \
   --i-taxonomy $name/taxonomy/taxonomy.qza \
   --m-metadata-file $name/"$name"map.txt \
   --o-visualization $name/taxonomy/taxa-bar-plots.qzv \
   --quiet
-#
+
 qiime feature-table filter-features \
 --i-table $name/$sv/table.qza \
 --p-min-frequency 500 \
 --o-filtered-table $name/$sv/table-500.qza \
 --quiet 
-#
+
 qiime taxa barplot \
   --i-table $name/$sv/table-500.qza \
   --i-taxonomy $name/taxonomy/taxonomy.qza \
   --m-metadata-file $name/"$name"map.txt \
   --o-visualization $name/taxonomy/taxa-bar-plots-500.qzv \
   --quiet
-#
+
 qiime tools export --input-path $name/taxonomy/taxa-bar-plots.qzv --output-path $name/useful/taxa-bar-plots
 qiime tools export --input-path $name/taxonomy/taxa-bar-plots-500.qzv --output-path $name/useful/taxa-bar-plots-500
 qiime tools export --input-path $name/taxonomy/taxonomy.qza --output-path $name/useful/
