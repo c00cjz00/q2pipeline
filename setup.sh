@@ -3,6 +3,8 @@
 mkdir scripts
 mv *sh scripts 
 mv *R scripts
+mv *r scripts
+mv *awk scripts
 mkdir classifiers 
 mkdir classifiers/illumina_16S
 mkdir classifiers/iontorrent_16S
