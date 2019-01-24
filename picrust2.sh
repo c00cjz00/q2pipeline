@@ -23,3 +23,4 @@ mkdir $name/useful/picrust
 tail -n +2 $name/picrust/q2-picrust_output/ko_metagenome/picrust_kegg.txt > $name/useful/picrust/picrust_ko.txt 
 
 awk -f scripts/picrust_transform.awk $name/useful/picrust/picrust_ko.txt > $name/useful/picrust_ko_normalised.txt 
+# Awk script is from here: https://unix.stackexchange.com/questions/175265/how-to-calculate-percent-of-every-column 
