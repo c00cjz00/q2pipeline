@@ -102,6 +102,7 @@ You should only need to do this once. However, QIIME2 and the scripts get update
 2. In your project folder (TEST), you will place your map file along with your raw sequence data. Your map file should be called after your project, so for this example, it will be called `testmap.txt`
  
 > Illumina: You will have received your demultiplexed data (already split into individual samples per barcode) in a series of folders, each containing two fastqs, the forward and reverse read. You need to put all these fastqs into one folder called 'Seqs', within your project (TEST) folder. 
+>> If your fastq files are all in their own folders, you can use the `./move_fastq.sh` script to automatically move them all out. Put all the folders in one folder called `Seqs` and put that in `~/Desktop/q2pipeline/test`. Then use `./scripts/move_fastq.sh test` and it will move all the fastq files into the one seqs folder. 
 >> It is very important your Illumina filenames follow the standard format of x_x_L001_R1_001.fastq.gz (or R2 for reverse) – if they do not, QIIME2 will throw a fit, and you'll have to fix them. You can use the `rename` function from Homebrew to fix them all in one go. 
   
 > Ion Torrent: You will have one multiplexed fastq file. Put this in your project (TEST) folder. Rename your fastq to the project name, e.g., test.fastq
