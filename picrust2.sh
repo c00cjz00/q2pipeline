@@ -3,8 +3,8 @@
 
 mkdir $name/picrust
 
-qiime fragment-insertion sepp --i-representative-sequences $name/dada2/table.qza \
-                              --p-threads 1 --i-reference-alignment classifiers/picrust/reference.fna.qza \
+qiime fragment-insertion sepp --i-representative-sequences $name/dada2/rep-seqs.qza \
+                              --p-threads $threads --i-reference-alignment classifiers/picrust/reference.fna.qza \
                               --i-reference-phylogeny classifiers/picrust/reference.tre.qza \
                               --output-dir $name/picrust/placed_out
                               

@@ -18,7 +18,7 @@ fi
 echo -e "\n${PUR}QIIME2 Pipeline by Peter Leary. Last updated 24/01/2019.${NC}\n"
 
 # Enter a number where the pipeline should start from
-echo -e "\n${PUR}First, please select which step of the pipeline you'd like to run from. If you are running this on new data, you will need to run the entire pipeline. If you choose to run from another step, you must have the files from the previous steps in the right place, as the pipeline will look for them as it would look for them if it had made them itself. This is more for people who wish to re-run certain bits of their analysis but with different options. Pick a part of the pipeline and enter the number below.\n\n1. From the beginning, including importing and demultiplexing.\n2. DADA2 onwards.\n3. Assign Taxonomy.\n4. Align.\n5. Construct phylogenetic tree.\n6.Picrust.\n7. Alpha diversity and beta diversity.\n8. Gneiss Differential Abundance.\n${NC}"
+echo -e "\n${PUR}First, please select which step of the pipeline you'd like to run from. If you are running this on new data, you will need to run the entire pipeline. If you choose to run from another step, you must have the files from the previous steps in the right place, as the pipeline will look for them as it would look for them if it had made them itself. This is more for people who wish to re-run certain bits of their analysis but with different options. Pick a part of the pipeline and enter the number below.\n\n1. From the beginning, including importing and demultiplexing.\n2. DADA2 onwards.\n3. Assign Taxonomy.\n4. Align.\n5. Construct phylogenetic tree.\n6. Picrust.\n7. Alpha diversity and beta diversity.\n8. Gneiss Differential Abundance.\n${NC}"
 read step_in
 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 4 ]]; then
@@ -221,9 +221,10 @@ fi
 
 # Picrust
 if [[ "$gene_in" == "16S" && "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 7 ]]; then
+source activate qiime2-2018.11
 echo -E -e "\n$(date)\nPicrust - picrust.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nPicrust\n${NC}"
-NINTH=$(name=$1, sv=$sv_in, threads=$threads_in scripts/picrust.sh)
+NINTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/picrust2.sh)
 echo $NINTH 
 fi
 
