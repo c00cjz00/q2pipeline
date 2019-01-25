@@ -16,11 +16,11 @@ qiime picrust2 custom-tree-pipeline --i-table $name/dada2/table.qza \
                                     --p-max-nsti 2
 
 qiime tools export --input-path $name/picrust/q2-picrust2_output/ko_metagenome.qza --output-path $name/picrust/q2-picrust_output/
-biom convert -i $name/picrust/q2-picrust_output/ko_metagenome/feature-table.biom -o $name/picrust/q2-picrust_output/ko_metagenome/picrust_kegg.txt --to-tsv 
+biom convert -i $name/picrust/q2-picrust_output/feature-table.biom -o $name/picrust/q2-picrust_output/picrust_kegg.txt --to-tsv 
 
 mkdir $name/useful/picrust
 
-tail -n +2 $name/picrust/q2-picrust_output/ko_metagenome/picrust_kegg.txt > $name/useful/picrust/picrust_ko.txt 
+tail -n +2 $name/picrust/q2-picrust_output/picrust_kegg.txt > $name/useful/picrust/picrust_ko.txt 
 
 awk -f scripts/picrust_transform.awk $name/useful/picrust/picrust_ko.txt > $name/useful/picrust_ko_normalised.txt 
 # Awk script is from here: https://unix.stackexchange.com/questions/175265/how-to-calculate-percent-of-every-column 

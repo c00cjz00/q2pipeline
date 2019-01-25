@@ -21,7 +21,7 @@ wget https://data.qiime2.org/distro/core/qiime2-2018.11-py35-linux-conda.yml
 conda env create -n qiime2-2018.11 --file qiime2-2018.11-py35-linux-conda.yml
 rm qiime2-2018.11-py35-linux-conda.yml
 conda create -n qiime1 python=2.7 qiime matplotlib=1.4.3 mock nose -c bioconda
-fi 
+#fi 
 #
 
 source activate qiime2-2018.11
@@ -44,8 +44,8 @@ qiime dev refresh-cache
 cd ..
 
 # Tidy
-rm -r picrust2-2.0.3-b
-rm -r q2-picrust2-0.0.2
+rm -r picrust2-2.0.3-b.zip
+rm -r q2-picrust2-0.0.2.zip
 
 # Install ITSXpress
 conda install -c bioconda itsxpress
