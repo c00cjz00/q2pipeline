@@ -50,21 +50,19 @@ And then bring life to the scripts by typing
   
 `chmod a+x *R`
 
-*If you want to run the script that will install everything, like QIIME1 and 2 and R, enter the following command.*
+Before you can install QIIME 2, you need to install Miniconda: https://conda.io/en/master/miniconda.html 
 
-`./install_all.sh` 
+Or, you can use the following script: 
 
-Once it's finished installing, it's best to close all current Terminal windows and `cd` back to `/q2pipeline-master` folder.
+`./install_miniconda.sh` - After usign this script and installing Miniconda, you will need to close the Terminal window and open a new one (don't forget to `cd` back to where you downloaded the scripts to!) 
+
+Then you can install QIIME 2 using the following script, which installs the latest version of QIIME 2, QIIME 1, and a couple of extra plugins for QIIME 2 (Picrust2 and ITSXpress)
+
+`./install_qiime.sh`
 
 Okay, now execute the script that will tidy everything up and create the right folders for you 
 
 `source ./setup.sh`
-  
-And then lastly, execute the script that will install Tax4Fun and its dependencies. It also downloads the SILVA119 files needed for Tax4Fun *but not for closed-reference OTU picking* – these will still need downloading. Make sure you install R first (you don't need RStudio for this...)!
-
-`./scripts/install_tax4fun.R`
-
-**Note: Currently, it looks like this script is required each time you run a pipeline instance to make Tax4Fun work. I'll identify the issue soon I hope!** 
 
 
 ## Part 2 – Getting the feature classifiers in the right place 
