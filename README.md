@@ -20,9 +20,9 @@ You must have QIIME2 installed at the very least. Additionally, you will need QI
    
 > http://qiime.org/install/install.html 
 
-However, there is a script in this collection that will install everything for you. I'm not sure how well it will work on your machine (it works on mine, but I have lots of extras installed that you might not), but give it a go:
-
-`./install_all.sh`
+Or, you can try to use the two included installation scripts here:
+`./install_miniconda.sh` - then when it's finished, close the Terminal windows and open a new one, then
+`./install_qiime.sh` 
 
 ## QIIME Library
 Even if you have QIIME2 installed, you will likely need to install the Picrust2 and ITSXpress plugins. 
