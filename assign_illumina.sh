@@ -50,4 +50,3 @@ qiime tools export --input-path $name/taxonomy/taxonomy.qza --output-path $name/
 biom add-metadata -i $name/useful/biomtable/feature-table.biom -o $name/useful/biomtable/feature-table-tax.biom --observation-metadata-fp $name/useful/taxonomy.tsv --observation-header OTUID,taxonomy --sc-separated taxonomy
 biom convert -i $name/useful/biomtable/feature-table-tax.biom -o $name/useful/biomtable/otu_table_w_tax.txt --to-tsv --table-type="OTU table" --header-key taxonomy
 biom convert -i $name/useful/biomtable/feature-table.biom -o $name/useful/biomtable/otu_table.txt --to-tsv --table-type="OTU table"
-#
