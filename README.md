@@ -128,7 +128,7 @@ Next, it will ask you how you'd like to trim and truncate your reads. This can b
   - Truncating cuts your reads off at *n* at the 3' -> 5' end. This is usually to remove low quality bases at the end of reads. With Ion Torrent, my experience is that most anything past about 300 bp is low-quality and best removed. With Illumina paired-end, the forward read is usually good quality all the way to ~240 bp, and the reverse reads is usually good until about 180 bp. So, enter a number for truncating. If later you decide that these are too short/long, you can always run again with more appropriate numbers. 
   >> Don't forget that if you're looking at the sequencing quality information for the reverse read, it'll be presented as 5' -> 3', so the bases you'll be truncating are from right to left, but they're the ones that match the 5' -> 3' from left to right of the forward read! 
   
-It will then ask how many cores/threads your computer has. For most of you, using a 13" MacBook Pro, the answer is 2. So type 2 and hit return. If you have a fancier computer, it might be 4, so type that. If you have a really nice machine, like the iMac (or my 15" MacBook Pro with Intel i7) the answer is 8. So hit 8. 
+It will then ask how many cores/threads your computer has. This depends on you knowing the answer. The more cores, the better, generally. If you're unsure/want to use everything, type 0 (zero). This will use everything, but at certain steps (namely taxonomic classification) it will make your computer rather unusable. Choose an appropriate number! 
 
   
 Then that's it! The pipeline will do the rest! A brief overview of what the pipeline does can be found in the pipeline_overview document.
