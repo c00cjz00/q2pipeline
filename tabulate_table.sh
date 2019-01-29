@@ -1,7 +1,9 @@
 #!/bin/bash
 
 name=$1
-sv="dada2"
+sv=$2
+
+source activate qiime2-2018.11
 
 qiime feature-table summarize \
   --i-table $name/$sv/table.qza \
