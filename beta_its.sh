@@ -18,7 +18,7 @@ qiime emperor plot \
 qiime diversity beta-group-significance \
  --i-distance-matrix $name/diversity/core-metrics-results/bray_curtis_distance_matrix.qza \
  --m-metadata-file $name/"$name"map.txt \
- --m-metadata-column Treatment \
+ --m-metadata-column $column \
  --o-visualization $name/diversity/core-metrics-results/bray_curtis_treatment_significance.qzv \
  --p-pairwise \
  --quiet
@@ -26,7 +26,7 @@ qiime diversity beta-group-significance \
 qiime diversity beta-group-significance \
  --i-distance-matrix $name/diversity/core-metrics-results/jaccard_distance_matrix.qza \
  --m-metadata-file $name/"$name"map.txt \
- --m-metadata-column Treatment \
+ --m-metadata-column $column \
  --o-visualization $name/diversity/core-metrics-results/jaccard_treatment_significance.qzv \
  --p-pairwise \
  --quiet

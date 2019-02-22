@@ -241,12 +241,12 @@ echo -E -e "Sampling depth = $samdep_in\n" >> $1/options.txt
 if [[ "$gene_in" == "16S" ]]; then
 echo -E -e "\n$(date)\nCore metrics and alpha diversity with a sampling depth of $samdep_in\n - alpha.sh" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nDoing alpha diversity\n${NC}"
-NINTH=$(name=$1 sv=$sv_in sam=$samdep_in sam_max=$sammax_in scripts/alpha.sh)
+NINTH=$(name=$1 column=$column_in sv=$sv_in sam=$samdep_in sam_max=$sammax_in scripts/alpha.sh)
 echo $NINTH 
     # Beta 
 echo -E -e "\n$(date)\nBeta diversity - beta.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nNow doing some beta diversity\n${NC}"
-TENTH=$(name=$1 sv=$sv_in scripts/beta.sh)
+TENTH=$(name=$1 column=$column_in sv=$sv_in scripts/beta.sh)
 echo $TENTH
 fi
     # ITS Analysis
@@ -254,12 +254,12 @@ fi
 if [[ "$gene_in" == "ITS" ]]; then 
 echo -E -e "\n$(date)\nCore metrics and alpha diversity with a sampling depth of $samdep_in\n - alpha.sh" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nDoing alpha diversity\n${NC}"
-NINTH=$(name=$1 sv=$sv_in athreads=$athreads sam=$samdep_in sam_max=$sammax_in scripts/alpha_its.sh)
+NINTH=$(name=$1 column=$column_in sv=$sv_in athreads=$athreads sam=$samdep_in sam_max=$sammax_in scripts/alpha_its.sh)
 echo $NINTH 
     # Beta
 echo -E -e "\n$(date)\nBeta diversity - beta.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nNow doing some beta diversity\n${NC}"
-TENTH=$(name=$1 athreads=$athreads sv=$sv_in scripts/beta_its.sh)
+TENTH=$(name=$1 column=$column_in athreads=$athreads sv=$sv_in scripts/beta_its.sh)
 echo $TENTH
 fi
 fi
