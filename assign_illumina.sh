@@ -10,6 +10,14 @@ qiime feature-classifier classify-sklearn \
   --p-n-jobs $athreads \
   --quiet
 fi
+if [[ "$gene" == "18S" ]]; then
+qiime feature-classifier classify-sklearn \
+  --i-classifier classifiers/illumina_18S/*.qza \
+  --i-reads $name/$sv/rep-seqs.qza \
+  --o-classification $name/taxonomy/taxonomy.qza \
+  --p-n-jobs $athreads \
+  --quiet
+fi
 if [[ "$gene" == "ITS" ]]; then
 qiime feature-classifier classify-sklearn \
   --i-classifier classifiers/illumina_ITS/*.qza \

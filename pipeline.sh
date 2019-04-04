@@ -46,7 +46,7 @@ fi
 
 # Enter which marker gene was sequenced: 16S or ITS 
 if [[ ! $gene_in ]]; then
-echo -e "\n${PUR}Please tell me what marker gene was sequenced by typing either 16S or ITS below.\n${NC}"
+echo -e "\n${PUR}Please tell me what marker gene was sequenced by typing either 16S, 18S, or ITS below.\n${NC}"
 read gene_in
 fi
 
@@ -208,7 +208,7 @@ fi
 fi
 
 # Align
-if [[ "$gene_in" == "16S" ]] && [[ "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 6 ]]; then
+if [[ "$gene_in" == "16S" ]] && [[ "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 6 ]] || [[ "$gene_in" == "18S" ]] && [[ "$step_in" == 1 ]] || [[ "$gene_in" == "18S" && "$step_in" < 6 ]]; then
 source activate qiime2-2018.11
 echo -E -e "\n$(date)\nAligning - align.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nAligning\n${NC}"
@@ -217,7 +217,7 @@ echo $SEVENTH
 fi
 
 # Make phylogenetic tree
-if [[ "$gene_in" == "16S" ]] && [[ "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 7 ]]; then
+if [[ "$gene_in" == "16S" ]] && [[ "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 7 ]] || [[ "$gene_in" == "18S" ]] && [[ "$step_in" == 1 ]] || [[ "$gene_in" == "18S" && "$step_in" < 7 ]]; then
 source activate qiime2-2018.11
 echo -E -e "\n$(date)\nBuilding phylogenetic tree - tree.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nMaking phylogenetic tree\n${NC}"
@@ -244,7 +244,7 @@ read samdep_in
 echo -E -e "Sampling depth = $samdep_in\n" >> $1/options.txt
     # 16S Analysis
     # Alpha 
-if [[ "$gene_in" == "16S" ]]; then
+if [[ "$gene_in" == "16S" ]] || [[ "$gene_in" == "18S" ]]; then
 echo -E -e "\n$(date)\nCore metrics and alpha diversity with a sampling depth of $samdep_in\n - alpha.sh" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nDoing alpha diversity\n${NC}"
 NINTH=$(name=$1 column=$column_in sv=$sv_in sam=$samdep_in sam_max=$sammax_in scripts/alpha.sh)

@@ -2,7 +2,7 @@
 # QIIME 2 Pipeline by Peter Leary
 
 mkdir $name/demux
-if [[ "$gene" == "16S" ]]; then
+if [[ "$gene" == "16S" ]] || [[ "$gene" == "18S" ]]; then
 qiime tools import \
   --type 'SampleData[PairedEndSequencesWithQuality]' \
   --input-path $name/seqs \
