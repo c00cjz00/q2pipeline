@@ -54,7 +54,7 @@ fi
 sv_in="DADA2"   # Just go with DADA2
 
 # Enter the value to trim all reads from the 5' end. 
-if [[ "$step_in" == 1 ]] || [[ "$step_in" == 2 ]] && [[ "$gene_in" == "16S" ]]; then
+if [[ "$step_in" == 1 ]] || [[ "$step_in" == 2 ]] && [[ "$gene_in" == "16S" ]] || [[ "$gene_in" == 18S ]]; then
 echo -e "\n${PUR}Now I need you to tell me how you'd like to trim reads at the 5' end. For Ion Torrent, this should be ~20 bp, so type 20. For Illumina, it should be ~13, so type 13, and hit return.\n${NC}"
 read trimleft_in
 
@@ -63,7 +63,7 @@ echo -e "\n${PUR}Thanks! Now type how you'd like sequences truncated at the 3' e
 read trunclen_in
 
 # Enter the value to truncate all reverse reads from Illumina 
-if [[ "$platform_in" == "Illumina" && "$gene_in" == "16S" ]]; then
+if [[ "$platform_in" == "Illumina" && "$gene_in" == "16S" || "$gene_in" == "18S" ]]; then
 	echo -e "\n${PUR}Illumina-option Special! Please tell me how you'd like to truncate your reverse reads at the 3' end. 180 is a very sensible number I feel.\n${NC}"
 	read trunclen_rev_in
 fi
