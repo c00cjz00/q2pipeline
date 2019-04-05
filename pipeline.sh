@@ -155,6 +155,7 @@ fi
 fi
     # Summarize tables 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 4 ]]; then
+source activate qiime2-2019.1
 echo -E -e "\n$(date)\n${GREEN}Summarizing DADA2 biom table${NC}\n"
 FIFTH=$(name=$1 sv=$sv_in scripts/dada2-step2.sh)
 echo $FIFTH
