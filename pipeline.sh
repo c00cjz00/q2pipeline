@@ -70,7 +70,7 @@ fi
 fi
 
 # Tell me which metadata column to use for Gneiss 
-if [[ "$step_in" == 1 ]] || [[ "$step_in" == 8 ]]; then 
+if [[ "$step_in" == 1 ]] || [[ "$step_in" == 9 ]]; then 
 echo -e "\n${PUR}Please tell me what column from your sample metadata/map file to use for Gneiss. Enter the name of the column exactly as it is in your map.\n${NC}"
 read column_in
 fi
@@ -104,7 +104,7 @@ if [[ "$platform_in" == "Ion Torrent" ]]; then
 	echo $FIRST
 fi
 
-source activate qiime2-2019.1
+source activate qiime2-2019.4
 mkdir $1/useful     # The Useful folder is where all useful files are extracted to
 
 
@@ -138,7 +138,7 @@ fi
 # Dada2
     # Ion Torrent
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 3 ]]; then
-source activate qiime2-2019.1
+source activate qiime2-2019.4
 if [[ "$platform_in" == "Ion Torrent" && "$sv_in" == "DADA2" ]]; then 
 echo -E -e "\n$(date)\nDoing DADA2 - dada2.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nDADA2-ing now. This can take upto a few hours, so go do something else!\n${NC}"
@@ -155,7 +155,7 @@ fi
 fi
     # Summarize tables 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 4 ]]; then
-source activate qiime2-2019.1
+source activate qiime2-2019.4
 echo -E -e "\n$(date)\n${GREEN}Summarizing DADA2 biom table${NC}\n"
 FIFTH=$(name=$1 sv=$sv_in scripts/dada2-step2.sh)
 echo $FIFTH
@@ -193,7 +193,7 @@ fi
     # Ion Torrent 
 echo -E -e "\n$(date)\nClassifying taxonomy at 99% with $athreads jobs (that's $threads_in threads) - assign.sh\n" >> $1/log.txt 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 5 ]]; then
-source activate qiime2-2019.1
+source activate qiime2-2019.4
 if [[ "$platform_in" == "Ion Torrent" ]]; then
 echo -e "\n$(date)${GREEN}\nClassifying taxonomy - 99%\n${NC}"
 SIXTH=$(name=$1 sv=$sv_in athreads=$athreads gene=$gene_in scripts/assign.sh)
@@ -210,7 +210,7 @@ fi
 
 # Align
 if [[ "$gene_in" == "16S" ]] && [[ "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 6 ]] || [[ "$gene_in" == "18S" ]] && [[ "$step_in" == 1 ]] || [[ "$gene_in" == "18S" && "$step_in" < 6 ]]; then
-source activate qiime2-2019.1
+source activate qiime2-2019.4
 echo -E -e "\n$(date)\nAligning - align.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nAligning\n${NC}"
 SEVENTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/align.sh)
@@ -219,7 +219,7 @@ fi
 
 # Make phylogenetic tree
 if [[ "$gene_in" == "16S" ]] && [[ "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 7 ]] || [[ "$gene_in" == "18S" ]] && [[ "$step_in" == 1 ]] || [[ "$gene_in" == "18S" && "$step_in" < 7 ]]; then
-source activate qiime2-2019.1
+source activate qiime2-2019.4
 echo -E -e "\n$(date)\nBuilding phylogenetic tree - tree.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nMaking phylogenetic tree\n${NC}"
 EIGTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/tree.sh)
@@ -228,7 +228,7 @@ fi
 
 # Picrust
 if [[ "$gene_in" == "16S" && "$step_in" == 1 ]] || [[ "$gene_in" == "16S" && "$step_in" < 8 ]]; then
-source activate qiime2-2019.1
+source activate qiime2-2019.4
 echo -E -e "\n$(date)\nPicrust - picrust.sh\n" >> $1/log.txt 
 echo -e "\n$(date)${GREEN}\nPicrust\n${NC}"
 NINTH=$(name=$1 sv=$sv_in threads=$threads_in scripts/picrust2.sh)
@@ -237,7 +237,7 @@ fi
 
 # Alpha and beta diversity analyses 
 if [[ "$step_in" == 1 ]] || [[ "$step_in" < 9 ]]; then
-source activate qiime2-2019.1
+source activate qiime2-2019.4
 
 # Enter a number to be used as sampling depth for rarefaction
 echo -e "\n${PUR}Okay now it's your turn. Go into the output /$1/useful/table/index.html and select the second tab. Find the bottom sample with the fewest reads, and enter the number below for sampling depth.\n${NC}"
@@ -272,8 +272,8 @@ fi
 fi
 
 # Gneiss Differential Abundance
-if [[ "$step_in" == 1 ]] || [[ "$step_in" < 10 ]]; then 
-source activate qiime2-2019.1
+if [[ "$step_in" == 1 ]] || [[ "$step_in" < 9 ]] || [[ "$step_in" == 9 ]]; then 
+source activate qiime2-2019.4
 echo -E -e "\n$(date)\nGneiss differential abundance - gneiss.sh" >> $1/log.txt
 echo -e "\n$(date)${GREEN}\nCalculating differential abundances via Gneiss\n${NC}"
 THIRTEENTH=$(name=$1 sv=$sv_in column=$column_in scripts/gneiss.sh)
