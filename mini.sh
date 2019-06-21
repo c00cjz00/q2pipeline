@@ -1,7 +1,7 @@
 #!/bin/bash
 # Where $2 = name of project / $2 = number to filter to 
 
-source activate qiime2-2019.1
+source activate qiime2-2019.4
 
 qiime feature-table filter-features --i-table $1/DADA2/table.qza --p-min-frequency $2 --o-filtered-table $1/DADA2/table-"$2".qza 
 
