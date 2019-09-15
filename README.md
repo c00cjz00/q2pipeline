@@ -2,8 +2,6 @@
 ## Introduction 
 QIIME2 Pipeline Scripts by Peter Leary, Newcastle University  
 
-A collection of badly-written scripts based on the Moving Pictures tutorial: https://docs.qiime2.org/2018.11/tutorials/moving-pictures/ 
-
 The intention is to perform pipeline analysis on 16S and ITS rRNA gene sequencing data from the Illumina and Ion Torrent platforms, with a few extra steps where appropriate, including preparing data for and running in Tax4Fun (Asshauer et al., 2015), using QIIME2 (currently 2018.11) (Caporaso et al., 2010) 
 
 A full list of references can be found in the References Wiki. 
