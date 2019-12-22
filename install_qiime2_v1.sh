@@ -34,6 +34,10 @@ fi
 
 #source activate qiime2-2019.10
 conda activate qiime2-2019.10
+jupyter serverextension enable --py qiime2 --sys-prefix
+jupyter  notebook --ip=0.0.0.0
+
+
 # Install Picrust2
 #wget https://github.com/picrust/picrust2/releases/download/v2.0.3-b/picrust2-2.0.3-b.zip
 #unzip picrust2-2.0.3-b.zip
