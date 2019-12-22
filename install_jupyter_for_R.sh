@@ -1,6 +1,7 @@
 apt install r-base
 pip3 install –upgrade pip
 sudo apt-get install libzmq3-dev libcurl4 libcurl4-openssl-dev
+sudo apt-get install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev
 
 conda install -c r r-essentials
 
