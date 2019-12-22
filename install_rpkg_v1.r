@@ -4,6 +4,8 @@
 # sudo -i R
 # install.packages('devtools')
 # sudo apt-get install -y r-cran-latticeextra
+# sudo apt-get install libzmq3-dev libcurl4 libcurl4-openssl-dev
+# sudo apt-get install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev
 install.packages("vegan")
 source("https://bioconductor.org/biocLite.R")
 biocLite("BiocInstaller")
